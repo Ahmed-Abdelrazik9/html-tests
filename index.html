@@ -1,1 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study MRCPI | CarePro OSCE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
+      position: relative;
+    }
+    .line-art {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.08;
+      background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 Q120,120 340,60 Q600,0 800,180 Q900,270 1200,180" stroke="white" stroke-width="2" fill="none"/><circle cx="650" cy="200" r="80" stroke="white" stroke-width="1" fill="none"/></svg>') no-repeat center/cover;
+    }
+    /* Custom scrollbar for lesson summary */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #b5c6e0;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <!-- RCOG-style line art -->
+  <div class="line-art"></div>
+  <div class="relative z-10 flex flex-row h-screen items-stretch justify-center">
 
+    <!-- Left: Controls -->
+    <div class="flex flex-col justify-center items-center w-full max-w-xs p-6 space-y-5">
+      <!-- Obstetrics -->
+      <button class="w-full h-20 md:h-16 rounded-2xl bg-white/90 shadow-lg hover:bg-[#d9eafe] hover:scale-105 transition text-[#2062b8] text-xl font-semibold mb-2 focus:outline-none">
+        Obstetrics
+      </button>
+      <!-- Gynaecology -->
+      <button class="w-full h-20 md:h-16 rounded-2xl bg-white/90 shadow-lg hover:bg-[#e1d3fa] hover:scale-105 transition text-[#7b1fa2] text-xl font-semibold mb-2 focus:outline-none">
+        Gynaecology
+      </button>
+      <!-- Live Tutor -->
+      <button class="w-full h-20 md:h-16 rounded-2xl bg-white/90 shadow-lg hover:bg-[#e9fff4] hover:scale-105 transition text-[#00a181] text-xl font-semibold focus:outline-none flex items-center justify-center gap-3">
+        <svg class="w-6 h-6 inline" fill="none" stroke="#00a181" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" /></svg>
+        Live Tutor
+      </button>
+    </div>
+
+    <!-- Right: Lesson Summary -->
+    <div class="flex-1 flex flex-col justify-start items-center px-8 py-10">
+      <h2 class="text-3xl font-bold text-white mb-6 drop-shadow">Lesson Summary</h2>
+      <div class="bg-white/90 rounded-2xl shadow-xl w-full max-w-3xl h-[70vh] p-8 overflow-y-auto custom-scrollbar">
+        <!-- Example lesson content -->
+        <h3 class="text-xl font-semibold text-[#2062b8] mb-4">Sample Lesson Title</h3>
+        <p class="text-[#222f3e] mb-4">
+          This is a sample lesson summary. You can add up to two or three A4 pages of text here. This section is scrollable for longer content. When you select "Obstetrics" or "Gynaecology", you can dynamically load the corresponding lesson summaries.
+        </p>
+        <ul class="list-disc pl-5 text-[#283759]">
+          <li>Clear, concise learning points</li>
+          <li>Key definitions and criteria</li>
+          <li>Important guidelines (RCOG, NICE, FSRH, etc.)</li>
+        </ul>
+        <!-- ...More content can be added as needed -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

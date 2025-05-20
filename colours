@@ -1,0 +1,52 @@
+<div style="display: flex; flex-wrap: wrap; gap: 22px; background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%); padding: 32px; border-radius: 22px; justify-content: center;">
+
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #ffb6c1; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #fff; margin-top: 9px; font-size: 13px;">Pastel Pink<br>#ffb6c1</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #ffd6e0; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #fff; margin-top: 9px; font-size: 13px;">Blush Pink<br>#ffd6e0</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #ffdab9; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #fff; margin-top: 9px; font-size: 13px;">Peach<br>#ffdab9</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #ffe4e1; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #fff; margin-top: 9px; font-size: 13px;">Misty Rose<br>#ffe4e1</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #e0b0ff; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #fff; margin-top: 9px; font-size: 13px;">Mauve<br>#e0b0ff</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #d6b4fc; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #fff; margin-top: 9px; font-size: 13px;">Pale Violet<br>#d6b4fc</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #fff0f5; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #142354; margin-top: 9px; font-size: 13px;">Lavender Blush<br>#fff0f5</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #d7e9fc; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #142354; margin-top: 9px; font-size: 13px;">Baby Blue<br>#d7e9fc</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #f6e7d7; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #142354; margin-top: 9px; font-size: 13px;">Pale Beige<br>#f6e7d7</span>
+  </div>
+  
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div style="width: 70px; height: 70px; background: #ffb3ab; border-radius: 14px; border: 2px solid #fff;"></div>
+    <span style="color: #142354; margin-top: 9px; font-size: 13px;">Light Coral<br>#ffb3ab</span>
+  </div>
+</div>

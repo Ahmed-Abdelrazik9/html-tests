@@ -10,11 +10,9 @@
     body {
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
-      /* RCOG style gradient: dark navy → blue → purple */
       background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
       position: relative;
     }
-    /* Optional faint white line overlay to mimic RCOG (SVG) */
     .line-art {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -40,18 +38,18 @@
   <div class="relative z-10 flex flex-col items-center justify-center min-h-screen">
     <!-- App Name -->
     <h1 class="text-4xl md:text-5xl font-bold mb-2 text-white drop-shadow">CarePro OSCE</h1>
-    <span class="text-lg mb-10 font-medium text-[#dbeafe] drop-shadow">MRCPI</span>
+    <span class="text-lg mb-10 font-bold text-[#dbeafe] drop-shadow">MRCPI</span>
     <!-- Mode Cards -->
     <div class="flex flex-row flex-wrap gap-10 justify-center w-full max-w-2xl mt-2">
       <!-- Study Mode -->
       <a href="/study.html" class="mode-card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-white/85 backdrop-blur-md shadow-2xl hover:bg-white/95 cursor-pointer flex flex-col items-center">
         <span class="text-2xl font-semibold text-[#2062b8] mb-2 text-center">Study Mode</span>
-        <span class="text-md font-medium text-[#283759] text-center">Smart notes, resources & chatbot Q&amp;A</span>
+        <span class="text-md font-medium text-[#283759] text-center">Smart Notes, Resources, and Live Tutor Discussion</span>
       </a>
       <!-- Exam Mode -->
       <a href="/exam.html" class="mode-card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-white/85 backdrop-blur-md shadow-2xl hover:bg-white/95 cursor-pointer flex flex-col items-center">
         <span class="text-2xl font-semibold text-[#7b1fa2] mb-2 text-center">Exam Mode</span>
-        <span class="text-md font-medium text-[#561073] text-center">Practice OSCE stations, mock exams</span>
+        <span class="text-md font-medium text-[#561073] text-center">Practice Clinical &amp; OSCE Stations</span>
       </a>
     </div>
   </div>

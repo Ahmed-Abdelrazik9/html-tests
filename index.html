@@ -3,52 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CarePro OSCE</title>
+  <title>CarePro OSCE - Private Chatbot</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f8fafc 0%, #f8fafc 100%);
       min-height: 100vh;
+      background: url('/assets/images/ai-robot.jpg') center center / cover no-repeat fixed;
+      position: relative;
     }
-    .warm-shadow {
-      box-shadow: 0 8px 32px 0 rgba(0, 98, 140, 0.15);
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 26, 37, 0.73);
+      z-index: 0;
+      pointer-events: none;
     }
-    .card:hover {
-      transform: translateY(-8px) scale(1.04);
-      box-shadow: 0 12px 36px 0 rgba(0, 98, 140, 0.22);
-      transition: all 0.2s;
+    .mode-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .mode-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 12px 36px 0 rgba(0, 98, 140, 0.28);
+      background: rgba(255, 255, 255, 0.93) !important;
     }
   </style>
 </head>
-<body class="flex flex-col min-h-screen bg-gradient-to-br from-[#e2ece9] via-[#d7e7f4] to-[#f3e6e9]">
-  <div class="flex flex-col items-center justify-center flex-grow py-10">
-    <!-- Logo -->
-    <img src="/assets/images/main.jpg" alt="CarePro OSCE Logo" class="mb-8 w-32 h-32 rounded-2xl shadow-lg border-4 border-[#f6a82c] bg-white object-cover">
+<body>
+  <!-- Overlay for background dimming -->
+  <div class="overlay"></div>
+  
+  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen">
+    <!-- (Optional) Logo: If you want your logo above modes, uncomment below -->
+    <!-- <img src="/assets/images/main.jpg" alt="CarePro Logo" class="mb-8 w-28 h-28 rounded-xl shadow-xl border-4 border-[#f6a82c] bg-white object-cover"> -->
 
-    <!-- App Name -->
-    <h1 class="text-4xl md:text-5xl font-bold mb-2 text-[#007E7A] tracking-tight drop-shadow">CarePro OSCE</h1>
-    <span class="text-lg mb-10 font-medium text-[#3a3c3d]">Professional OSCE Exam Practice</span>
+    <!-- App Name (subtle for private use) -->
+    <h1 class="text-3xl md:text-4xl font-bold mb-2 text-white drop-shadow-lg">CarePro OSCE <span class="font-light text-[#e0fffa] text-xl align-middle">| Private Chatbot</span></h1>
+    <span class="text-base mb-10 font-medium text-[#dbf6ee] drop-shadow-lg">Your AI OSCE Study Companion</span>
 
     <!-- Mode Cards -->
-    <div class="flex flex-row flex-wrap gap-8 justify-center w-full max-w-2xl mt-4">
-      <!-- Examiner Mode -->
-      <a href="/examiner.html" class="card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-[#fff8ee] warm-shadow hover:bg-[#ffe8ca] transition duration-200 cursor-pointer flex flex-col items-center">
-        <span class="text-2xl font-semibold text-[#ff8300] mb-2 text-center">Examiner Mode</span>
-        <span class="text-md font-medium text-[#7c4900] text-center">Simulate real OSCE stations as an examiner</span>
+    <div class="flex flex-row flex-wrap gap-10 justify-center w-full max-w-2xl mt-2">
+      <!-- Study Mode -->
+      <a href="/study.html" class="mode-card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-white/80 backdrop-blur-md shadow-2xl hover:bg-white/90 cursor-pointer flex flex-col items-center">
+        <span class="text-2xl font-semibold text-[#007E7A] mb-2 text-center">Study Mode</span>
+        <span class="text-md font-medium text-[#3c6762] text-center">Smart notes, resources & chatbot Q&A</span>
       </a>
-      <!-- Role Player Mode -->
-      <a href="/role.html" class="card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-[#eefcfb] warm-shadow hover:bg-[#c7f7f1] transition duration-200 cursor-pointer flex flex-col items-center">
-        <span class="text-2xl font-semibold text-[#007E7A] mb-2 text-center">Role Player Mode</span>
-        <span class="text-md font-medium text-[#035c50] text-center">Practice OSCE communication & scenarios</span>
+      <!-- Exam Mode -->
+      <a href="/exam.html" class="mode-card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-white/80 backdrop-blur-md shadow-2xl hover:bg-white/90 cursor-pointer flex flex-col items-center">
+        <span class="text-2xl font-semibold text-[#ff8300] mb-2 text-center">Exam Mode</span>
+        <span class="text-md font-medium text-[#7c4900] text-center">Practice OSCE stations, mock exams</span>
       </a>
     </div>
   </div>
-
-  <!-- Footer -->
-  <footer class="flex items-center justify-center py-3 bg-transparent">
-    <span class="text-[#7c7d7f] text-sm font-medium">© 2026 CarePro OSCE. All rights reserved.</span>
-  </footer>
 </body>
 </html>

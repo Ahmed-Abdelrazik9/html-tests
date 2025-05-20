@@ -3,162 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarePro OSCE - Role Player Mode</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <title>CarePro OSCE - Medical Examination Training</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2a9d8f 0%, #3a86ff 100%);
+            background-attachment: fixed;
+        }
+        .mode-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .mode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .card-title {
+            text-align: center;
+        }
+        .card-description {
+            text-align: center;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <div class="logo">CarePro OSCE</div>
-            <div class="mode-indicator">Role Player Mode</div>
-            <button class="end-session-btn" id="endSessionBtn">End Session</button>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <!-- Updated logo color to a warmer, more attractive tone -->
+                    <h1 class="text-2xl font-bold text-[#e76f51]">CarePro OSCE</h1>
+                </div>
+                <nav class="flex space-x-4">
+                    <a href="study.html" class="text-gray-600 hover:text-[#e76f51] px-3 py-2 rounded-md text-sm font-medium">Study</a>
+                    <a href="exam.html" class="text-gray-600 hover:text-[#e76f51] px-3 py-2 rounded-md text-sm font-medium">Exams</a>
+                    <a href="#" class="text-gray-600 hover:text-[#e76f51] px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        <div class="scenario-header">
-            <h1 class="scenario-title">OSCE Scenario: Abdominal Pain Assessment</h1>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Welcome Section -->
+        <div class="text-center mb-12 bg-white bg-opacity-90 p-8 rounded-lg shadow-md">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Welcome to CarePro OSCE</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Your comprehensive platform for medical OSCE examination preparation.
+                Choose a mode to begin your learning journey.
+            </p>
         </div>
 
-        <div class="scenario-content">
-            <div class="scenario-details">
-                <div class="card">
-                    <h2 class="card-title">Patient Information</h2>
-                    <p class="card-content">
-                        You are playing the role of Maria Chen, a 34-year-old woman who has come to the 
-                        emergency department with severe abdominal pain that started approximately 8 hours ago.
+        <!-- Mode Selection Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+            <!-- Study Mode Card -->
+            <div class="mode-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="h-48 overflow-hidden">
+                    <img src="/assets/images/study.jpg" alt="Study Mode" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1073&q=80';">
+                </div>
+                <div class="p-6">
+                    <!-- Centered title -->
+                    <h3 class="card-title text-xl font-semibold text-gray-900 mb-4">Study Mode</h3>
+                    <!-- Updated description -->
+                    <p class="card-description text-gray-700 mb-6">
+                        Study Smarter
                     </p>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">Chief Complaint</h2>
-                    <p class="card-content">
-                        "I have this terrible pain in my stomach. It started around my belly button but now it's 
-                        moved to my right side and it's getting worse. I've never felt anything like this before."
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">History to Provide</h2>
-                    <ul class="list-content">
-                        <li>Pain characteristics: Started as diffuse periumbilical pain 8 hours ago, now localized to right lower quadrant. Sharp, constant pain rated 8/10.</li>
-                        <li>Associated symptoms: Nausea, vomited twice. Loss of appetite. No diarrhea or constipation.</li>
-                        <li>Past medical history: Generally healthy. No previous surgeries.</li>
-                        <li>Medications: Only takes occasional ibuprofen for menstrual cramps.</li>
-                        <li>Allergies: None known.</li>
-                        <li>Last menstrual period: 2 weeks ago, regular cycle.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">Behavior Guidance</h2>
-                    <ul class="list-content">
-                        <li>Appear visibly uncomfortable, occasionally wincing from pain.</li>
-                        <li>Hold your right lower abdomen when moving or coughing.</li>
-                        <li>Show anxiety about what might be causing the pain.</li>
-                        <li>If the examiner presses on your right lower abdomen, react with increased pain (rebound tenderness).</li>
-                        <li>Express concern about missing work tomorrow if asked about social history.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">Key Information - Only If Asked</h2>
-                    <ul class="list-content">
-                        <li>No recent travel history.</li>
-                        <li>No history of inflammatory bowel disease.</li>
-                        <li>No urinary symptoms.</li>
-                        <li>No recent dietary changes or food poisoning symptoms.</li>
-                        <li>Not sexually active in the past 3 months.</li>
-                        <li>No history of similar pain episodes.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h2 class="card-title">Expected Diagnosis</h2>
-                    <p class="card-content">
-                        The candidate should suspect acute appendicitis based on the classic presentation of 
-                        periumbilical pain migrating to the right lower quadrant, associated with nausea, 
-                        vomiting, and anorexia.
-                    </p>
+                    <div class="flex justify-center">
+                        <a href="study.html" class="inline-flex items-center px-5 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#2a9d8f] hover:bg-[#238b7e] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2a9d8f]">
+                            Enter Study Mode
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="sidebar">
-                <div class="card timer-container">
-                    <h2 class="card-title">Station Timer</h2>
-                    <div class="timer-display" id="timerDisplay">08:00</div>
-                    <div class="timer-controls">
-                        <button class="timer-btn start" id="startTimer">Start</button>
-                        <button class="timer-btn pause" id="pauseTimer">Pause</button>
-                        <button class="timer-btn reset" id="resetTimer">Reset</button>
-                    </div>
+            <!-- Exam Mode Card -->
+            <div class="mode-card bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="h-48 overflow-hidden">
+                    <img src="/assets/images/exam.jpg" alt="Exam Mode" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80';">
                 </div>
-
-                <div class="card">
-                    <h2 class="card-title">Available Investigations</h2>
-                    <div class="investigations-list">
-                        <div class="investigation-item">
-                            <div class="investigation-info">
-                                <span class="investigation-title">Complete Blood Count</span>
-                                <span class="investigation-desc">Shows elevated white cell count</span>
-                            </div>
-                            <button class="view-btn" data-investigation="cbc">View</button>
-                        </div>
-                        <div class="investigation-item">
-                            <div class="investigation-info">
-                                <span class="investigation-title">C-Reactive Protein</span>
-                                <span class="investigation-desc">Inflammatory marker</span>
-                            </div>
-                            <button class="view-btn" data-investigation="crp">View</button>
-                        </div>
-                        <div class="investigation-item">
-                            <div class="investigation-info">
-                                <span class="investigation-title">Abdominal Ultrasound</span>
-                                <span class="investigation-desc">Imaging of appendix and surrounding area</span>
-                            </div>
-                            <button class="view-btn" data-investigation="ultrasound">View</button>
-                        </div>
-                        <div class="investigation-item">
-                            <div class="investigation-info">
-                                <span class="investigation-title">Urinalysis</span>
-                                <span class="investigation-desc">Routine urine test</span>
-                            </div>
-                            <button class="view-btn" data-investigation="urinalysis">View</button>
-                        </div>
-                        <div class="investigation-item">
-                            <div class="investigation-info">
-                                <span class="investigation-title">CT Scan Abdomen/Pelvis</span>
-                                <span class="investigation-desc">Detailed imaging</span>
-                            </div>
-                            <button class="view-btn" data-investigation="ct">View</button>
-                        </div>
+                <div class="p-6">
+                    <!-- Centered title -->
+                    <h3 class="card-title text-xl font-semibold text-gray-900 mb-4">Exam Mode</h3>
+                    <!-- Updated description -->
+                    <p class="card-description text-gray-700 mb-6">
+                        Practice LC, SD, SPT
+                    </p>
+                    <div class="flex justify-center">
+                        <a href="exam.html" class="inline-flex items-center px-5 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#e76f51] hover:bg-[#e05c3d] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e76f51]">
+                            Enter Exam Mode
+                        </a>
                     </div>
-                </div>
-
-                <div class="card evaluation-status">
-                    <h2 class="card-title">Evaluation Status</h2>
-                    <div class="score-display">Current Score: <span id="currentScore">17</span> / <span id="totalScore">25</span></div>
-                    <div class="pass-status">PASS</div>
-                    <div class="pass-note">Minimum passing score: 15</div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p class="footer-text">© 2025 CarePro OSCE | Medical Education Platform</p>
+    <!-- Footer - Simplified as requested -->
+    <footer class="bg-white bg-opacity-90">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm text-gray-500">© 2026 CarePro OSCE. All rights reserved.</p>
         </div>
     </footer>
-
-    <script src="js/role-player.js"></script>
-    <script>
-        // Initialize the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            window.rolePlayerApp = new RolePlayerApp();
-        });
-    </script>
 </body>
 </html>

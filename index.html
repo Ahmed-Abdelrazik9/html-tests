@@ -3,73 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Study MRCPI | CarePro OSCE</title>
+  <title>Study MRCPI</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
       background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
-      position: relative;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
     }
-    .line-art {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.08;
-      background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 Q120,120 340,60 Q600,0 800,180 Q900,270 1200,180" stroke="white" stroke-width="2" fill="none"/><circle cx="650" cy="200" r="80" stroke="white" stroke-width="1" fill="none"/></svg>') no-repeat center/cover;
+    .custom-scroll::-webkit-scrollbar {
+      width: 7px;
+      background: #e1e6ef;
+      border-radius: 4px;
     }
-    /* Custom scrollbar for lesson summary */
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 8px;
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #2062b8;
+      border-radius: 4px;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #b5c6e0;
-      border-radius: 6px;
+    .divider {
+      width: 2px;
+      background: linear-gradient(180deg, #c7d2fe 10%, #7b1fa2 90%);
+      min-height: 80%;
+      margin: 0 10px;
+      border-radius: 1px;
+    }
+    .tutor-active {
+      background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+      animation: clouds 3s infinite alternate;
+    }
+    @keyframes clouds {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
   </style>
 </head>
 <body>
-  <!-- RCOG-style line art -->
-  <div class="line-art"></div>
-  <div class="relative z-10 flex flex-row h-screen items-stretch justify-center">
-
-    <!-- Left: Controls -->
-    <div class="flex flex-col justify-center items-center w-full max-w-xs p-6 space-y-5">
-      <!-- Obstetrics -->
-      <button class="w-full h-20 md:h-16 rounded-2xl bg-white/90 shadow-lg hover:bg-[#d9eafe] hover:scale-105 transition text-[#2062b8] text-xl font-semibold mb-2 focus:outline-none">
-        Obstetrics
-      </button>
-      <!-- Gynaecology -->
-      <button class="w-full h-20 md:h-16 rounded-2xl bg-white/90 shadow-lg hover:bg-[#e1d3fa] hover:scale-105 transition text-[#7b1fa2] text-xl font-semibold mb-2 focus:outline-none">
-        Gynaecology
-      </button>
-      <!-- Live Tutor -->
-      <button class="w-full h-20 md:h-16 rounded-2xl bg-white/90 shadow-lg hover:bg-[#e9fff4] hover:scale-105 transition text-[#00a181] text-xl font-semibold focus:outline-none flex items-center justify-center gap-3">
-        <svg class="w-6 h-6 inline" fill="none" stroke="#00a181" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" /></svg>
-        Live Tutor
-      </button>
+  <div class="flex flex-row h-screen">
+    <!-- Left Panel (Navigation) -->
+    <div class="flex flex-col w-1/3 max-w-xs min-w-[290px] px-4 pt-8 pb-4">
+      <!-- عنوان الصفحة الرئيسي -->
+      <h2 class="text-3xl font-bold text-white mb-6 pl-2 tracking-wide drop-shadow">Study MRCPI</h2>
+      <!-- البوكسات الأفقية -->
+      <div class="flex flex-col gap-4">
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#2062b8] font-semibold text-lg shadow transition">Obstetrics</button>
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Gynaecology</button>
+        <!-- Live Tutor -->
+        <div id="liveTutorBox" class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-between px-4 shadow relative transition">
+          <span class="font-semibold text-[#1a485d] text-lg">Live Tutor</span>
+          <div class="flex items-center gap-2">
+            <button id="playBtn" title="Play" class="focus:outline-none"><svg width="24" height="24" fill="#2062b8"><polygon points="8,5 19,12 8,19"></polygon></svg></button>
+            <button id="pauseBtn" title="Pause" class="focus:outline-none"><svg width="24" height="24" fill="#ff8300"><rect x="7" y="5" width="4" height="14"></rect><rect x="13" y="5" width="4" height="14"></rect></svg></button>
+            <span id="timer" class="ml-1 text-sm font-bold text-[#2062b8]">00:00</span>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Right: Lesson Summary -->
-    <div class="flex-1 flex flex-col justify-start items-center px-8 py-10">
-      <h2 class="text-3xl font-bold text-white mb-6 drop-shadow">Lesson Summary</h2>
-      <div class="bg-white/90 rounded-2xl shadow-xl w-full max-w-3xl h-[70vh] p-8 overflow-y-auto custom-scrollbar">
-        <!-- Example lesson content -->
-        <h3 class="text-xl font-semibold text-[#2062b8] mb-4">Sample Lesson Title</h3>
-        <p class="text-[#222f3e] mb-4">
-          This is a sample lesson summary. You can add up to two or three A4 pages of text here. This section is scrollable for longer content. When you select "Obstetrics" or "Gynaecology", you can dynamically load the corresponding lesson summaries.
+    <!-- فاصل رأسي رفيع -->
+    <div class="divider self-center"></div>
+    <!-- Right Panel (Content) -->
+    <div class="flex-1 flex flex-col justify-start h-full py-10 px-8 overflow-hidden">
+      <!-- عنوان الدرس الحالي -->
+      <div class="mb-4">
+        <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow mb-2">Hyperemesis Gravidarum</h3>
+        <span class="text-md text-[#e5defd]">Lesson summary and key notes</span>
+      </div>
+      <!-- ملخص الدرس (Scrollable) -->
+      <div class="bg-white/90 rounded-xl shadow-lg p-6 custom-scroll overflow-y-auto" style="height: calc(100vh - 170px); max-height: 620px;">
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Definition</h4>
+        <p class="mb-4">
+          Hyperemesis gravidarum is a severe form of nausea and vomiting in pregnancy associated with weight loss, dehydration, and electrolyte imbalance. 
         </p>
-        <ul class="list-disc pl-5 text-[#283759]">
-          <li>Clear, concise learning points</li>
-          <li>Key definitions and criteria</li>
-          <li>Important guidelines (RCOG, NICE, FSRH, etc.)</li>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Epidemiology</h4>
+        <p class="mb-4">
+          Occurs in up to 1% of pregnancies. Risk factors include multiple pregnancy, molar pregnancy, and previous history.
+        </p>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Diagnosis</h4>
+        <ul class="list-disc ml-6 mb-4">
+          <li>Persistent vomiting</li>
+          <li>Weight loss &gt;5% pre-pregnancy weight</li>
+          <li>Ketonuria, electrolyte imbalance, dehydration</li>
         </ul>
-        <!-- ...More content can be added as needed -->
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Management</h4>
+        <ul class="list-disc ml-6 mb-4">
+          <li>Rehydration (oral/IV fluids)</li>
+          <li>Antiemetics: cyclizine, prochlorperazine, ondansetron (as per RCOG/BNF)</li>
+          <li>Vitamin supplementation (thiamine)</li>
+          <li>Thromboprophylaxis if admitted</li>
+        </ul>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">References</h4>
+        <ul class="list-disc ml-6">
+          <li>
+            <a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/the-management-of-nausea-and-vomiting-of-pregnancy-and-hyperemesis-gravidarum-green-top-guideline-no-69/" target="_blank" class="text-[#2062b8] underline">RCOG Green-top Guideline No. 69</a>
+          </li>
+        </ul>
+        <div style="height:160px;"></div>
       </div>
     </div>
   </div>
+  <script>
+    // Simple timer for Live Tutor (demo)
+    let timerInterval, time = 0;
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const timerDisplay = document.getElementById('timer');
+    playBtn.onclick = function() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(()=>{
+        time++;
+        const min = String(Math.floor(time/60)).padStart(2,'0');
+        const sec = String(time%60).padStart(2,'0');
+        timerDisplay.textContent = `${min}:${sec}`;
+      }, 1000);
+      document.getElementById('liveTutorBox').classList.add('tutor-active');
+    };
+    pauseBtn.onclick = function() {
+      clearInterval(timerInterval);
+      document.getElementById('liveTutorBox').classList.remove('tutor-active');
+    };
+  </script>
 </body>
 </html>

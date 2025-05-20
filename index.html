@@ -1,100 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarePro OSCE - Medical Examination Training</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', 'Manrope', sans-serif;
-            background: radial-gradient(ellipse at 50% 30%, #e5f9f7 0%, #c9e7f2 40%, #f1f6fb 100%);
-            min-height: 100vh;
-            background-attachment: fixed;
-        }
-        .glass {
-            background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(16px) saturate(180%);
-            border-radius: 2.5rem;
-            box-shadow: 0 12px 44px 0 rgba(34,67,118,.16), 0 2px 4px 0 rgba(51,107,198,0.02);
-            border: 1px solid rgba(255,255,255,0.32);
-        }
-        .mode-elevate {
-            box-shadow: 0 8px 40px 0 rgba(33, 150, 243, 0.10), 0 1.5px 7px 0 rgba(34,67,118,0.09);
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
-        .mode-elevate:hover {
-            box-shadow: 0 20px 48px 0 rgba(33, 150, 243, 0.14), 0 3px 12px 0 rgba(34,67,118,0.12);
-            transform: translateY(-6px) scale(1.03);
-        }
-        .luxury-title {
-            font-family: 'Manrope', 'Inter', sans-serif;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-        }
-        .footer-glass {
-            background: rgba(255,255,255,0.65);
-            backdrop-filter: blur(8px) saturate(180%);
-            border-top-left-radius: 2rem;
-            border-top-right-radius: 2rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarePro OSCE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #f8fafc 100%);
+      min-height: 100vh;
+    }
+    .warm-shadow {
+      box-shadow: 0 8px 32px 0 rgba(0, 98, 140, 0.15);
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.04);
+      box-shadow: 0 12px 36px 0 rgba(0, 98, 140, 0.22);
+      transition: all 0.2s;
+    }
+  </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-gradient-to-br from-[#e2ece9] via-[#d7e7f4] to-[#f3e6e9]">
+  <div class="flex flex-col items-center justify-center flex-grow py-10">
+    <!-- Logo -->
+    <img src="/assets/images/main.jpg" alt="CarePro OSCE Logo" class="mb-8 w-32 h-32 rounded-2xl shadow-lg border-4 border-[#f6a82c] bg-white object-cover">
 
-    <!-- Header -->
-    <header class="py-12">
-        <div class="flex flex-col items-center justify-center">
-            <!-- Custom SVG logo (navy blue and teal) -->
-            <div class="mb-4">
-                <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
-                  <circle cx="34" cy="34" r="34" fill="#007E7A"/>
-                  <text x="34" y="43" text-anchor="middle" font-size="32" fill="#fff" font-family='Manrope, Inter, sans-serif' font-weight="bold">CP</text>
-                </svg>
-            </div>
-            <h1 class="luxury-title text-4xl sm:text-5xl text-[#003366] drop-shadow-lg mb-2 tracking-wide">CarePro OSCE</h1>
-            <div class="text-[#007E7A] text-xl font-semibold tracking-widest mb-1" style="letter-spacing:0.1em;">MRCPI</div>
-        </div>
-    </header>
+    <!-- App Name -->
+    <h1 class="text-4xl md:text-5xl font-bold mb-2 text-[#007E7A] tracking-tight drop-shadow">CarePro OSCE</h1>
+    <span class="text-lg mb-10 font-medium text-[#3a3c3d]">Professional OSCE Exam Practice</span>
 
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col items-center justify-center">
-        <div class="glass max-w-4xl w-full mx-4 px-8 py-12 mb-10 flex flex-col md:flex-row gap-10 shadow-xl border">
-            <!-- Study Mode Card -->
-            <div class="mode-elevate flex-1 bg-white bg-opacity-60 rounded-3xl flex flex-col items-center overflow-hidden transition-all">
-                <div class="w-full h-56 rounded-t-3xl overflow-hidden relative">
-                    <img src="/assets/images/study.jpg" alt="Study Mode" class="w-full h-full object-cover object-center transition-all duration-500"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1073&q=80';">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#007E7A80] to-transparent"></div>
-                </div>
-                <div class="flex flex-col items-center py-7 px-4">
-                    <h3 class="luxury-title text-2xl text-[#007E7A] mb-3">Study Mode</h3>
-                    <p class="text-gray-700 text-base font-medium opacity-80 mb-7 text-center">Study Smarter</p>
-                    <a href="study.html" class="px-8 py-3 rounded-full bg-gradient-to-r from-[#007E7A] to-[#4DD0E1] text-white font-bold text-base shadow-lg hover:scale-105 transition">Enter Study Mode</a>
-                </div>
-            </div>
-            <!-- Exam Mode Card -->
-            <div class="mode-elevate flex-1 bg-white bg-opacity-60 rounded-3xl flex flex-col items-center overflow-hidden transition-all">
-                <div class="w-full h-56 rounded-t-3xl overflow-hidden relative">
-                    <img src="/assets/images/exam.jpg" alt="Exam Mode" class="w-full h-full object-cover object-center transition-all duration-500"
-                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1170&q=80';">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#00336699] to-transparent"></div>
-                </div>
-                <div class="flex flex-col items-center py-7 px-4">
-                    <h3 class="luxury-title text-2xl text-[#003366] mb-3">Exam Mode</h3>
-                    <p class="text-gray-700 text-base font-medium opacity-80 mb-7 text-center">Practice LC, SD, SPT</p>
-                    <a href="exam.html" class="px-8 py-3 rounded-full bg-gradient-to-r from-[#003366] to-[#007E7A] text-white font-bold text-base shadow-lg hover:scale-105 transition">Enter Exam Mode</a>
-                </div>
-            </div>
-        </div>
-    </main>
+    <!-- Mode Cards -->
+    <div class="flex flex-row flex-wrap gap-8 justify-center w-full max-w-2xl mt-4">
+      <!-- Examiner Mode -->
+      <a href="/examiner.html" class="card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-[#fff8ee] warm-shadow hover:bg-[#ffe8ca] transition duration-200 cursor-pointer flex flex-col items-center">
+        <span class="text-2xl font-semibold text-[#ff8300] mb-2 text-center">Examiner Mode</span>
+        <span class="text-md font-medium text-[#7c4900] text-center">Simulate real OSCE stations as an examiner</span>
+      </a>
+      <!-- Role Player Mode -->
+      <a href="/role.html" class="card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-[#eefcfb] warm-shadow hover:bg-[#c7f7f1] transition duration-200 cursor-pointer flex flex-col items-center">
+        <span class="text-2xl font-semibold text-[#007E7A] mb-2 text-center">Role Player Mode</span>
+        <span class="text-md font-medium text-[#035c50] text-center">Practice OSCE communication & scenarios</span>
+      </a>
+    </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer-glass mt-auto py-5 px-4 shadow-inner">
-        <div class="max-w-5xl mx-auto text-center">
-            <p class="text-gray-600 text-sm tracking-wide">© 2026 CarePro OSCE. All rights reserved. • Made personal for <span class="text-[#007E7A] font-semibold">Ahmed</span></p>
-        </div>
-    </footer>
+  <!-- Footer -->
+  <footer class="flex items-center justify-center py-3 bg-transparent">
+    <span class="text-[#7c7d7f] text-sm font-medium">© 2026 CarePro OSCE. All rights reserved.</span>
+  </footer>
 </body>
 </html>

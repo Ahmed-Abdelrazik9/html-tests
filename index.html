@@ -23,12 +23,18 @@
       background: #2062b8;
       border-radius: 4px;
     }
-    .divider {
+    .divider, .inner-divider {
       width: 2px;
       background: linear-gradient(180deg, #c7d2fe 10%, #7b1fa2 90%);
+      border-radius: 1px;
+    }
+    .divider {
       min-height: 80%;
       margin: 0 10px;
-      border-radius: 1px;
+    }
+    .inner-divider {
+      height: 24px;
+      margin: 0 10px;
     }
     @media (max-width: 900px) {
       .main-flex { flex-direction: column !important; }
@@ -50,17 +56,18 @@
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Structured Discussion (SD)</button>
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Role Player (SPT)</button>
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">LWP</button>
-        <!-- Timer with Start and Pause Icons -->
-        <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-between px-4 shadow relative transition">
-          <div class="flex items-center gap-2">
+        <!-- Timer with Start/Pause and Divider -->
+        <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
+          <div class="flex items-center">
             <button id="startBtn" title="Start" class="focus:outline-none">
               <svg width="20" height="20" fill="#2062b8"><polygon points="6,4 16,10 6,16"></polygon></svg>
             </button>
-            <button id="pauseBtn" title="Pause" class="focus:outline-none">
+            <button id="pauseBtn" title="Pause" class="focus:outline-none ml-2">
               <svg width="20" height="20" fill="#ff8300"><rect x="5" y="4" width="4" height="12"></rect><rect x="11" y="4" width="4" height="12"></rect></svg>
             </button>
+            <div class="inner-divider"></div>
+            <span id="timer" class="text-lg font-semibold text-[#2062b8] min-w-[60px] text-center">10:00</span>
           </div>
-          <span id="timer" class="text-lg font-semibold text-[#2062b8]">00:00</span>
         </div>
         <!-- Feedback Box -->
         <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
@@ -114,25 +121,36 @@
     </div>
   </div>
   <script>
-    // Timer Controls
-    let timerInterval, time = 0;
+    // Countdown timer logic
+    let timerInterval;
+    let time = 600; // 10 minutes in seconds
     const timerDisplay = document.getElementById('timer');
     const startBtn = document.getElementById('startBtn');
     const pauseBtn = document.getElementById('pauseBtn');
 
+    function updateTimerDisplay() {
+      const min = String(Math.floor(time / 60)).padStart(2, '0');
+      const sec = String(time % 60).padStart(2, '0');
+      timerDisplay.textContent = `${min}:${sec}`;
+    }
+
     startBtn.onclick = function () {
       clearInterval(timerInterval);
       timerInterval = setInterval(() => {
-        time++;
-        const min = String(Math.floor(time / 60)).padStart(2, '0');
-        const sec = String(time % 60).padStart(2, '0');
-        timerDisplay.textContent = `${min}:${sec}`;
+        if (time > 0) {
+          time--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+        }
       }, 1000);
     };
 
     pauseBtn.onclick = function () {
       clearInterval(timerInterval);
     };
+
+    updateTimerDisplay(); // Initial call
   </script>
 </body>
 </html>

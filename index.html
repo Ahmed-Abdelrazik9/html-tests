@@ -8,7 +8,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
-      --main-purple: #7b1fa2;
+      --ob-color: #2062b8;
+      --gy-color: #7b1fa2;
+      --timer-color: #1a485d;
+      --white: #fff;
+      --box-shadow: 0 4px 14px 0 rgba(32,98,184,0.10);
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -17,113 +21,141 @@
       margin: 0;
       overflow: hidden;
     }
-    .custom-scroll::-webkit-scrollbar {
-      width: 7px;
-      background: #e1e6ef;
-      border-radius: 4px;
+    .main-flex {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
     }
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background: #2062b8;
-      border-radius: 4px;
-    }
-    .divider {
-      width: 2px;
-      background: linear-gradient(180deg, #c7d2fe 10%, #7b1fa2 90%);
-      min-height: 80%;
-      margin: 0 10px;
-      border-radius: 1px;
-    }
-    .osce-box {
-      width: 100%;
-      min-height: 56px;
-      border-radius: 14px;
-      background: #fff;
+    .left-panel {
+      min-width: 390px;
+      width: 430px;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      min-height: 100vh;
+    }
+    .title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+      margin-bottom: 40px;
+      margin-top: 0;
+      text-align: center;
+      text-shadow: 0 4px 16px rgba(32,98,184,0.14);
+    }
+    .boxes-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      width: 100%;
+    }
+    .exam-box {
+      width: 290px;
+      height: 54px;
+      border-radius: 14px;
+      background: var(--white);
+      display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Poppins', sans-serif;
+      font-size: 1.16em;
       font-weight: 600;
-      font-size: 1.23em;
-      color: var(--main-purple);
-      box-shadow: 0 4px 14px 0 rgba(32,98,184,0.10);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.08px;
+      box-shadow: var(--box-shadow);
       border: none;
       outline: none;
       transition: box-shadow .17s;
+      gap: 9px;
     }
-    .osce-box span {
-      font-weight: 400;
-      font-size: 0.95em;
-      color: var(--main-purple);
-      opacity: 0.8;
-      letter-spacing: 0.4px;
+    .exam-box.sd, .exam-box.feedback {
+      color: var(--ob-color);
     }
-    .boxes-gap {
-      display: flex;
-      flex-direction: column;
-      gap: 28px; /* موحدة بين جميع البوكسات */
-      width: 100%;
-      align-items: center;
+    .exam-box.rp {
+      color: var(--gy-color);
     }
-    .timer-panel {
-      width: 100%;
-      height: 56px;
+    .exam-box.timer {
+      color: var(--timer-color);
       background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
-      border-radius: 14px;
-      box-shadow: 0 4px 14px 0 rgba(32,98,184,0.10);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+    }
+    .exam-box span {
+      font-weight: 500;
+      font-size: 1em;
+      opacity: 0.90;
+      letter-spacing: 0.5px;
+      margin-left: 7px;
     }
     .timer-content {
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 15px;
       width: 100%;
-      gap: 18px;
     }
     .timer-time {
-      font-size: 1.7rem;
-      color: var(--main-purple);
+      font-size: 1.23rem;
+      color: var(--timer-color);
       font-weight: 700;
-      letter-spacing: 1.5px;
-      text-align: center;
-      min-width: 78px;
+      letter-spacing: 1px;
+      min-width: 62px;
       font-family: 'Poppins', sans-serif;
-      margin-right: 6px;
+      text-align: center;
     }
     .timer-btn-ico {
       background: transparent;
       border: none;
-      font-size: 1.5em;
-      color: var(--main-purple);
+      font-size: 1.3em;
+      color: var(--timer-color);
       cursor: pointer;
-      padding: 3px 9px;
+      padding: 2px 7px;
       border-radius: 7px;
       transition: background 0.15s;
       font-family: 'Poppins', sans-serif;
     }
     .timer-btn-ico:hover {
-      background: #f6e1fa;
+      background: #e7e8fa;
     }
-    .feedback-btn {
-      background: #ffe0fa;
-      border-radius: 14px;
-      border: none;
-      font-weight: 600;
-      color: var(--main-purple);
-      font-size: 1.23em;
-      padding: 11px 0 10px 0;
-      width: 100%;
-      box-shadow: 0 4px 14px 0 rgba(32,98,184,0.10);
-      cursor: pointer;
-      letter-spacing: 0.4px;
-      transition: background 0.14s;
+    .divider {
+      width: 2px;
+      background: linear-gradient(180deg, #c7d2fe 10%, #7b1fa2 90%);
+      min-height: 70%;
+      margin: 0 18px;
+      border-radius: 1px;
+      align-self: center;
+    }
+    .content-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+      padding: 0 48px 0 0;
+    }
+    .scenario-title {
+      color: #d7e9fc;
+      letter-spacing: 0.5px;
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .content-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 6px 24px 0 rgba(32,98,184,0.13);
+      padding: 36px 32px 32px 32px;
+      max-width: 640px;
+      margin: 0 auto;
+      min-height: 310px;
+      font-size: 1.09em;
+      color: #222;
       font-family: 'Poppins', sans-serif;
+      overflow-y: auto;
     }
-    .feedback-btn:hover { background: #f8f0ff; }
     .modal {
       display: none;
       position: fixed;
@@ -165,59 +197,50 @@
       color: #20b86a;
     }
     @media (max-width: 900px) {
-      .main-flex { flex-direction: column !important; }
+      .main-flex { flex-direction: column; }
       .divider { display: none; }
-      .left-panel { max-width: 100%; margin-bottom: 18px;}
-      .summary-scroll { max-height: 320px; }
-      .center-vert { justify-content: flex-start !important; }
-      .osce-box, .timer-panel, .feedback-btn { min-height: 48px; font-size: 1em; }
-      .timer-time { font-size: 1.1em; min-width: 58px;}
+      .left-panel { width: 100vw; min-width: 0; }
+      .content-panel { padding: 0 12px; }
+      .content-card { padding: 20px 6vw; }
+    }
+    @media (max-width: 600px) {
+      .title { font-size: 1.6rem;}
+      .scenario-title { font-size: 1.12rem;}
+      .exam-box { width: 97vw; font-size: 1em; }
+      .content-card { max-width: 98vw; padding: 12px 2vw;}
     }
   </style>
 </head>
 <body>
-  <div class="flex flex-row h-screen main-flex">
+  <div class="main-flex">
     <!-- Left Panel -->
-    <div class="left-panel flex flex-col w-1/3 max-w-xs min-w-[290px] px-4 pt-4 pb-4 center-vert justify-center">
-      <div class="flex flex-col items-center mb-8">
-        <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow mb-2" style="line-height:1.1; letter-spacing:1px;">OSCE MRCPI</h2>
-      </div>
-      <!-- جميع البوكسات في قائمة بفواصل متساوية -->
-      <div class="boxes-gap">
-        <div class="osce-box">
-          Structured Discussion
-          <span>(SD)</span>
-        </div>
-        <div class="osce-box">
-          Role Player
-          <span>(SPT)</span>
-        </div>
-        <!-- Timer Box بنسخة Study MRCPI معدلة -->
-        <div class="timer-panel">
-          <div class="timer-content">
-            <div id="timer" class="timer-time">10:00</div>
-            <button class="timer-btn-ico" id="startBtn" title="Start">&#9654;</button>
-            <button class="timer-btn-ico" id="pauseBtn" title="Pause">&#10073;&#10073;</button>
+    <div class="left-panel">
+      <div>
+        <div class="title">OSCE MRCPI</div>
+        <div class="boxes-col">
+          <div class="exam-box sd">
+            Structured Discussion <span>(SD)</span>
           </div>
+          <div class="exam-box rp">
+            Role Player <span>(SPT)</span>
+          </div>
+          <div class="exam-box timer">
+            <div class="timer-content">
+              <div id="timer" class="timer-time">10:00</div>
+              <button class="timer-btn-ico" id="startBtn" title="Start">&#9654;</button>
+              <button class="timer-btn-ico" id="pauseBtn" title="Pause">&#10073;&#10073;</button>
+            </div>
+          </div>
+          <button class="exam-box feedback" id="feedbackBtn">Feedback</button>
         </div>
-        <!-- Feedback Button -->
-        <button class="feedback-btn" id="feedbackBtn">Feedback</button>
       </div>
     </div>
-    <!-- فاصل رأسي رفيع -->
-    <div class="divider self-center"></div>
-    <!-- Right Panel (Content) -->
-    <div class="flex-1 flex flex-col justify-start h-full py-10 px-8 overflow-hidden">
-      <!-- عنوان السيناريو Centralized -->
-      <div class="mb-4 flex items-center justify-center" style="height:54px;">
-        <h3 
-          class="text-3xl font-bold mb-2 text-center"
-          style="color:#d7e9fc; letter-spacing:0.5px;">
-          Abdominal Pain in Pregnancy
-        </h3>
-      </div>
-      <!-- سيناريو OSCE (Scrollable) -->
-      <div class="bg-white/90 rounded-xl shadow-lg p-6 custom-scroll overflow-y-auto" style="height: calc(100vh - 170px); max-height: 620px;">
+    <!-- Divider -->
+    <div class="divider"></div>
+    <!-- Content Page -->
+    <div class="content-panel">
+      <div class="scenario-title">Abdominal Pain in Pregnancy</div>
+      <div class="content-card">
         <p>
           <b>Scenario:</b><br>
           You are the registrar in an antenatal clinic.<br>
@@ -228,7 +251,6 @@
           - Address the patient’s concerns<br>
           - Outline your initial management plan
         </p>
-        <div style="height:140px;"></div>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OSCE MRCPI</title>
+  <title>Study MRCPI</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -23,18 +23,16 @@
       background: #2062b8;
       border-radius: 4px;
     }
-    .divider, .inner-divider {
+    .divider {
       width: 2px;
       background: linear-gradient(180deg, #c7d2fe 10%, #7b1fa2 90%);
-      border-radius: 1px;
-    }
-    .divider {
       min-height: 80%;
       margin: 0 10px;
+      border-radius: 1px;
     }
-    .inner-divider {
-      height: 24px;
-      margin: 0 10px;
+    .tutor-active {
+      background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+      animation: clouds 3s infinite alternate;
     }
     .back-button {
       width: 48px;
@@ -52,6 +50,10 @@
       background-color: rgba(219, 234, 254, 0.9);
       transform: scale(1.05);
     }
+    @keyframes clouds {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
     @media (max-width: 900px) {
       .main-flex { flex-direction: column !important; }
       .divider { display: none; }
@@ -65,29 +67,19 @@
   <div class="flex flex-row h-screen main-flex">
     <![-- Left Panel ](Navigation) -->
     <div class="left-panel flex flex-col w-1/3 max-w-xs min-w-[290px] px-4 pt-4 pb-4 center-vert justify-center">
-      <div class="flex flex-col items-center mb-4">
-        <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow mb-2" style="line-height:1.1">OSCE MRCPI</h2>
+      <div class="flex flex-col items-center mb-8">
+        <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow mb-2" style="line-height:1.1">Study MRCPI</h2>
       </div>
-      <div class="flex flex-col items-center gap-4">
-        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Structured Discussion (SD)</button>
-        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Role Player (SPT)</button>
-        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">LWP</button>
-        <!-- Timer with Start/Pause and Divider -->
-        <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
-          <div class="flex items-center">
-            <button id="startBtn" title="Start" class="focus:outline-none">
-              <svg width="20" height="20" fill="#2062b8"><polygon points="6,4 16,10 6,16"></polygon></svg>
-            </button>
-            <button id="pauseBtn" title="Pause" class="focus:outline-none ml-2">
-              <svg width="20" height="20" fill="#ff8300"><rect x="5" y="4" width="4" height="12"></rect><rect x="11" y="4" width="4" height="12"></rect></svg>
-            </button>
-            <div class="inner-divider"></div>
-            <span id="timer" class="text-lg font-semibold text-[#2062b8] min-w-[60px] text-center">10:00</span>
+      <div class="flex flex-col gap-4 items-center">
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#2062b8] font-semibold text-lg shadow transition">Obstetrics</button>
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Gynaecology</button>
+        <div id="liveTutorBox" class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-between px-4 shadow relative transition mt-2">
+          <span class="font-semibold text-[#1a485d] text-lg">Live Tutor</span>
+          <div class="flex items-center gap-2">
+            <button id="playBtn" title="Play" class="focus:outline-none"><svg width="24" height="24" fill="#2062b8"><polygon points="8,5 19,12 8,19"></polygon></svg></button>
+            <button id="pauseBtn" title="Pause" class="focus:outline-none"><svg width="24" height="24" fill="#ff8300"><rect x="7" y="5" width="4" height="14"></rect><rect x="13" y="5" width="4" height="14"></rect></svg></button>
+            <span id="timer" class="ml-1 text-sm font-bold text-[#2062b8]">00:00</span>
           </div>
-        </div>
-        <!-- Feedback Box -->
-        <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
-          <span class="text-lg font-semibold text-[#2062b8]">Feedback</span>
         </div>
         <![-- Back Button ](New) -->
         <button class="back-button">
@@ -95,11 +87,11 @@
         </button>
       </div>
     </div>
-    <!-- Divider -->
+    <!-- فاصل رأسي رفيع -->
     <div class="divider self-center"></div>
     <![-- Right Panel ](Content) -->
     <div class="flex-1 flex flex-col justify-start h-full py-10 px-8 overflow-hidden">
-      <!-- Lesson Title -->
+      <!-- عنوان الدرس Centralized بلون Baby Blue فوق الـcontent page فقط -->
       <div class="mb-4 flex items-center justify-center" style="height:54px;">
         <h3 
           class="text-3xl font-bold mb-2 text-center"
@@ -107,7 +99,7 @@
           Hyperemesis Gravidarum
         </h3>
       </div>
-      <!-- Lesson Summary -->
+      <![-- ملخص الدرس ](Scrollable) -->
       <div class="bg-white/90 rounded-xl shadow-lg p-6 custom-scroll overflow-y-auto" style="height: calc(100vh - 170px); max-height: 620px;">
         <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Definition</h4>
         <p class="mb-4">
@@ -141,36 +133,25 @@
     </div>
   </div>
   <script>
-    // Countdown timer logic
-    let timerInterval;
-    let time = 600; // 10 minutes in seconds
-    const timerDisplay = document.getElementById('timer');
-    const startBtn = document.getElementById('startBtn');
+    // Simple timer for Live Tutor (demo)
+    let timerInterval, time = 0;
+    const playBtn = document.getElementById('playBtn');
     const pauseBtn = document.getElementById('pauseBtn');
-
-    function updateTimerDisplay() {
-      const min = String(Math.floor(time / 60)).padStart(2, '0');
-      const sec = String(time % 60).padStart(2, '0');
-      timerDisplay.textContent = `${min}:${sec}`;
-    }
-
-    startBtn.onclick = function () {
+    const timerDisplay = document.getElementById('timer');
+    playBtn.onclick = function() {
       clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        if (time > 0) {
-          time--;
-          updateTimerDisplay();
-        } else {
-          clearInterval(timerInterval);
-        }
+      timerInterval = setInterval(()=>{
+        time++;
+        const min = String(Math.floor(time/60)).padStart(2,'0');
+        const sec = String(time % 60).padStart(2,'0');
+        timerDisplay.textContent = `${min}:${sec}`;
       }, 1000);
+      document.getElementById('liveTutorBox').classList.add('tutor-active');
     };
-
-    pauseBtn.onclick = function () {
+    pauseBtn.onclick = function() {
       clearInterval(timerInterval);
+      document.getElementById('liveTutorBox').classList.remove('tutor-active');
     };
-
-    updateTimerDisplay(); // Initial call
   </script>
 </body>
 </html>

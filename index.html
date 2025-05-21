@@ -8,9 +8,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
-      --ob-color: #2062b8;
-      --gy-color: #7b1fa2;
-      --timer-color: #1a485d;
+      --ob-color: #2062b8;    /* Structured Discussion + Feedback */
+      --gy-color: #7b1fa2;    /* Role Player */
+      --timer-color: #1a485d; /* Timer */
       --white: #fff;
       --box-shadow: 0 4px 14px 0 rgba(32,98,184,0.10);
     }
@@ -243,7 +243,7 @@
     </div>
     <!-- Divider -->
     <div class="divider"></div>
-    <!-- Content Page -->
+    <!-- Content Page (بدون أي تعديل) -->
     <div class="content-panel">
       <div class="content-card">
         <div class="scenario-title">Abdominal Pain in Pregnancy</div>
@@ -288,7 +288,7 @@
 
     function updateTimer() {
       let min = String(Math.floor(timer/60)).padStart(2, '0');
-      let sec = String(timer%60).padStart(2, '0');
+      let sec = String(timer%60)).padStart(2, '0');
       timerEl.textContent = `${min}:${sec}`;
     }
     updateTimer();

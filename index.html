@@ -56,6 +56,7 @@
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Structured Discussion (SD)</button>
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Role Player (SPT)</button>
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">LWP</button>
+
         <!-- Timer with Start/Pause and Divider -->
         <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
           <div class="flex items-center">
@@ -69,14 +70,26 @@
             <span id="timer" class="text-lg font-semibold text-[#2062b8] min-w-[60px] text-center">10:00</span>
           </div>
         </div>
+
         <!-- Feedback Box -->
         <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
           <span class="text-lg font-semibold text-[#2062b8]">Feedback</span>
         </div>
+
+        <!-- Back Button (midway to bottom) -->
+        <div class="flex justify-center w-full mt-20">
+          <button 
+            class="w-10 h-10 rounded-full bg-white/90 shadow flex items-center justify-center text-sm font-semibold text-[#2062b8] hover:bg-blue-100 transition"
+            title="Back">
+            ←
+          </button>
+        </div>
       </div>
     </div>
+
     <!-- Divider -->
     <div class="divider self-center"></div>
+
     <!-- Right Panel (Content) -->
     <div class="flex-1 flex flex-col justify-start h-full py-10 px-8 overflow-hidden">
       <!-- Lesson Title -->
@@ -120,6 +133,7 @@
       </div>
     </div>
   </div>
+
   <script>
     // Countdown timer logic
     let timerInterval;

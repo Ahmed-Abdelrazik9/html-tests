@@ -34,7 +34,7 @@
       background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
       animation: clouds 3s infinite alternate;
     }
-    .home-button {
+    .back-button {
       width: 48px;
       height: 48px;
       border-radius: 50%;
@@ -43,11 +43,15 @@
       justify-content: center;
       background-color: rgba(255, 255, 255, 0.9);
       margin-top: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: all 0.2s ease;
     }
-    .home-button:hover {
+    .back-button:hover {
+      background-color: rgba(219, 234, 254, 0.9);
       transform: scale(1.05);
+    }
+    .sidebar-spacing {
+      height: 16px;
     }
     @keyframes clouds {
       0% { background-position: 0% 50%; }
@@ -66,14 +70,15 @@
   <div class="flex flex-row h-screen main-flex">
     <![-- Left Panel ](Navigation) -->
     <div class="left-panel flex flex-col w-1/3 max-w-xs min-w-[290px] px-4 pt-4 pb-4 center-vert justify-center">
-      <div class="flex flex-col items-center mb-4">
+      <div class="flex flex-col items-center">
         <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow mb-2" style="line-height:1.1">Study MRCPI</h2>
       </div>
+      <div class="sidebar-spacing"></div>
       <div class="flex flex-col items-center">
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#2062b8] font-semibold text-lg shadow transition">Obstetrics</button>
-        <div class="h-4"></div>
+        <div class="sidebar-spacing"></div>
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Gynaecology</button>
-        <div class="h-4"></div>
+        <div class="sidebar-spacing"></div>
         <div id="liveTutorBox" class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-between px-4 shadow relative transition">
           <span class="font-semibold text-[#1a485d] text-lg">Live Tutor</span>
           <div class="flex items-center gap-2">
@@ -82,18 +87,18 @@
             <span id="timer" class="ml-1 text-sm font-bold text-[#2062b8]">00:00</span>
           </div>
         </div>
-        <div class="h-4"></div>
-        <![-- Home Button ](New) -->
-        <button class="home-button rounded-xl bg-white/90 shadow-lg">
-          <span class="text-[#2062b8] font-semibold">Home</span>
+        <div class="sidebar-spacing"></div>
+        <!-- Back Button -->
+        <button class="back-button">
+          <span class="text-[#2062b8] font-semibold">Back</span>
         </button>
       </div>
     </div>
-    <!-- فاصل رأسي رفيع -->
+    <!-- Divider -->
     <div class="divider self-center"></div>
     <![-- Right Panel ](Content) -->
     <div class="flex-1 flex flex-col justify-start h-full py-10 px-8 overflow-hidden">
-      <!-- عنوان الدرس Centralized بلون Baby Blue فوق الـcontent page فقط -->
+      <!-- Lesson Title -->
       <div class="mb-4 flex items-center justify-center" style="height:54px;">
         <h3 
           class="text-3xl font-bold mb-2 text-center"
@@ -101,7 +106,7 @@
           Hyperemesis Gravidarum
         </h3>
       </div>
-      <![-- ملخص الدرس ](Scrollable) -->
+      <![-- Lesson Summary ](Scrollable) -->
       <div class="bg-white/90 rounded-xl shadow-lg p-6 custom-scroll overflow-y-auto" style="height: calc(100vh - 170px); max-height: 620px;">
         <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Definition</h4>
         <p class="mb-4">

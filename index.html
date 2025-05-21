@@ -47,13 +47,24 @@
         <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow mb-2" style="line-height:1.1">OSCE MRCPI</h2>
       </div>
       <div class="flex flex-col items-center gap-4">
-        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#2062b8] font-semibold text-lg shadow transition">Structured Discussion (SD)</button>
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Structured Discussion (SD)</button>
         <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Role Player (SPT)</button>
-        <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">LWP</button>
+        <!-- Timer with Start and Pause Icons -->
+        <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-between px-4 shadow relative transition">
+          <div class="flex items-center gap-2">
+            <button id="startBtn" title="Start" class="focus:outline-none">
+              <svg width="20" height="20" fill="#2062b8"><polygon points="6,4 16,10 6,16"></polygon></svg>
+            </button>
+            <button id="pauseBtn" title="Pause" class="focus:outline-none">
+              <svg width="20" height="20" fill="#ff8300"><rect x="5" y="4" width="4" height="12"></rect><rect x="11" y="4" width="4" height="12"></rect></svg>
+            </button>
+          </div>
           <span id="timer" class="text-lg font-semibold text-[#2062b8]">00:00</span>
         </div>
+        <!-- Feedback Box -->
         <div class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
-          <span class="text-lg font-semibold text-[#7b1fa2]">Feedback</span>
+          <span class="text-lg font-semibold text-[#2062b8]">Feedback</span>
         </div>
       </div>
     </div>
@@ -103,15 +114,25 @@
     </div>
   </div>
   <script>
-    // Timer auto-start
+    // Timer Controls
     let timerInterval, time = 0;
     const timerDisplay = document.getElementById('timer');
-    timerInterval = setInterval(()=>{
-      time++;
-      const min = String(Math.floor(time/60)).padStart(2,'0');
-      const sec = String(time%60)).padStart(2,'0');
-      timerDisplay.textContent = `${min}:${sec}`;
-    }, 1000);
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+
+    startBtn.onclick = function () {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        time++;
+        const min = String(Math.floor(time / 60)).padStart(2, '0');
+        const sec = String(time % 60).padStart(2, '0');
+        timerDisplay.textContent = `${min}:${sec}`;
+      }, 1000);
+    };
+
+    pauseBtn.onclick = function () {
+      clearInterval(timerInterval);
+    };
   </script>
 </body>
 </html>

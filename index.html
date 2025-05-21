@@ -3,17 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OSCE MRCPI</title>
+  <title>Study MRCPI</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --ob-color: #2062b8;    /* Structured Discussion + Feedback */
-      --gy-color: #7b1fa2;    /* Role Player */
-      --timer-color: #1a485d; /* Timer */
-      --white: #fff;
-      --box-shadow: 0 4px 14px 0 rgba(32,98,184,0.10);
-    }
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
@@ -21,302 +14,123 @@
       margin: 0;
       overflow: hidden;
     }
-    .main-flex {
-      display: flex;
-      flex-direction: row;
-      height: 100vh;
+    .custom-scroll::-webkit-scrollbar {
+      width: 7px;
+      background: #e1e6ef;
+      border-radius: 4px;
     }
-    .left-panel {
-      min-width: 390px;
-      width: 430px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: none;
-      min-height: 100vh;
-    }
-    .title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.5px;
-      margin-bottom: 40px;
-      margin-top: 0;
-      text-align: center;
-      text-shadow: 0 4px 16px rgba(32,98,184,0.14);
-    }
-    .boxes-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 32px;
-      width: 100%;
-    }
-    .exam-box {
-      width: 290px;
-      height: 54px;
-      border-radius: 14px;
-      background: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.16em;
-      font-weight: 600;
-      letter-spacing: 0.08px;
-      box-shadow: var(--box-shadow);
-      border: none;
-      outline: none;
-      transition: box-shadow .17s;
-      gap: 9px;
-    }
-    .exam-box.sd, .exam-box.feedback {
-      color: var(--ob-color);
-    }
-    .exam-box.rp {
-      color: var(--gy-color);
-    }
-    .exam-box.timer {
-      color: var(--timer-color);
-      background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
-    }
-    .exam-box span {
-      font-weight: 500;
-      font-size: 1em;
-      opacity: 0.90;
-      letter-spacing: 0.5px;
-      margin-left: 7px;
-    }
-    .timer-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      width: 100%;
-    }
-    .timer-time {
-      font-size: 1.23rem;
-      color: var(--timer-color);
-      font-weight: 700;
-      letter-spacing: 1px;
-      min-width: 62px;
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-    }
-    .timer-btn-ico {
-      background: transparent;
-      border: none;
-      font-size: 1.3em;
-      color: var(--timer-color);
-      cursor: pointer;
-      padding: 2px 7px;
-      border-radius: 7px;
-      transition: background 0.15s;
-      font-family: 'Poppins', sans-serif;
-    }
-    .timer-btn-ico:hover {
-      background: #e7e8fa;
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #2062b8;
+      border-radius: 4px;
     }
     .divider {
       width: 2px;
       background: linear-gradient(180deg, #c7d2fe 10%, #7b1fa2 90%);
-      min-height: 70%;
-      margin: 0 18px;
+      min-height: 80%;
+      margin: 0 10px;
       border-radius: 1px;
-      align-self: center;
     }
-    .content-panel {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 0 48px 0 0;
+    .tutor-active {
+      background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+      animation: clouds 3s infinite alternate;
     }
-    .content-card {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 6px 24px 0 rgba(32,98,184,0.13);
-      padding: 32px 32px 32px 32px;
-      width: 100%;
-      max-width: 620px;
-      margin: 0 auto;
-      min-height: 310px;
-      font-size: 1.09em;
-      color: #222;
-      font-family: 'Poppins', sans-serif;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .scenario-title {
-      color: #2062b8;
-      letter-spacing: 0.5px;
-      font-size: 1.45rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      text-align: left;
-      width: 100%;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(32,34,54,0.4);
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-content {
-      background: #fff;
-      border-radius: 18px;
-      max-width: 410px;
-      padding: 36px 30px 30px 30px;
-      box-shadow: 0 8px 36px 0 rgba(32,98,184,0.16);
-      text-align: left;
-      position: relative;
-      font-family: 'Poppins', sans-serif;
-    }
-    .close-modal {
-      position: absolute;
-      top: 20px; right: 34px;
-      color: #2062b8;
-      font-size: 2em;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .result-status {
-      text-align: center;
-      font-size: 2em;
-      font-weight: bold;
-      margin-bottom: 16px;
-      color: #b82031;
-      font-family: 'Poppins', sans-serif;
-    }
-    .result-status.pass {
-      color: #20b86a;
+    @keyframes clouds {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
     @media (max-width: 900px) {
-      .main-flex { flex-direction: column; }
+      .main-flex { flex-direction: column !important; }
       .divider { display: none; }
-      .left-panel { width: 100vw; min-width: 0; }
-      .content-panel { padding: 0 12px; }
-      .content-card { padding: 20px 6vw; }
-    }
-    @media (max-width: 600px) {
-      .title { font-size: 1.6rem;}
-      .scenario-title { font-size: 1.12rem;}
-      .exam-box { width: 97vw; font-size: 1em; }
-      .content-card { max-width: 98vw; padding: 12px 2vw;}
+      .left-panel { max-width: 100%; margin-bottom: 18px;}
+      .summary-scroll { max-height: 320px; }
+      .center-vert { justify-content: flex-start !important; }
     }
   </style>
 </head>
 <body>
-  <div class="main-flex">
-    <!-- Left Panel -->
-    <div class="left-panel">
-      <div>
-        <div class="title">OSCE MRCPI</div>
-        <div class="boxes-col">
-          <div class="exam-box sd">
-            Structured Discussion <span>(SD)</span>
+  <div class="flex flex-row h-screen main-flex">
+    <!-- Left Panel (Navigation) -->
+    <div class="left-panel flex flex-col w-1/3 max-w-xs min-w-[290px] px-4 pt-4 pb-4 center-vert justify-center">
+      <div class="flex flex-col items-center mb-8">
+        <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow mb-2" style="line-height:1.1">Study MRCPI</h2>
+      </div>
+      <div class="flex flex-col gap-4 items-center">
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#2062b8] font-semibold text-lg shadow transition">Obstetrics</button>
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Gynaecology</button>
+        <div id="liveTutorBox" class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-between px-4 shadow relative transition mt-2">
+          <span class="font-semibold text-[#1a485d] text-lg">Live Tutor</span>
+          <div class="flex items-center gap-2">
+            <button id="playBtn" title="Play" class="focus:outline-none"><svg width="24" height="24" fill="#2062b8"><polygon points="8,5 19,12 8,19"></polygon></svg></button>
+            <button id="pauseBtn" title="Pause" class="focus:outline-none"><svg width="24" height="24" fill="#ff8300"><rect x="7" y="5" width="4" height="14"></rect><rect x="13" y="5" width="4" height="14"></rect></svg></button>
+            <span id="timer" class="ml-1 text-sm font-bold text-[#2062b8]">00:00</span>
           </div>
-          <div class="exam-box rp">
-            Role Player <span>(SPT)</span>
-          </div>
-          <div class="exam-box timer">
-            <div class="timer-content">
-              <div id="timer" class="timer-time">10:00</div>
-              <button class="timer-btn-ico" id="startBtn" title="Start">&#9654;</button>
-              <button class="timer-btn-ico" id="pauseBtn" title="Pause">&#10073;&#10073;</button>
-            </div>
-          </div>
-          <button class="exam-box feedback" id="feedbackBtn">Feedback</button>
         </div>
       </div>
     </div>
-    <!-- Divider -->
-    <div class="divider"></div>
-    <!-- Content Page (بدون أي تعديل) -->
-    <div class="content-panel">
-      <div class="content-card">
-        <div class="scenario-title">Abdominal Pain in Pregnancy</div>
-        <p>
-          <b>Scenario:</b><br>
-          You are the registrar in an antenatal clinic.<br>
-          A 32-year-old woman, 20 weeks pregnant, presents with acute abdominal pain.<br>
-          <br>
-          <b>Task:</b><br>
-          - Take a focused history<br>
-          - Address the patient’s concerns<br>
-          - Outline your initial management plan
-        </p>
+    <!-- فاصل رأسي رفيع -->
+    <div class="divider self-center"></div>
+    <!-- Right Panel (Content) -->
+    <div class="flex-1 flex flex-col justify-start h-full py-10 px-8 overflow-hidden">
+      <!-- عنوان الدرس Centralized بلون Baby Blue فوق الـcontent page فقط -->
+      <div class="mb-4 flex items-center justify-center" style="height:54px;">
+        <h3 
+          class="text-3xl font-bold mb-2 text-center"
+          style="color:#d7e9fc; letter-spacing:0.5px;">
+          Hyperemesis Gravidarum
+        </h3>
       </div>
-    </div>
-  </div>
-  <!-- Feedback Modal -->
-  <div class="modal" id="modalFeedback">
-    <div class="modal-content relative">
-      <button class="close-modal" id="closeModal">&times;</button>
-      <div id="breakdownResult">
-        <div class="result-status">Fail</div>
-        <ul style="margin-left: 18px;">
-          <li>Information Gathering: 3/8</li>
-          <li>Communication: 2/5</li>
-          <li>Management Plan: 1/4</li>
+      <!-- ملخص الدرس (Scrollable) -->
+      <div class="bg-white/90 rounded-xl shadow-lg p-6 custom-scroll overflow-y-auto" style="height: calc(100vh - 170px); max-height: 620px;">
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Definition</h4>
+        <p class="mb-4">
+          Hyperemesis gravidarum is a severe form of nausea and vomiting in pregnancy associated with weight loss, dehydration, and electrolyte imbalance. 
+        </p>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Epidemiology</h4>
+        <p class="mb-4">
+          Occurs in up to 1% of pregnancies. Risk factors include multiple pregnancy, molar pregnancy, and previous history.
+        </p>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Diagnosis</h4>
+        <ul class="list-disc ml-6 mb-4">
+          <li>Persistent vomiting</li>
+          <li>Weight loss &gt;5% pre-pregnancy weight</li>
+          <li>Ketonuria, electrolyte imbalance, dehydration</li>
         </ul>
-        <p class="mt-4 font-semibold" style="color:#b82031;">Reason for Fail: Missed key information and red flags.</p>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Management</h4>
+        <ul class="list-disc ml-6 mb-4">
+          <li>Rehydration (oral/IV fluids)</li>
+          <li>Antiemetics: cyclizine, prochlorperazine, ondansetron (as per RCOG/BNF)</li>
+          <li>Vitamin supplementation (thiamine)</li>
+          <li>Thromboprophylaxis if admitted</li>
+        </ul>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">References</h4>
+        <ul class="list-disc ml-6">
+          <li>
+            <a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/the-management-of-nausea-and-vomiting-of-pregnancy-and-hyperemesis-gravidarum-green-top-guideline-no-69/" target="_blank" class="text-[#2062b8] underline">RCOG Green-top Guideline No. 69</a>
+          </li>
+        </ul>
+        <div style="height:160px;"></div>
       </div>
     </div>
   </div>
   <script>
-    // Timer Logic: stopwatch countdown from 10:00 to 0:00
-    let timer = 600; // 10 minutes in seconds
-    let interval = null;
-    const timerEl = document.getElementById('timer');
-    const startBtn = document.getElementById('startBtn');
+    // Simple timer for Live Tutor (demo)
+    let timerInterval, time = 0;
+    const playBtn = document.getElementById('playBtn');
     const pauseBtn = document.getElementById('pauseBtn');
-    const feedbackBtn = document.getElementById('feedbackBtn');
-    const modal = document.getElementById('modalFeedback');
-    const closeModal = document.getElementById('closeModal');
-
-    function updateTimer() {
-      let min = String(Math.floor(timer/60)).padStart(2, '0');
-      let sec = String(timer%60)).padStart(2, '0');
-      timerEl.textContent = `${min}:${sec}`;
-    }
-    updateTimer();
-
-    startBtn.onclick = function() {
-      if (interval) return;
-      interval = setInterval(()=>{
-        if (timer > 0) {
-          timer--;
-          updateTimer();
-        }
+    const timerDisplay = document.getElementById('timer');
+    playBtn.onclick = function() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(()=>{
+        time++;
+        const min = String(Math.floor(time/60)).padStart(2,'0');
+        const sec = String(time%60).padStart(2,'0');
+        timerDisplay.textContent = `${min}:${sec}`;
       }, 1000);
+      document.getElementById('liveTutorBox').classList.add('tutor-active');
     };
     pauseBtn.onclick = function() {
-      clearInterval(interval);
-      interval = null;
-    };
-    feedbackBtn.onclick = function() {
-      modal.style.display = "flex";
-    };
-    closeModal.onclick = function() {
-      modal.style.display = "none";
-    };
-    window.onload = ()=>{
-      modal.style.display = "none";
-      timer = 600; updateTimer();
-      clearInterval(interval);
-      interval = null;
+      clearInterval(timerInterval);
+      document.getElementById('liveTutorBox').classList.remove('tutor-active');
     };
   </script>
 </body>

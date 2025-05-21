@@ -34,7 +34,7 @@
       background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
       animation: clouds 3s infinite alternate;
     }
-    .back-button {
+    .home-button {
       width: 48px;
       height: 48px;
       border-radius: 50%;
@@ -43,11 +43,10 @@
       justify-content: center;
       background-color: rgba(255, 255, 255, 0.9);
       margin-top: 12px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       transition: all 0.2s ease;
     }
-    .back-button:hover {
-      background-color: rgba(219, 234, 254, 0.9);
+    .home-button:hover {
       transform: scale(1.05);
     }
     @keyframes clouds {
@@ -81,9 +80,9 @@
             <span id="timer" class="ml-1 text-sm font-bold text-[#2062b8]">00:00</span>
           </div>
         </div>
-        <![-- Back Button ](New) -->
-        <button class="back-button">
-          <span class="text-[#2062b8] font-semibold">Back</span>
+        <![-- Home Button ](New) -->
+        <button class="home-button rounded-xl bg-white/90 shadow-lg">
+          <span class="text-[#2062b8] font-semibold">Home</span>
         </button>
       </div>
     </div>

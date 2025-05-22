@@ -8,52 +8,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#f0f9ff',
-              100: '#e0f2fe',
-              200: '#bae6fd',
-              300: '#7dd3fc',
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
-              800: '#075985',
-              900: '#0c4a6e',
-            },
-            secondary: {
-              50: '#f5f3ff',
-              100: '#ede9fe',
-              200: '#ddd6fe',
-              300: '#c4b5fd',
-              400: '#a78bfa',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
-              800: '#5b21b6',
-              900: '#4c1d95',
-            }
-          }
-        }
-      }
-    }
-  </script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f8fafc;
+      background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
+      position: relative;
+      min-height: 100vh;
+      color: white;
     }
+    
+    .line-art {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.10;
+      background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 Q120,120 340,60 Q600,0 800,180 Q900,270 1200,180" stroke="white" stroke-width="2" fill="none"/><circle cx="650" cy="200" r="80" stroke="white" stroke-width="1" fill="none"/></svg>') no-repeat center/cover;
+    }
+    
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+    
     .custom-checkbox {
       appearance: none;
       -webkit-appearance: none;
       height: 1.2rem;
       width: 1.2rem;
-      background-color: #fff;
-      border: 1px solid #cbd5e1;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 0.25rem;
       cursor: pointer;
       display: inline-flex;
@@ -61,41 +45,34 @@
       justify-content: center;
       margin-right: 0.5rem;
     }
+    
     .custom-checkbox:checked {
-      background-color: #7c3aed;
-      border-color: #7c3aed;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-color: rgba(255, 255, 255, 0.8);
       position: relative;
     }
+    
     .custom-checkbox:checked::after {
       content: "✓";
-      color: white;
+      color: #142354;
       font-size: 0.8rem;
       position: absolute;
     }
-    .module-card {
-      transition: all 0.2s ease;
-    }
-    .module-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
+    
     .topic-grid label {
       transition: all 0.2s ease;
       padding: 0.25rem 0.5rem;
       border-radius: 0.25rem;
     }
+    
     .topic-grid label:hover {
-      background-color: rgba(124, 58, 237, 0.1);
+      background-color: rgba(255, 255, 255, 0.1);
     }
-    .btn-action {
-      transition: all 0.2s ease;
-    }
-    .btn-action:hover {
-      transform: scale(1.1);
-    }
+    
     .search-container {
       position: relative;
     }
+    
     .search-container::after {
       content: "🔍";
       position: absolute;
@@ -104,30 +81,46 @@
       transform: translateY(-50%);
       pointer-events: none;
     }
+    
+    .module-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+    }
+    
+    .btn-action {
+      transition: all 0.2s ease;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 0.25rem;
+    }
+    
+    .btn-action:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen p-4">
-  <div class="max-w-6xl mx-auto space-y-8">
-
+<body>
+  <div class="line-art"></div>
+  
+  <div class="content max-w-6xl mx-auto space-y-8 p-4">
     <!-- Search Bar -->
     <div class="search-container flex gap-3 mt-6 justify-center">
-      <input id="searchInput" type="text" placeholder="Search a topic..." class="flex-1 p-3 pl-10 rounded-lg shadow-sm border border-slate-200 focus:border-secondary-400 focus:ring focus:ring-secondary-200 focus:ring-opacity-50 outline-none transition text-slate-700 max-w-xl" />
-      <button onclick="performSearch()" class="bg-secondary-600 hover:bg-secondary-700 text-white px-5 py-3 rounded-lg shadow-sm transition font-medium">Search</button>
+      <input id="searchInput" type="text" placeholder="Search a topic..." class="flex-1 p-3 pl-10 rounded-lg bg-white bg-opacity-10 border border-white border-opacity-20 focus:border-white focus:border-opacity-40 focus:outline-none focus:ring focus:ring-white focus:ring-opacity-20 text-white placeholder-white placeholder-opacity-60 max-w-xl" />
+      <button onclick="performSearch()" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white px-5 py-3 rounded-lg border border-white border-opacity-20 transition font-medium">Search</button>
     </div>
 
     <!-- Topics Section -->
-    <div class="mt-10 space-y-6">
-
+    <div class="mt-10 space-y-10">
       <!-- Maternal Medicine -->
-      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
-        <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Maternal Medicine</h2>
+      <div class="space-y-2">
+        <div class="flex justify-between items-center module-header">
+          <h2 class="text-xl font-semibold">Maternal Medicine</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
-            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 text-white">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 text-white">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 topic-grid">
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Graves disease</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Chronic renal disease & transplant</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Gestational thrombocytopenia</label>
@@ -143,15 +136,15 @@
       </div>
 
       <!-- Maternal Infections -->
-      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
-        <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Maternal Infections</h2>
+      <div class="space-y-2">
+        <div class="flex justify-between items-center module-header">
+          <h2 class="text-xl font-semibold">Maternal Infections</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
-            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 text-white">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 text-white">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 topic-grid">
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Parvovirus B19</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Genital Herpes</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Hepatitis B</label>
@@ -162,15 +155,15 @@
       </div>
 
       <!-- Antenatal Care -->
-      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
-        <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Antenatal Care</h2>
+      <div class="space-y-2">
+        <div class="flex justify-between items-center module-header">
+          <h2 class="text-xl font-semibold">Antenatal Care</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
-            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 text-white">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 text-white">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 topic-grid">
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> OC</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> PTL</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> PPROM</label>
@@ -180,15 +173,15 @@
       </div>
 
       <!-- Fetal Medicine -->
-      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
-        <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Fetal Medicine</h2>
+      <div class="space-y-2">
+        <div class="flex justify-between items-center module-header">
+          <h2 class="text-xl font-semibold">Fetal Medicine</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
-            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 text-white">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 text-white">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 topic-grid">
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Oligohydramnios</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> LGA</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Polyhydramnios</label>
@@ -200,15 +193,15 @@
       </div>
 
       <!-- Obstetric Emergencies -->
-      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
-        <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Obstetric Emergencies</h2>
+      <div class="space-y-2">
+        <div class="flex justify-between items-center module-header">
+          <h2 class="text-xl font-semibold">Obstetric Emergencies</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
-            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 text-white">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 text-white">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 topic-grid">
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Shoulder dystocia</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Maternal collapse</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> PPH</label>
@@ -216,15 +209,15 @@
       </div>
 
       <!-- Labour & Delivery -->
-      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
-        <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Labour & Delivery</h2>
+      <div class="space-y-2">
+        <div class="flex justify-between items-center module-header">
+          <h2 class="text-xl font-semibold">Labour & Delivery</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
-            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 text-white">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 text-white">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 topic-grid">
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Home birth</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Breech</label>
           <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Delayed 2nd stage + OVD</label>
@@ -238,7 +231,7 @@
 
     <!-- Back Button -->
     <div class="flex justify-center mt-10 mb-6">
-      <a href="study.html" class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-full font-semibold shadow-sm hover:shadow transition flex items-center gap-2">
+      <a href="study.html" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white px-6 py-3 rounded-full font-semibold border border-white border-opacity-20 transition flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
         </svg>
@@ -254,7 +247,7 @@
     }
 
     function addTopic(btn) {
-      const container = btn.closest(".module-card").querySelector(".topic-grid");
+      const container = btn.closest("div").parentElement.nextElementSibling;
       const newTopic = prompt("Enter new topic:");
       if (newTopic) {
         const label = document.createElement("label");
@@ -266,7 +259,7 @@
     }
 
     function removeTopic(btn) {
-      const container = btn.closest(".module-card").querySelector(".topic-grid");
+      const container = btn.closest("div").parentElement.nextElementSibling;
       if (container.lastElementChild) {
         container.removeChild(container.lastElementChild);
       }
@@ -293,4 +286,3 @@
   </script>
 </body>
 </html>
-

@@ -3,52 +3,163 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Study – Obstetrics</title>
+  <title>Obstetrics Topics</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-indigo-900 via-blue-600 to-purple-700 min-h-screen text-white p-4">
-  <div class="max-w-4xl mx-auto space-y-6">
-    <h1 class="text-3xl font-bold text-center mb-4">Study MRCPI – Obstetrics</h1>
+<body class="bg-gradient-to-br from-indigo-900 via-blue-600 to-purple-700 text-white min-h-screen p-4">
+  <div class="max-w-6xl mx-auto space-y-6">
 
     <!-- Search Bar -->
-    <div class="flex gap-2">
-      <input id="searchInput" type="text" placeholder="Search a topic..." class="flex-1 p-2 rounded text-black" />
+    <div class="flex gap-2 mt-6 justify-center">
+      <input id="searchInput" type="text" placeholder="Search a topic..." class="flex-1 p-2 rounded text-black max-w-xl" />
       <button onclick="performSearch()" class="bg-white text-indigo-800 px-4 py-2 rounded">Search</button>
     </div>
 
-    <!-- Results Section -->
-    <div id="results" class="hidden mt-6 space-y-6">
-      <!-- From Books -->
-      <div>
-        <h2 class="text-xl font-semibold">From OSCE Books</h2>
-        <ul class="list-disc list-inside space-y-1">
-          <li><a href="#" class="underline text-blue-200">Konje – Station 21 – Eclampsia Management</a></li>
-          <li><a href="#" class="underline text-blue-200">Clark – Station 9 – Shoulder Dystocia</a></li>
-        </ul>
-      </div>
+    <!-- Topics Section -->
+    <div class="mt-10 space-y-10">
 
-      <!-- From Official Sources -->
-      <div>
-        <h2 class="text-xl font-semibold">From Trusted Guidelines</h2>
-        <div class="space-y-1">
-          <label><input type="checkbox" class="mr-2" value="NICE" /> NICE (e.g., Hypertension in Pregnancy)</label><br/>
-          <label><input type="checkbox" class="mr-2" value="RCOG" /> RCOG (e.g., Green-top Guidelines)</label><br/>
-          <label><input type="checkbox" class="mr-2" value="TOG" /> TOG Journal</label><br/>
-          <label><input type="checkbox" class="mr-2" value="FSRH" /> FSRH Guidance</label><br/>
-          <label><input type="checkbox" class="mr-2" value="NHS" /> NHS.uk</label>
+      <!-- Maternal Medicine -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-semibold">🩺 Maternal Medicine</h2>
+          <div class="space-x-2">
+            <button onclick="addTopic(this)" class="text-sm px-2 py-1 bg-green-600 rounded">➕ Add Topic</button>
+            <button onclick="removeTopic(this)" class="text-sm px-2 py-1 bg-red-600 rounded">➖ Remove Topic</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+          <label><input type="checkbox" class="mr-2"> Graves disease</label>
+          <label><input type="checkbox" class="mr-2"> Chronic renal disease & transplant</label>
+          <label><input type="checkbox" class="mr-2"> Gestational thrombocytopenia</label>
+          <label><input type="checkbox" class="mr-2"> DM</label>
+          <label><input type="checkbox" class="mr-2"> VTE</label>
+          <label><input type="checkbox" class="mr-2"> Epilepsy</label>
+          <label><input type="checkbox" class="mr-2"> Rheumatic diseases</label>
+          <label><input type="checkbox" class="mr-2"> MS/AS</label>
+          <label><input type="checkbox" class="mr-2"> Coarctation of Aorta</label>
+          <label><input type="checkbox" class="mr-2"> Obesity / advanced maternal age</label>
+          <label><input type="checkbox" class="mr-2"> SCD</label>
         </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex gap-4 mt-4">
-        <button onclick="generateSummary()" class="bg-green-500 px-4 py-2 rounded text-white">Done</button>
-        <button onclick="window.print()" class="bg-yellow-500 px-4 py-2 rounded text-white">Print</button>
+      <!-- Maternal Infections -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-semibold">🦠 Maternal Infections</h2>
+          <div class="space-x-2">
+            <button onclick="addTopic(this)" class="text-sm px-2 py-1 bg-green-600 rounded">➕ Add Topic</button>
+            <button onclick="removeTopic(this)" class="text-sm px-2 py-1 bg-red-600 rounded">➖ Remove Topic</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+          <label><input type="checkbox" class="mr-2"> Parvovirus B19</label>
+          <label><input type="checkbox" class="mr-2"> Genital Herpes</label>
+          <label><input type="checkbox" class="mr-2"> Hepatitis B</label>
+          <label><input type="checkbox" class="mr-2"> Chickenpox</label>
+          <label><input type="checkbox" class="mr-2"> Malaria</label>
+          <label><input type="checkbox" class="mr-2"> HIV</label>
+        </div>
       </div>
 
-      <!-- Summary Output -->
-      <div id="summaryOutput" class="bg-white text-black p-4 rounded mt-4 hidden">
-        <h3 class="font-bold mb-2">Summary</h3>
-        <p>This is where your smart summary will appear based on the selected sources and search topic. It will not include references in the printout.</p>
+      <!-- Antenatal Care -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-semibold">👶 Antenatal Care</h2>
+          <div class="space-x-2">
+            <button onclick="addTopic(this)" class="text-sm px-2 py-1 bg-green-600 rounded">➕ Add Topic</button>
+            <button onclick="removeTopic(this)" class="text-sm px-2 py-1 bg-red-600 rounded">➖ Remove Topic</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+          <label><input type="checkbox" class="mr-2"> OC</label>
+          <label><input type="checkbox" class="mr-2"> PTL</label>
+          <label><input type="checkbox" class="mr-2"> PPROM</label>
+          <label><input type="checkbox" class="mr-2"> APH</label>
+          <label><input type="checkbox" class="mr-2"> PET/ET</label>
+        </div>
+      </div>
+
+      <!-- Fetal Medicine -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-semibold">🧬 Fetal Medicine</h2>
+          <div class="space-x-2">
+            <button onclick="addTopic(this)" class="text-sm px-2 py-1 bg-green-600 rounded">➕ Add Topic</button>
+            <button onclick="removeTopic(this)" class="text-sm px-2 py-1 bg-red-600 rounded">➖ Remove Topic</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+          <label><input type="checkbox" class="mr-2"> Oligohydramnios</label>
+          <label><input type="checkbox" class="mr-2"> LGA</label>
+          <label><input type="checkbox" class="mr-2"> Polyhydramnios</label>
+          <label><input type="checkbox" class="mr-2"> IUFD</label>
+          <label><input type="checkbox" class="mr-2"> Red cells Abs</label>
+          <label><input type="checkbox" class="mr-2"> FGR</label>
+          <label><input type="checkbox" class="mr-2"> Twins</label>
+        </div>
+      </div>
+
+      <!-- Obstetric Emergencies -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-semibold">🚨 Obstetric Emergencies</h2>
+          <div class="space-x-2">
+            <button onclick="addTopic(this)" class="text-sm px-2 py-1 bg-green-600 rounded">➕ Add Topic</button>
+            <button onclick="removeTopic(this)" class="text-sm px-2 py-1 bg-red-600 rounded">➖ Remove Topic</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+          <label><input type="checkbox" class="mr-2"> Shoulder dystocia</label>
+          <label><input type="checkbox" class="mr-2"> Maternal collapse</label>
+          <label><input type="checkbox" class="mr-2"> PPH</label>
+        </div>
+      </div>
+
+      <!-- Labour & Delivery -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-semibold">🧷 Labour & Delivery</h2>
+          <div class="space-x-2">
+            <button onclick="addTopic(this)" class="text-sm px-2 py-1 bg-green-600 rounded">➕ Add Topic</button>
+            <button onclick="removeTopic(this)" class="text-sm px-2 py-1 bg-red-600 rounded">➖ Remove Topic</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+          <label><input type="checkbox" class="mr-2"> Home birth</label>
+          <label><input type="checkbox" class="mr-2"> Breech</label>
+          <label><input type="checkbox" class="mr-2"> Delayed 2nd stage + OVD</label>
+          <label><input type="checkbox" class="mr-2"> Broken perineum</label>
+          <label><input type="checkbox" class="mr-2"> CS</label>
+          <label><input type="checkbox" class="mr-2"> Perineal tears</label>
+          <label><input type="checkbox" class="mr-2"> LWP</label>
+        </div>
+      </div>
+
+      <!-- Guidelines -->
+      <div>
+        <h2 class="text-xl font-semibold mt-6">📚 Trusted Guidelines</h2>
+        <div class="space-y-1">
+          <label><input type="checkbox" class="mr-2" /> <a href="https://www.nice.org.uk/guidance/conditions-and-diseases/fertility--pregnancy-and-childbirth" target="_blank" class="underline">NICE – Pregnancy & Childbirth</a></label><br/>
+          <label><input type="checkbox" class="mr-2" /> <a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/" target="_blank" class="underline">RCOG – Green-top Guidelines</a></label><br/>
+          <label><input type="checkbox" class="mr-2" /> <a href="https://obgyn.onlinelibrary.wiley.com/loi/17444667" target="_blank" class="underline">TOG – The Obstetrician & Gynaecologist</a></label><br/>
+          <label><input type="checkbox" class="mr-2" /> <a href="https://www.fsrh.org/standards-and-guidance/" target="_blank" class="underline">FSRH – Clinical Guidelines</a></label><br/>
+          <label><input type="checkbox" class="mr-2" /> <a href="https://www.nhs.uk/pregnancy/" target="_blank" class="underline">NHS.uk – Pregnancy</a></label>
+        </div>
+      </div>
+
+      <!-- OSCE Books -->
+      <div>
+        <h2 class="text-xl font-semibold mt-6">📘 OSCE Books</h2>
+        <div class="space-y-2">
+          <label>
+            <input type="checkbox" class="mr-2" />
+            <a href="https://www.amazon.co.uk/Complete-Revision-Guide-MRCOG-Part/dp/1138667936" target="_blank" class="underline text-blue-200">Konje – Complete Revision Guide</a>
+          </label><br/>
+          <label>
+            <input type="checkbox" class="mr-2" />
+            <a href="https://www.amazon.co.uk/Get-Through-MRCOG-Part-3/dp/1138651535" target="_blank" class="underline text-blue-200">Clark – Get Through MRCOG Part 3</a>
+          </label>
+        </div>
       </div>
     </div>
 
@@ -60,19 +171,43 @@
 
   <script>
     function performSearch() {
-      document.getElementById("results").classList.remove("hidden");
-      // You can dynamically change the results here using API if needed
+      alert("Search triggered! (integration pending)");
     }
 
-    function generateSummary() {
-      const output = document.getElementById("summaryOutput");
-      output.classList.remove("hidden");
-      output.innerHTML = `
-        <h3 class="font-bold mb-2">Summary</h3>
-        <p>This is a smart summary generated for the searched topic (e.g., Pre-eclampsia) based on selected sources. All references are excluded in the final output as requested.</p>
-      `;
+    function addTopic(btn) {
+      const container = btn.closest("div").nextElementSibling;
+      const newTopic = prompt("Enter new topic:");
+      if (newTopic) {
+        const label = document.createElement("label");
+        label.innerHTML = `<input type="checkbox" class="mr-2"> ${newTopic}`;
+        container.appendChild(label);
+        setupCheckbox(label.querySelector("input"));
+      }
     }
+
+    function removeTopic(btn) {
+      const container = btn.closest("div").nextElementSibling;
+      if (container.lastElementChild) {
+        container.removeChild(container.lastElementChild);
+      }
+    }
+
+    function setupCheckbox(checkbox) {
+      const labelText = checkbox.parentElement.textContent.trim();
+      const checkboxID = `cb_${labelText.replace(/\s+/g, '_').toLowerCase()}`;
+      checkbox.dataset.id = checkboxID;
+
+      if (localStorage.getItem(checkboxID) === 'true') {
+        checkbox.checked = true;
+      }
+
+      checkbox.addEventListener('change', () => {
+        localStorage.setItem(checkboxID, checkbox.checked);
+      });
+    }
+
+    // Apply to all checkboxes on load
+    document.querySelectorAll('input[type="checkbox"]').forEach(setupCheckbox);
   </script>
 </body>
 </html>
-

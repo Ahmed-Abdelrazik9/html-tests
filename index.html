@@ -3,55 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CarePro OSCE</title>
+  <title>Clinical Exam MRCPI</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
       background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
-      position: relative;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
     }
-    .line-art {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.10;
-      background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 Q120,120 340,60 Q600,0 800,180 Q900,270 1200,180" stroke="white" stroke-width="2" fill="none"/><circle cx="650" cy="200" r="80" stroke="white" stroke-width="1" fill="none"/></svg>') no-repeat center/cover;
+    .custom-scroll::-webkit-scrollbar {
+      width: 7px;
+      background: #e1e6ef;
+      border-radius: 4px;
     }
-    .mode-card {
-      transition: transform 0.2s, box-shadow 0.2s;
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #2062b8;
+      border-radius: 4px;
     }
-    .mode-card:hover {
-      transform: translateY(-8px) scale(1.05);
-      box-shadow: 0 12px 36px 0 rgba(16, 98, 200, 0.23);
-      background: rgba(255,255,255,0.97) !important;
+    .divider {
+      width: 2px;
+      background: linear-gradient(180deg, #c7d2fe 10%, #7b1fa2 90%);
+      min-height: 80%;
+      margin: 0 10px;
+      border-radius: 1px;
+    }
+    .tutor-active {
+      background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+      animation: clouds 3s infinite alternate;
+    }
+    .back-button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      margin-top: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+    .back-button:hover {
+      background-color: rgba(219, 234, 254, 0.9);
+      transform: scale(1.05);
+    }
+    .sidebar-spacing {
+      height: 16px;
+    }
+    @keyframes clouds {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    @media (max-width: 900px) {
+      .main-flex { flex-direction: column !important; }
+      .divider { display: none; }
+      .left-panel { max-width: 100%; margin-bottom: 18px;}
+      .summary-scroll { max-height: 320px; }
+      .center-vert { justify-content: flex-start !important; }
     }
   </style>
 </head>
 <body>
-  <!-- RCOG line art style overlay -->
-  <div class="line-art"></div>
-
-  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen">
-    <!-- App Name -->
-    <h1 class="text-4xl md:text-5xl font-bold mb-2 text-white drop-shadow">CarePro OSCE</h1>
-    <span class="text-lg mb-10 font-bold text-[#dbeafe] drop-shadow">MRCPI</span>
-    <!-- Mode Cards -->
-    <div class="flex flex-row flex-wrap gap-10 justify-center w-full max-w-2xl mt-2">
-      <!-- Study Mode -->
-      <a href="/study.html" class="mode-card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-white/85 backdrop-blur-md shadow-2xl hover:bg-white/95 cursor-pointer flex flex-col items-center">
-        <span class="text-2xl font-semibold text-[#2062b8] mb-2 text-center">Study Mode</span>
-        <span class="text-md font-medium text-[#283759] text-center">Smart Notes, Resources, and Live Tutor Discussion</span>
-      </a>
-      <!-- Exam Mode -->
-      <a href="/exam.html" class="mode-card flex-1 min-w-[240px] max-w-[340px] p-8 rounded-2xl bg-white/85 backdrop-blur-md shadow-2xl hover:bg-white/95 cursor-pointer flex flex-col items-center">
-        <span class="text-2xl font-semibold text-[#7b1fa2] mb-2 text-center">Exam Mode</span>
-        <span class="text-md font-medium text-[#561073] text-center">Practice Clinical &amp; OSCE Stations</span>
-      </a>
+  <div class="flex flex-row h-screen main-flex">
+    <![-- Left Panel ](Navigation) -->
+    <div class="left-panel flex flex-col w-1/3 max-w-xs min-w-[290px] px-4 pt-4 pb-4 center-vert justify-center">
+      <div class="flex flex-col items-center">
+        <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow" style="line-height:1.1">Clinical Exam</h2>
+        <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow" style="line-height:1.1">MRCPI</h2>
+      </div>
+      <div class="sidebar-spacing"></div>
+      <div class="flex flex-col items-center">
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Obstetrics</button>
+        <div class="sidebar-spacing"></div>
+        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">Gynaecology</button>
+        <div class="sidebar-spacing"></div>
+        <div id="liveTutorBox" class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-between px-4 shadow relative transition">
+          <span class="font-semibold text-[#1a485d] text-lg">Live Tutor</span>
+          <div class="flex items-center gap-2">
+            <button id="playBtn" title="Play" class="focus:outline-none"><svg width="24" height="24" fill="#2062b8"><polygon points="8,5 19,12 8,19"></polygon></svg></button>
+            <button id="pauseBtn" title="Pause" class="focus:outline-none"><svg width="24" height="24" fill="#ff8300"><rect x="7" y="5" width="4" height="14"></rect><rect x="13" y="5" width="4" height="14"></rect></svg></button>
+            <span id="timer" class="ml-1 text-sm font-bold text-[#2062b8]">25:00</span>
+          </div>
+        </div>
+        <div class="sidebar-spacing"></div>
+        <!-- Back Button - Now with proper link to index.html -->
+        <a href="/index.html" class="back-button">
+          <span class="text-[#2062b8] font-semibold">Back</span>
+        </a>
+      </div>
+    </div>
+    <!-- Divider -->
+    <div class="divider self-center"></div>
+    <![-- Right Panel ](Content) -->
+    <div class="flex-1 flex flex-col justify-start h-full py-10 px-8 overflow-hidden">
+      <!-- Lesson Title -->
+      <div class="mb-4 flex items-center justify-center" style="height:54px;">
+        <h3 
+          class="text-3xl font-bold mb-2 text-center"
+          style="color:#d7e9fc; letter-spacing:0.5px;">
+          Hyperemesis Gravidarum
+        </h3>
+      </div>
+      <![-- Lesson Summary ](Scrollable) -->
+      <div class="bg-white/90 rounded-xl shadow-lg p-6 custom-scroll overflow-y-auto" style="height: calc(100vh - 170px); max-height: 620px;">
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Definition</h4>
+        <p class="mb-4">
+          Hyperemesis gravidarum is a severe form of nausea and vomiting in pregnancy associated with weight loss, dehydration, and electrolyte imbalance. 
+        </p>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Epidemiology</h4>
+        <p class="mb-4">
+          Occurs in up to 1% of pregnancies. Risk factors include multiple pregnancy, molar pregnancy, and previous history.
+        </p>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Diagnosis</h4>
+        <ul class="list-disc ml-6 mb-4">
+          <li>Persistent vomiting</li>
+          <li>Weight loss &gt;5% pre-pregnancy weight</li>
+          <li>Ketonuria, electrolyte imbalance, dehydration</li>
+        </ul>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Management</h4>
+        <ul class="list-disc ml-6 mb-4">
+          <li>Rehydration (oral/IV fluids)</li>
+          <li>Antiemetics: cyclizine, prochlorperazine, ondansetron (as per RCOG/BNF)</li>
+          <li>Vitamin supplementation (thiamine)</li>
+          <li>Thromboprophylaxis if admitted</li>
+        </ul>
+        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">References</h4>
+        <ul class="list-disc ml-6">
+          <li>
+            <a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/the-management-of-nausea-and-vomiting-of-pregnancy-and-hyperemesis-gravidarum-green-top-guideline-no-69/" target="_blank" class="text-[#2062b8] underline">RCOG Green-top Guideline No. 69</a>
+          </li>
+        </ul>
+        <div style="height:160px;"></div>
+      </div>
     </div>
   </div>
+  <script>
+    // Timer for Live Tutor (countdown from 25:00)
+    let timerInterval;
+    let time = 25 * 60; // 25 minutes in seconds
+    const timerDisplay = document.getElementById('timer');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    
+    // Initialize timer display
+    updateTimerDisplay();
+    
+    function updateTimerDisplay() {
+      const min = String(Math.floor(time / 60)).padStart(2, '0');
+      const sec = String(time % 60).padStart(2, '0');
+      timerDisplay.textContent = `${min}:${sec}`;
+    }
+    
+    playBtn.onclick = function() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (time > 0) {
+          time--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+      document.getElementById('liveTutorBox').classList.add('tutor-active');
+    };
+    
+    pauseBtn.onclick = function() {
+      clearInterval(timerInterval);
+      document.getElementById('liveTutorBox').classList.remove('tutor-active');
+    };
+  </script>
 </body>
 </html>

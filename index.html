@@ -7,673 +7,160 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
       font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
       background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
-      position: relative;
+      overflow: hidden;
     }
-    .line-art {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.10;
-      background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 Q120,120 340,60 Q600,0 800,180 Q900,270 1200,180" stroke="white" stroke-width="2" fill="none"/><circle cx="650" cy="200" r="80" stroke="white" stroke-width="1" fill="none"/></svg>') no-repeat center/cover;
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .result-card {
-      transition: transform 0.2s, box-shadow 0.2s;
+    .content-box {
+      flex: 1 1 auto;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      max-width: 750px;
+      min-height: 0;
     }
-    .result-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px 0 rgba(16, 98, 200, 0.18);
+    .rect-btn {
+      padding: 0.75rem 2.5rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: #fff;
+      background: #7b1fa2;
+      border: none;
+      outline: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+      min-width: 120px;
+      text-align: center;
+      display: inline-block;
+      cursor: pointer;
+      margin-bottom: 0;
     }
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      z-index: 100;
-      transform: translateY(100px);
-      opacity: 0;
-      transition: transform 0.3s, opacity 0.3s;
+    .rect-btn.search {
+      background: #2062b8;
+      margin-right: 14px;
     }
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    .gradient-text {
+    .logo-gradient {
       background: linear-gradient(90deg, #2062b8, #7b1fa2);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      font-weight: bold;
+      font-weight: 600;
+      letter-spacing: 2px;
     }
-    .floating-button {
+    .bottom-left-btn {
       position: fixed;
+      left: 20px;
       bottom: 20px;
+      z-index: 51;
+    }
+    .bottom-right-btns {
+      position: fixed;
       right: 20px;
-      z-index: 50;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    .circular-button {
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      bottom: 20px;
+      z-index: 51;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: transform 0.2s;
+      gap: 16px;
     }
-    .circular-button:hover {
-      transform: scale(1.05);
+    .results-area {
+      width: 100%;
+      background: rgba(255,255,255,0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(32,98,184,0.07);
+      padding: 36px 26px 28px 26px;
+      margin: 0;
+      min-height: 330px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    @media (max-width: 700px) {
+      .content-box { max-width: 98vw;}
+      .results-area { padding: 24px 5vw; }
     }
   </style>
 </head>
 <body>
-  <!-- RCOG line art style overlay -->
-  <div class="line-art"></div>
-
-  <div class="relative z-10 flex flex-col items-center min-h-screen p-4 md:p-8">
-    <!-- CarePro Title at the top center -->
-    <h1 class="text-4xl md:text-5xl gradient-text mb-8">CarePro</h1>
-
-    <!-- Search Form -->
-    <div class="w-full max-w-4xl mb-8">
-      <form id="searchForm" class="flex flex-col md:flex-row gap-3">
-        <div class="flex-1 relative">
-          <input 
-            type="text" 
-            id="searchInput" 
-            placeholder="Search for a medical topic..." 
-            class="w-full px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-blue-300 focus:outline-none pr-12"
-            value="Preeclampsia"
-          >
-          <button 
-            type="submit" 
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#2062b8]"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
-        </div>
-      </form>
+  <h1 class="logo-gradient text-3xl md:text-4xl mb-3 mt-5 select-none text-center w-full">CarePro</h1>
+  <div class="content-box">
+    <div id="resultsContainer" class="results-area flex flex-col items-start justify-start">
+      <p class="text-gray-500">Enter a search term to find OSCE stations and resources.</p>
     </div>
-
-    <!-- Search Results Section - Stretched to fill most of the page height -->
-    <div id="resultsContainer" class="w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-12 min-h-[calc(100vh-300px)]">
-      <!-- Results will be populated here by JavaScript -->
-      <div class="flex justify-center items-center py-8">
-        <p class="text-gray-500">Enter a search term to find medical topics.</p>
-      </div>
-    </div>
-
-    <!-- Circular Back Button -->
-    <a href="index.html" class="circular-button bg-white text-[#2062b8] mb-6">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-    </a>
-
-    <!-- Floating Done Button -->
-    <button id="doneBtn" class="floating-button px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors">
-      Done
-    </button>
   </div>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="toast flex items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-    </svg>
-    <span id="toastMessage">Message here</span>
+  <!-- Back button, bottom left -->
+  <a href="index.html" class="rect-btn bottom-left-btn">Back</a>
+  <!-- Search and Done, bottom right -->
+  <div class="bottom-right-btns">
+    <button id="searchBtn" class="rect-btn search">Search</button>
+    <button id="doneBtn" class="rect-btn">Done</button>
   </div>
 
   <script>
-    /**
-     * Sample database of medical topics
-     */
-    const medicalTopics = {
-      books: [
-        {
-          id: 'b1',
-          title: 'Preeclampsia and Hypertensive Disorders',
-          source: 'Williams Obstetrics, 25th Edition',
-          pages: '710-742',
-          keywords: ['preeclampsia', 'hypertension', 'pregnancy', 'eclampsia', 'gestational hypertension']
-        },
-        {
-          id: 'b2',
-          title: 'Severe Preeclampsia Management',
-          source: 'Clinical Obstetrics: The Fetus & Mother',
-          pages: '423-450',
-          keywords: ['preeclampsia', 'severe', 'management', 'eclampsia', 'HELLP']
-        },
-        {
-          id: 'b3',
-          title: 'Diabetes in Pregnancy',
-          source: 'Williams Obstetrics, 25th Edition',
-          pages: '1125-1156',
-          keywords: ['diabetes', 'gestational diabetes', 'pregnancy', 'insulin', 'glucose']
-        },
-        {
-          id: 'b4',
-          title: 'Postpartum Hemorrhage',
-          source: 'Obstetric Emergencies: A Practical Guide',
-          pages: '87-112',
-          keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'blood loss']
-        }
-      ],
-      osceStations: [
-        {
-          id: 'o1',
-          title: 'Preeclampsia Assessment Station',
-          source: 'OSCE Clinical Skills',
-          duration: '10 minutes',
-          keywords: ['preeclampsia', 'assessment', 'clinical skills', 'hypertension', 'pregnancy']
-        },
-        {
-          id: 'o2',
-          title: 'Obstetric Emergency: Eclampsia',
-          source: 'Emergency OSCE Scenarios',
-          duration: '15 minutes',
-          keywords: ['eclampsia', 'seizure', 'emergency', 'magnesium sulfate', 'hypertension']
-        }
-      ],
-      guidelines: [
-        {
-          id: 'g1',
-          title: 'Hypertension in Pregnancy',
-          source: 'RCOG Green-top Guideline No. 37a',
-          updated: '2023',
-          keywords: ['hypertension', 'preeclampsia', 'pregnancy', 'blood pressure', 'eclampsia']
-        },
-        {
-          id: 'g2',
-          title: 'Preeclampsia: Diagnosis and Management',
-          source: 'NICE Guideline NG133',
-          updated: '2024',
-          keywords: ['preeclampsia', 'diagnosis', 'management', 'hypertension', 'proteinuria']
-        },
-        {
-          id: 'g3',
-          title: 'Gestational Diabetes Mellitus',
-          source: 'ACOG Practice Bulletin No. 190',
-          updated: '2023',
-          keywords: ['diabetes', 'gestational diabetes', 'pregnancy', 'glucose', 'screening']
-        },
-        {
-          id: 'g4',
-          title: 'Management of Postpartum Hemorrhage',
-          source: 'RCOG Green-top Guideline No. 52',
-          updated: '2022',
-          keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'transfusion']
-        }
-      ]
-    };
+    // Example OSCE stations data for demonstration
+    const osceStations = [
+      { book: 'OSCEs for the MRCOG', stationNumber: '1', title: 'Preeclampsia Assessment' },
+      { book: 'OSCEs for the MRCOG', stationNumber: '2', title: 'Eclampsia Management' },
+      { book: 'Part 3 MRCOG Guide', stationNumber: '7', title: 'Diabetes in Pregnancy' }
+      // Add more as needed
+    ];
+    // Example resources list
+    const resources = [
+      'RCOG Green-top Guidelines',
+      'NICE Guideline NG133',
+      'FSRH Guidance'
+    ];
 
-    /**
-     * Calculate similarity score between search query and a topic
-     * @param {string} query - The search query
-     * @param {Object} topic - The topic object to compare against
-     * @return {number} Similarity score (0-100)
-     */
-    function calculateSimilarity(query, topic) {
-      query = query.toLowerCase();
-      
-      // Check for exact title match
-      if (topic.title.toLowerCase().includes(query)) {
-        return 100;
+    function renderResults(osce, resources) {
+      let html = '';
+      if (osce && osce.length) {
+        html += `<div class="mb-6">
+          <h2 class="text-lg font-semibold text-[#2062b8] mb-2">OSCE Stations</h2>`;
+        html += '<ol class="list-decimal pl-5">';
+        osce.forEach((station, i) => {
+          html += `<li class="mb-2"><span class="font-semibold">${station.book}</span>: ${station.stationNumber} ${station.title}</li>`;
+        });
+        html += '</ol></div>';
+      } else {
+        html += `<div class="mb-6"><h2 class="text-lg font-semibold text-[#2062b8] mb-2">OSCE Stations</h2><p class="text-gray-400">No OSCE stations found.</p></div>`;
       }
-      
-      // Check keywords
-      const keywordMatches = topic.keywords.filter(keyword => 
-        keyword.includes(query) || query.includes(keyword)
-      ).length;
-      
-      if (keywordMatches > 0) {
-        // Calculate score based on keyword matches
-        const keywordScore = (keywordMatches / topic.keywords.length) * 100;
-        
-        // Boost score if query is very similar to any keyword
-        const closestKeyword = topic.keywords.reduce((closest, keyword) => {
-          const similarity = levenshteinSimilarity(query, keyword);
-          return similarity > closest.similarity ? { keyword, similarity } : closest;
-        }, { keyword: '', similarity: 0 });
-        
-        return Math.min(95, Math.max(keywordScore, closestKeyword.similarity * 100));
+      // Resources section
+      if (resources && resources.length) {
+        html += `<div><h2 class="text-lg font-semibold text-[#7b1fa2] mb-2">Resources</h2><ol class="list-decimal pl-5">`;
+        resources.forEach((resource, i) => {
+          html += `<li class="mb-2">${resource}</li>`;
+        });
+        html += '</ol></div>';
       }
-      
-      // Check for partial matches in title
-      const titleWords = topic.title.toLowerCase().split(/\s+/);
-      const queryWords = query.split(/\s+/);
-      
-      let titleMatchCount = 0;
-      for (const qWord of queryWords) {
-        for (const tWord of titleWords) {
-          if (tWord.includes(qWord) || qWord.includes(tWord) || 
-              levenshteinSimilarity(qWord, tWord) > 0.7) {
-            titleMatchCount++;
-            break;
-          }
-        }
-      }
-      
-      if (titleMatchCount > 0) {
-        return Math.min(90, (titleMatchCount / queryWords.length) * 100);
-      }
-      
-      // Fall back to overall text similarity
-      const overallSimilarity = levenshteinSimilarity(query, topic.title.toLowerCase()) * 100;
-      return Math.round(overallSimilarity);
-    }
-
-    /**
-     * Calculate Levenshtein similarity between two strings
-     * @param {string} a - First string
-     * @param {string} b - Second string
-     * @return {number} Similarity (0-1)
-     */
-    function levenshteinSimilarity(a, b) {
-      if (a.length === 0) return 0;
-      if (b.length === 0) return 0;
-      
-      const matrix = Array(a.length + 1).fill().map(() => Array(b.length + 1).fill(0));
-      
-      for (let i = 0; i <= a.length; i++) {
-        matrix[i][0] = i;
-      }
-      
-      for (let j = 0; j <= b.length; j++) {
-        matrix[0][j] = j;
-      }
-      
-      for (let i = 1; i <= a.length; i++) {
-        for (let j = 1; j <= b.length; j++) {
-          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-          matrix[i][j] = Math.min(
-            matrix[i - 1][j] + 1,      // deletion
-            matrix[i][j - 1] + 1,      // insertion
-            matrix[i - 1][j - 1] + cost // substitution
-          );
-        }
-      }
-      
-      const distance = matrix[a.length][b.length];
-      const maxLength = Math.max(a.length, b.length);
-      
-      return maxLength > 0 ? 1 - (distance / maxLength) : 1;
-    }
-
-    /**
-     * Search for topics matching the query
-     * @param {string} query - The search query
-     * @return {Object} Search results with scores
-     */
-    function searchTopics(query) {
-      if (![query || query.trim]() === '') {
-        return { 
-          books: [], 
-          osceStations: [],
-          guidelines: [], 
-          exactMatch: false 
-        };
-      }
-      
-      query = query.trim();
-      
-      // Check for exact match
-      const exactMatchBook = medicalTopics.books.find(book => 
-        book.title.toLowerCase() === query.toLowerCase()
-      );
-      const exactMatchOSCE = medicalTopics.osceStations.find(station => 
-        station.title.toLowerCase() === query.toLowerCase()
-      );
-      const exactMatchGuideline = medicalTopics.guidelines.find(guideline => 
-        guideline.title.toLowerCase() === query.toLowerCase()
-      );
-      
-      const exactMatch = ![!](exactMatchBook || exactMatchOSCE || exactMatchGuideline);
-      
-      // Calculate similarity scores for all topics
-      const scoredBooks = medicalTopics.books.map(book => ({
-        ...book,
-        score: calculateSimilarity(query, book)
-      })).sort((a, b) => b.score - a.score);
-      
-      const scoredOSCE = medicalTopics.osceStations.map(station => ({
-        ...station,
-        score: calculateSimilarity(query, station)
-      })).sort((a, b) => b.score - a.score);
-      
-      const scoredGuidelines = medicalTopics.guidelines.map(guideline => ({
-        ...guideline,
-        score: calculateSimilarity(query, guideline)
-      })).sort((a, b) => b.score - a.score);
-      
-      // Filter out low-scoring results (below 50%)
-      const filteredBooks = scoredBooks.filter(book => book.score >= 50);
-      const filteredOSCE = scoredOSCE.filter(station => station.score >= 50);
-      const filteredGuidelines = scoredGuidelines.filter(guideline => guideline.score >= 50);
-      
-      return {
-        books: filteredBooks,
-        osceStations: filteredOSCE,
-        guidelines: filteredGuidelines,
-        exactMatch
-      };
-    }
-
-    /**
-     * Escape HTML to prevent XSS
-     * @param {string} unsafe - Unsafe string
-     * @return {string} Safe string
-     */
-    function escapeHtml(unsafe) {
-      return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    /**
-     * Show toast notification
-     * @param {string} message - Message to display
-     * @param {number} duration - Duration in milliseconds
-     */
-    function showToast(message, duration = 3000) {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toastMessage');
-      
-      toastMessage.textContent = message;
-      toast.classList.add('show');
-      
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, duration);
-    }
-
-    /**
-     * Send search query to DeepSeek API
-     * @param {string} query - The search query
-     * @return {Promise} Promise resolving to API response
-     */
-    async function searchDeepSeekAPI(query) {
-      try {
-        // This is a placeholder for the actual API call
-        // In a real implementation, you would make a fetch request to the DeepSeek API
-        console.log(`Searching DeepSeek API for: ${query}`);
-        
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // For now, return the local search results
-        return searchTopics(query);
-      } catch (error) {
-        console.error('Error searching DeepSeek API:', error);
-        showToast('Error connecting to search service');
-        return searchTopics(query); // Fallback to local search
-      }
+      return html;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      const searchForm = document.getElementById('searchForm');
-      const searchInput = document.getElementById('searchInput');
-      const resultsContainer = document.getElementById('resultsContainer');
+      const searchBtn = document.getElementById('searchBtn');
       const doneBtn = document.getElementById('doneBtn');
-      
-      // Handle search form submission
-      searchForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const query = searchInput.value.trim();
-        
-        if (query) {
-          // Show loading state
-          resultsContainer.innerHTML = `
-            <div class="flex justify-center items-center py-8">
-              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2062b8]"></div>
-              <p class="ml-3 text-gray-600">Searching...</p>
-            </div>
-          `;
-          
-          // Perform search via DeepSeek API
-          const results = await searchDeepSeekAPI(query);
-          displaySearchResults(query, results);
+      const resultsContainer = document.getElementById('resultsContainer');
+      // Handle Search button
+      searchBtn.addEventListener('click', function() {
+        const term = prompt('Enter search term:');
+        if (term && term.trim()) {
+          // Normally, you’d filter OSCE/resources based on the term!
+          // For now, just render all sample data for demonstration.
+          resultsContainer.innerHTML = renderResults(osceStations, resources);
         }
       });
-      
-      /**
-       * Display search results in the UI
-       * @param {string} query - The search query
-       * @param {Object} results - The search results object
-       */
-      function displaySearchResults(query, results) {
-        // Create results HTML
-        let resultsHTML = `
-          <div class="mb-4 flex justify-between items-center">
-            <h2 class="text-2xl font-bold text-[#2062b8]">Search Results</h2>
-            <div class="text-sm text-gray-500">Showing closest matches for: <span class="font-semibold">${escapeHtml(query)}</span></div>
-          </div>
-        `;
-        
-        // Show notice if no exact match
-        if (!results.exactMatch) {
-          resultsHTML += `
-            <div class="mb-6 p-3 bg-blue-50 rounded-lg border border-blue-100">
-              <p class="text-blue-800">No exact match found. Showing closest matching topics.</p>
-            </div>
-          `;
-        }
-        
-        // Upper Section: Books and OSCE Stations
-        resultsHTML += `<div class="mb-8 border-b pb-6">`;
-        
-        // Books section
-        if (results.books.length > 0) {
-          resultsHTML += `
-            <div class="mb-6">
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Books
-              </h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          `;
-          
-          // Add book results
-          results.books.forEach(book => {
-            resultsHTML += `
-              <div class="result-card p-4 bg-white rounded-xl shadow-md border border-gray-100" data-id="${book.id}" data-type="book" data-title="${escapeHtml(book.title)}" data-source="${escapeHtml(book.source)}">
-                <div class="flex items-start">
-                  <div class="flex-1">
-                    <h4 class="font-semibold text-[#2062b8]">${escapeHtml(book.title)}</h4>
-                    <p class="text-sm text-gray-600 mb-2">${escapeHtml(book.source)}</p>
-                    <div class="flex items-center text-xs text-gray-500">
-                      <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full mr-2">Match: ${Math.round(book.score)}%</span>
-                      <span>Pages: ${escapeHtml(book.pages)}</span>
-                    </div>
-                  </div>
-                  <div class="ml-2">
-                    <input type="checkbox" class="h-5 w-5 text-[#2062b8] rounded border-gray-300 focus:ring-[#2062b8]">
-                  </div>
-                </div>
-              </div>
-            `;
-          });
-          
-          resultsHTML += `
-              </div>
-            </div>
-          `;
-        } else {
-          resultsHTML += `
-            <div class="mb-6">
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Books
-              </h3>
-              <p class="text-gray-500">No matching books found.</p>
-            </div>
-          `;
-        }
-        
-        // OSCE Stations section
-        if (results.osceStations.length > 0) {
-          resultsHTML += `
-            <div>
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                OSCE Stations
-              </h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          `;
-          
-          // Add OSCE station results
-          results.osceStations.forEach(station => {
-            resultsHTML += `
-              <div class="result-card p-4 bg-white rounded-xl shadow-md border border-gray-100" data-id="${station.id}" data-type="osce" data-title="${escapeHtml(station.title)}" data-source="${escapeHtml(station.source)}">
-                <div class="flex items-start">
-                  <div class="flex-1">
-                    <h4 class="font-semibold text-[#2062b8]">${escapeHtml(station.title)}</h4>
-                    <p class="text-sm text-gray-600 mb-2">${escapeHtml(station.source)}</p>
-                    <div class="flex items-center text-xs text-gray-500">
-                      <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full mr-2">Match: ${Math.round(station.score)}%</span>
-                      <span>Duration: ${escapeHtml(station.duration)}</span>
-                    </div>
-                  </div>
-                  <div class="ml-2">
-                    <input type="checkbox" class="h-5 w-5 text-[#2062b8] rounded border-gray-300 focus:ring-[#2062b8]">
-                  </div>
-                </div>
-              </div>
-            `;
-          });
-          
-          resultsHTML += `
-              </div>
-            </div>
-          `;
-        } else {
-          resultsHTML += `
-            <div>
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                OSCE Stations
-              </h3>
-              <p class="text-gray-500">No matching OSCE stations found.</p>
-            </div>
-          `;
-        }
-        
-        resultsHTML += `</div>`;
-        
-        // Lower Section: Guidelines and References
-        resultsHTML += `<h3 class="text-xl font-bold text-[#7b1fa2] mb-4">Trusted Guidelines & References</h3>`;
-        
-        // Guidelines section
-        if (results.guidelines.length > 0) {
-          resultsHTML += `
-            <div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          `;
-          
-          // Add guideline results
-          results.guidelines.forEach(guideline => {
-            resultsHTML += `
-              <div class="result-card p-4 bg-white rounded-xl shadow-md border border-gray-100" data-id="${guideline.id}" data-type="guideline" data-title="${escapeHtml(guideline.title)}" data-source="${escapeHtml(guideline.source)}">
-                <div class="flex items-start">
-                  <div class="flex-1">
-                    <h4 class="font-semibold text-[#7b1fa2]">${escapeHtml(guideline.title)}</h4>
-                    <p class="text-sm text-gray-600 mb-2">${escapeHtml(guideline.source)}</p>
-                    <div class="flex items-center text-xs text-gray-500">
-                      <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full mr-2">Match: ${Math.round(guideline.score)}%</span>
-                      <span>Updated: ${escapeHtml(guideline.updated)}</span>
-                    </div>
-                  </div>
-                  <div class="ml-2">
-                    <input type="checkbox" class="h-5 w-5 text-[#7b1fa2] rounded border-gray-300 focus:ring-[#7b1fa2]">
-                  </div>
-                </div>
-              </div>
-            `;
-          });
-          
-          resultsHTML += `
-              </div>
-            </div>
-          `;
-        } else {
-          resultsHTML += `
-            <div>
-              <p class="text-gray-500">No matching guidelines found.</p>
-            </div>
-          `;
-        }
-        
-        // No results message
-        if (results.books.length === 0 && results.osceStations.length === 0 && results.guidelines.length === 0) {
-          resultsHTML += `
-            <div class="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-100 text-center">
-              <p class="text-yellow-800">No matching topics found. Try a different search term.</p>
-            </div>
-          `;
-        }
-        
-        // Update results container
-        resultsContainer.innerHTML = resultsHTML;
-      }
-      
-      // Handle done button - proceed to summarization
       doneBtn.addEventListener('click', function() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        const selectedItems = Array.from(checkboxes)
-          .filter(cb => cb.checked)
-          .map(cb => {
-            const card = cb.closest('.result-card');
-            return {
-              id: card.dataset.id,
-              title: card.dataset.title,
-              type: card.dataset.type,
-              source: card.dataset.source
-            };
-          });
-        
-        if (selectedItems.length > 0) {
-          console.log('Selected items:', selectedItems);
-          
-          // Store selected items in localStorage for the summarization page
-          localStorage.setItem('selectedTopics', JSON.stringify(selectedItems));
-          
-          // Show toast notification
-          showToast(`Proceeding with ${selectedItems.length} selected items`);
-          
-          // Navigate to summarization page
-          setTimeout(() => {
-            window.location.href = 'summarize.html';
-          }, 1000);
-        } else {
-          showToast('Please select at least one item to proceed');
-        }
+        alert('Done clicked! Implement navigation/next step as needed.');
       });
-      
-      // Initialize with default search if input has value
-      if (searchInput.value.trim()) {
-        searchForm.dispatchEvent(new Event('submit'));
-      }
     });
   </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CarePro OSCE - Search Results</title>
+  <title>CarePro OSCE - Summarization</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -21,12 +21,35 @@
       opacity: 0.10;
       background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 Q120,120 340,60 Q600,0 800,180 Q900,270 1200,180" stroke="white" stroke-width="2" fill="none"/><circle cx="650" cy="200" r="80" stroke="white" stroke-width="1" fill="none"/></svg>') no-repeat center/cover;
     }
-    .result-card {
+    .summary-card {
       transition: transform 0.2s, box-shadow 0.2s;
     }
-    .result-card:hover {
+    .summary-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 24px 0 rgba(16, 98, 200, 0.18);
+    }
+    .tab-button {
+      transition: all 0.2s;
+    }
+    .tab-button.active {
+      background-color: white;
+      color: #2062b8;
+      font-weight: 600;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .loading-dots span {
+      animation: loadingDots 1.4s infinite ease-in-out both;
+    }
+    .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes loadingDots {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
     }
     .toast {
       position: fixed;
@@ -54,503 +77,95 @@
   <div class="relative z-10 flex flex-col items-center min-h-screen p-4 md:p-8">
     <!-- Header with Back Button -->
     <div class="w-full max-w-4xl flex items-center mb-6">
-      <a href="study.html" class="flex items-center text-white hover:text-blue-200 transition-colors">
+      <a href="search.html" class="flex items-center text-white hover:text-blue-200 transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
-        <span>Back</span>
+        <span>Back to Search</span>
       </a>
     </div>
 
-    <!-- Search Form -->
-    <div class="w-full max-w-4xl mb-8">
-      <form id="searchForm" class="flex flex-col md:flex-row gap-3">
-        <div class="flex-1">
-          <input 
-            type="text" 
-            id="searchInput" 
-            placeholder="Search for a medical topic..." 
-            class="w-full px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-blue-300 focus:outline-none"
-            value="Preeclampsia"
-          >
-        </div>
-        <button 
-          type="submit" 
-          class="px-6 py-3 bg-[#2062b8] text-white font-medium rounded-xl hover:bg-[#1a4c8f] transition-colors"
-        >
-          Search
-        </button>
-      </form>
-    </div>
-
-    <!-- Search Results Section -->
-    <div id="resultsContainer" class="w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-8">
-      <!-- Results will be populated here by JavaScript -->
-      <div class="flex justify-center items-center py-8">
-        <p class="text-gray-500">Enter a search term to find medical topics.</p>
-      </div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="w-full max-w-4xl flex flex-col md:flex-row gap-4 justify-end">
-      <button id="selectAllBtn" class="px-6 py-3 bg-white text-[#2062b8] font-medium rounded-xl hover:bg-gray-100 transition-colors">
-        Select All
-      </button>
-      <button id="doneBtn" class="px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors">
-        Done
-      </button>
-    </div>
-  </div>
-
-  <!-- Toast Notification -->
-  <div id="toast" class="toast flex items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-    </svg>
-    <span id="toastMessage">Message here</span>
-  </div>
-
-  <script>
-    /**
-     * Sample database of medical topics
-     */
-    const medicalTopics = {
-      books: [
-        {
-          id: 'b1',
-          title: 'Preeclampsia and Hypertensive Disorders',
-          source: 'Williams Obstetrics, 25th Edition',
-          pages: '710-742',
-          keywords: ['preeclampsia', 'hypertension', 'pregnancy', 'eclampsia', 'gestational hypertension']
-        },
-        {
-          id: 'b2',
-          title: 'Severe Preeclampsia Management',
-          source: 'Clinical Obstetrics: The Fetus & Mother',
-          pages: '423-450',
-          keywords: ['preeclampsia', 'severe', 'management', 'eclampsia', 'HELLP']
-        },
-        {
-          id: 'b3',
-          title: 'Diabetes in Pregnancy',
-          source: 'Williams Obstetrics, 25th Edition',
-          pages: '1125-1156',
-          keywords: ['diabetes', 'gestational diabetes', 'pregnancy', 'insulin', 'glucose']
-        },
-        {
-          id: 'b4',
-          title: 'Postpartum Hemorrhage',
-          source: 'Obstetric Emergencies: A Practical Guide',
-          pages: '87-112',
-          keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'blood loss']
-        }
-      ],
-      guidelines: [
-        {
-          id: 'g1',
-          title: 'Hypertension in Pregnancy',
-          source: 'RCOG Green-top Guideline No. 37a',
-          updated: '2023',
-          keywords: ['hypertension', 'preeclampsia', 'pregnancy', 'blood pressure', 'eclampsia']
-        },
-        {
-          id: 'g2',
-          title: 'Preeclampsia: Diagnosis and Management',
-          source: 'NICE Guideline NG133',
-          updated: '2024',
-          keywords: ['preeclampsia', 'diagnosis', 'management', 'hypertension', 'proteinuria']
-        },
-        {
-          id: 'g3',
-          title: 'Gestational Diabetes Mellitus',
-          source: 'ACOG Practice Bulletin No. 190',
-          updated: '2023',
-          keywords: ['diabetes', 'gestational diabetes', 'pregnancy', 'glucose', 'screening']
-        },
-        {
-          id: 'g4',
-          title: 'Management of Postpartum Hemorrhage',
-          source: 'RCOG Green-top Guideline No. 52',
-          updated: '2022',
-          keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'transfusion']
-        }
-      ]
-    };
-
-    /**
-     * Calculate similarity score between search query and a topic
-     * @param {string} query - The search query
-     * @param {Object} topic - The topic object to compare against
-     * @return {number} Similarity score (0-100)
-     */
-    function calculateSimilarity(query, topic) {
-      query = query.toLowerCase();
-      
-      // Check for exact title match
-      if (topic.title.toLowerCase().includes(query)) {
-        return 100;
-      }
-      
-      // Check keywords
-      const keywordMatches = topic.keywords.filter(keyword => 
-        keyword.includes(query) || query.includes(keyword)
-      ).length;
-      
-      if (keywordMatches > 0) {
-        // Calculate score based on keyword matches
-        const keywordScore = (keywordMatches / topic.keywords.length) * 100;
+    <!-- Summarization Container -->
+    <div class="w-full max-w-4xl">
+      <!-- Selected Topics Section -->
+      <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-6">
+        <h2 class="text-2xl font-bold text-[#2062b8] mb-4">Selected Topics</h2>
         
-        // Boost score if query is very similar to any keyword
-        const closestKeyword = topic.keywords.reduce((closest, keyword) => {
-          const similarity = levenshteinSimilarity(query, keyword);
-          return similarity > closest.similarity ? { keyword, similarity } : closest;
-        }, { keyword: '', similarity: 0 });
-        
-        return Math.min(95, Math.max(keywordScore, closestKeyword.similarity * 100));
-      }
-      
-      // Check for partial matches in title
-      const titleWords = topic.title.toLowerCase().split(/\s+/);
-      const queryWords = query.split(/\s+/);
-      
-      let titleMatchCount = 0;
-      for (const qWord of queryWords) {
-        for (const tWord of titleWords) {
-          if (tWord.includes(qWord) || qWord.includes(tWord) || 
-              levenshteinSimilarity(qWord, tWord) > 0.7) {
-            titleMatchCount++;
-            break;
-          }
-        }
-      }
-      
-      if (titleMatchCount > 0) {
-        return Math.min(90, (titleMatchCount / queryWords.length) * 100);
-      }
-      
-      // Fall back to overall text similarity
-      const overallSimilarity = levenshteinSimilarity(query, topic.title.toLowerCase()) * 100;
-      return Math.round(overallSimilarity);
-    }
-
-    /**
-     * Calculate Levenshtein similarity between two strings
-     * @param {string} a - First string
-     * @param {string} b - Second string
-     * @return {number} Similarity (0-1)
-     */
-    function levenshteinSimilarity(a, b) {
-      if (a.length === 0) return 0;
-      if (b.length === 0) return 0;
-      
-      const matrix = Array(a.length + 1).fill().map(() => Array(b.length + 1).fill(0));
-      
-      for (let i = 0; i <= a.length; i++) {
-        matrix[i][0] = i;
-      }
-      
-      for (let j = 0; j <= b.length; j++) {
-        matrix[0][j] = j;
-      }
-      
-      for (let i = 1; i <= a.length; i++) {
-        for (let j = 1; j <= b.length; j++) {
-          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-          matrix[i][j] = Math.min(
-            matrix[i - 1][j] + 1,      // deletion
-            matrix[i][j - 1] + 1,      // insertion
-            matrix[i - 1][j - 1] + cost // substitution
-          );
-        }
-      }
-      
-      const distance = matrix[a.length][b.length];
-      const maxLength = Math.max(a.length, b.length);
-      
-      return maxLength > 0 ? 1 - (distance / maxLength) : 1;
-    }
-
-    /**
-     * Search for topics matching the query
-     * @param {string} query - The search query
-     * @return {Object} Search results with scores
-     */
-    function searchTopics(query) {
-      if (![query || query.trim]() === '') {
-        return { books: [], guidelines: [], exactMatch: false };
-      }
-      
-      query = query.trim();
-      
-      // Check for exact match
-      const exactMatchBook = medicalTopics.books.find(book => 
-        book.title.toLowerCase() === query.toLowerCase()
-      );
-      const exactMatchGuideline = medicalTopics.guidelines.find(guideline => 
-        guideline.title.toLowerCase() === query.toLowerCase()
-      );
-      
-      const exactMatch = ![!](exactMatchBook || exactMatchGuideline);
-      
-      // Calculate similarity scores for all topics
-      const scoredBooks = medicalTopics.books.map(book => ({
-        ...book,
-        score: calculateSimilarity(query, book)
-      })).sort((a, b) => b.score - a.score);
-      
-      const scoredGuidelines = medicalTopics.guidelines.map(guideline => ({
-        ...guideline,
-        score: calculateSimilarity(query, guideline)
-      })).sort((a, b) => b.score - a.score);
-      
-      // Filter out low-scoring results (below 50%)
-      const filteredBooks = scoredBooks.filter(book => book.score >= 50);
-      const filteredGuidelines = scoredGuidelines.filter(guideline => guideline.score >= 50);
-      
-      return {
-        books: filteredBooks,
-        guidelines: filteredGuidelines,
-        exactMatch
-      };
-    }
-
-    /**
-     * Escape HTML to prevent XSS
-     * @param {string} unsafe - Unsafe string
-     * @return {string} Safe string
-     */
-    function escapeHtml(unsafe) {
-      return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    /**
-     * Show toast notification
-     * @param {string} message - Message to display
-     * @param {number} duration - Duration in milliseconds
-     */
-    function showToast(message, duration = 3000) {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toastMessage');
-      
-      toastMessage.textContent = message;
-      toast.classList.add('show');
-      
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, duration);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const searchForm = document.getElementById('searchForm');
-      const searchInput = document.getElementById('searchInput');
-      const resultsContainer = document.getElementById('resultsContainer');
-      const selectAllBtn = document.getElementById('selectAllBtn');
-      const doneBtn = document.getElementById('doneBtn');
-      
-      // Handle search form submission
-      searchForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const query = searchInput.value.trim();
-        
-        if (query) {
-          // Perform search
-          const results = searchTopics(query);
-          displaySearchResults(query, results);
-        }
-      });
-      
-      /**
-       * Display search results in the UI
-       * @param {string} query - The search query
-       * @param {Object} results - The search results object
-       */
-      function displaySearchResults(query, results) {
-        // Create results HTML
-        let resultsHTML = `
-          <div class="mb-4 flex justify-between items-center">
-            <h2 class="text-2xl font-bold text-[#2062b8]">Search Results</h2>
-            <div class="text-sm text-gray-500">Showing closest matches for: <span class="font-semibold">${escapeHtml(query)}</span></div>
+        <div id="selectedTopicsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <!-- Selected topics will be populated here by JavaScript -->
+          <div class="flex justify-center items-center col-span-2 py-4">
+            <p class="text-gray-500">Loading selected topics...</p>
           </div>
-        `;
+        </div>
         
-        // Show notice if no exact match
-        if (!results.exactMatch) {
-          resultsHTML += `
-            <div class="mb-6 p-3 bg-blue-50 rounded-lg border border-blue-100">
-              <p class="text-blue-800">No exact match found. Showing closest matching topics.</p>
-            </div>
-          `;
-        }
-        
-        // Books section
-        if (results.books.length > 0) {
-          resultsHTML += `
-            <div class="mb-6">
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Books
-              </h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          `;
-          
-          // Add book results
-          results.books.forEach(book => {
-            resultsHTML += `
-              <div class="result-card p-4 bg-white rounded-xl shadow-md border border-gray-100" data-id="${book.id}" data-type="book" data-title="${escapeHtml(book.title)}" data-source="${escapeHtml(book.source)}">
-                <div class="flex items-start">
-                  <div class="flex-1">
-                    <h4 class="font-semibold text-[#2062b8]">${escapeHtml(book.title)}</h4>
-                    <p class="text-sm text-gray-600 mb-2">${escapeHtml(book.source)}</p>
-                    <div class="flex items-center text-xs text-gray-500">
-                      <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full mr-2">Match: ${Math.round(book.score)}%</span>
-                      <span>Pages: ${escapeHtml(book.pages)}</span>
-                    </div>
-                  </div>
-                  <div class="ml-2">
-                    <input type="checkbox" class="h-5 w-5 text-[#2062b8] rounded border-gray-300 focus:ring-[#2062b8]">
-                  </div>
-                </div>
-              </div>
-            `;
-          });
-          
-          resultsHTML += `
-              </div>
-            </div>
-          `;
-        } else {
-          resultsHTML += `
-            <div class="mb-6">
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Books
-              </h3>
-              <p class="text-gray-500">No matching books found.</p>
-            </div>
-          `;
-        }
-        
-        // Guidelines section
-        if (results.guidelines.length > 0) {
-          resultsHTML += `
-            <div>
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Guidelines
-              </h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          `;
-          
-          // Add guideline results
-          results.guidelines.forEach(guideline => {
-            resultsHTML += `
-              <div class="result-card p-4 bg-white rounded-xl shadow-md border border-gray-100" data-id="${guideline.id}" data-type="guideline" data-title="${escapeHtml(guideline.title)}" data-source="${escapeHtml(guideline.source)}">
-                <div class="flex items-start">
-                  <div class="flex-1">
-                    <h4 class="font-semibold text-[#7b1fa2]">${escapeHtml(guideline.title)}</h4>
-                    <p class="text-sm text-gray-600 mb-2">${escapeHtml(guideline.source)}</p>
-                    <div class="flex items-center text-xs text-gray-500">
-                      <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full mr-2">Match: ${Math.round(guideline.score)}%</span>
-                      <span>Updated: ${escapeHtml(guideline.updated)}</span>
-                    </div>
-                  </div>
-                  <div class="ml-2">
-                    <input type="checkbox" class="h-5 w-5 text-[#7b1fa2] rounded border-gray-300 focus:ring-[#7b1fa2]">
-                  </div>
-                </div>
-              </div>
-            `;
-          });
-          
-          resultsHTML += `
-              </div>
-            </div>
-          `;
-        } else {
-          resultsHTML += `
-            <div>
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Guidelines
-              </h3>
-              <p class="text-gray-500">No matching guidelines found.</p>
-            </div>
-          `;
-        }
-        
-        // No results message
-        if (results.books.length === 0 && results.guidelines.length === 0) {
-          resultsHTML += `
-            <div class="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-100 text-center">
-              <p class="text-yellow-800">No matching topics found. Try a different search term.</p>
-            </div>
-          `;
-        }
-        
-        // Update results container
-        resultsContainer.innerHTML = resultsHTML;
-      }
+        <!-- Generate Button -->
+        <div class="flex justify-center">
+          <button id="generateBtn" class="px-6 py-3 bg-[#2062b8] text-white font-medium rounded-xl hover:bg-[#1a4c8f] transition-colors">
+            Generate Summary
+          </button>
+        </div>
+      </div>
       
-      // Handle select all button
-      selectAllBtn.addEventListener('click', function() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-        checkboxes.forEach(checkbox => {
-          checkbox.checked = !allChecked;
-        });
-      });
-      
-      // Handle done button - proceed to summarization
-      doneBtn.addEventListener('click', function() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        const selectedItems = Array.from(checkboxes)
-          .filter(cb => cb.checked)
-          .map(cb => {
-            const card = cb.closest('.result-card');
-            return {
-              id: card.dataset.id,
-              title: card.dataset.title,
-              type: card.dataset.type,
-              source: card.dataset.source
-            };
-          });
+      <![-- Summary Results Section ](initially hidden) -->
+      <div id="summaryResults" class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-6 hidden">
+        <h2 id="summaryTitle" class="text-2xl font-bold text-[#2062b8] mb-4">Summary</h2>
         
-        if (selectedItems.length > 0) {
-          console.log('Selected items:', selectedItems);
+        <![-- Loading State ](initially shown when generating) -->
+        <div id="loadingState" class="py-8 flex flex-col items-center">
+          <div class="loading-dots flex space-x-2 mb-4">
+            <span class="w-3 h-3 bg-[#2062b8] rounded-full"></span>
+            <span class="w-3 h-3 bg-[#2062b8] rounded-full"></span>
+            <span class="w-3 h-3 bg-[#2062b8] rounded-full"></span>
+          </div>
+          <p class="text-gray-600">Generating comprehensive summary...</p>
+        </div>
+        
+        <!-- Tabs Navigation -->
+        <div id="summaryTabs" class="hidden">
+          <div class="flex border-b border-gray-200 mb-4 overflow-x-auto">
+            <button class="tab-button active px-4 py-2 rounded-t-lg whitespace-nowrap" data-tab="overview">Overview</button>
+            <button class="tab-button px-4 py-2 rounded-t-lg whitespace-nowrap" data-tab="diagnosis">Diagnosis</button>
+            <button class="tab-button px-4 py-2 rounded-t-lg whitespace-nowrap" data-tab="management">Management</button>
+            <button class="tab-button px-4 py-2 rounded-t-lg whitespace-nowrap" data-tab="complications">Complications</button>
+          </div>
           
-          // Store selected items in localStorage for the summarization page
-          localStorage.setItem('selectedTopics', JSON.stringify(selectedItems));
+          <!-- Tab Contents -->
+          <div class="tab-content active" id="overview-tab">
+            <h3 class="text-lg font-semibold text-[#2062b8] mb-2">Overview</h3>
+            <div class="prose max-w-none">
+              <p class="mb-3">Preeclampsia is a pregnancy-specific hypertensive disorder with multisystem involvement. It typically occurs after 20 weeks of gestation and can lead to serious maternal and fetal complications if not properly managed.</p>
+              
+              <p class="mb-3">The condition is characterized by:</p>
+              <ul class="list-disc pl-5 mb-3">
+                <li>New-onset hypertension (systolic BP ≥140 mmHg or diastolic BP ≥90 mmHg)</li>
+                <li>Proteinuria (≥300 mg in 24 hours or protein/creatinine ratio ≥0.3)</li>
+                <li>Or end-organ dysfunction in the absence of proteinuria</li>
+              </ul>
+              
+              <p class="mb-3">The global prevalence of preeclampsia is estimated at 2-8% of all pregnancies, with higher rates in developing countries. Risk factors include nulliparity, previous history of preeclampsia, chronic hypertension, multiple gestation, and pre-existing medical conditions such as diabetes mellitus, renal disease, and autoimmune disorders.</p>
+              
+              <p>The pathophysiology involves abnormal placentation leading to placental ischemia, which triggers the release of anti-angiogenic factors. These factors cause widespread endothelial dysfunction, resulting in the clinical manifestations of preeclampsia.</p>
+            </div>
+          </div>
           
-          // Show toast notification
-          showToast(`Proceeding with ${selectedItems.length} selected items`);
-          
-          // Navigate to summarization page
-          setTimeout(() => {
-            window.location.href = 'summarize.html';
-          }, 1000);
-        } else {
-          showToast('Please select at least one item to proceed');
-        }
-      });
-      
-      // Initialize with default search if input has value
-      if (searchInput.value.trim()) {
-        searchForm.dispatchEvent(new Event('submit'));
-      }
-    });
-  </script>
-</body>
-</html>
+          <div class="tab-content" id="diagnosis-tab">
+            <h3 class="text-lg font-semibold text-[#2062b8] mb-2">Diagnosis</h3>
+            <div class="prose max-w-none">
+              <p class="mb-3">Diagnosis of preeclampsia is based on the presence of hypertension after 20 weeks of gestation along with one or more of the following:</p>
+              
+              <ul class="list-disc pl-5 mb-3">
+                <li>Proteinuria (≥300 mg in 24 hours or protein/creatinine ratio ≥0.3)</li>
+                <li>Thrombocytopenia (platelet count <100,000/μL)</li>
+                <li>Renal insufficiency (serum creatinine >1.1 mg/dL or doubling of baseline)</li>
+                <li>Impaired liver function (elevated transaminases to twice the upper limit of normal)</li>
+                <li>Pulmonary edema</li>
+                <li>Cerebral or visual symptoms</li>
+              </ul>
+              
+              <p class="mb-3">Severe features of preeclampsia include:</p>
+              <ul class="list-disc pl-5 mb-3">
+                <li>Systolic BP ≥160 mmHg or diastolic BP ≥110 mmHg on two occasions at least 4 hours apart</li>
+                <li>Thrombocytopenia (platelet count <100,000/μL)</li>
+                <li>Impaired liver function (elevated transaminases to twice the upper limit of normal, severe right upper quadrant or epigastric pain)</li>
+                <li>Progressive renal insufficiency</li>
+                <li>Pul

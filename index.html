@@ -13,7 +13,7 @@
       padding: 0;
       overflow: hidden;
     }
-
+    
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
@@ -22,7 +22,7 @@
       align-items: center;
       justify-content: space-between;
     }
-
+    
     .main-container {
       display: flex;
       flex-direction: column;
@@ -31,7 +31,7 @@
       padding: 2rem;
       box-sizing: border-box;
     }
-
+    
     .content-wrapper {
       flex: 1;
       display: flex;
@@ -41,7 +41,7 @@
       max-width: 1400px;
       margin: 0 auto;
     }
-
+    
     .content-card {
       background-color: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(5px);
@@ -51,7 +51,7 @@
       display: flex;
       overflow: hidden;
     }
-
+    
     .number-circle {
       display: inline-flex;
       align-items: center;
@@ -65,7 +65,7 @@
       margin-right: 12px;
       flex-shrink: 0;
     }
-
+    
     .list-item {
       display: flex;
       align-items: center;
@@ -74,18 +74,18 @@
       transition: all 0.2s;
       cursor: pointer;
     }
-
+    
     .list-item:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
-
+    
     .vertical-divider {
       width: 1px;
       background: rgba(255, 255, 255, 0.3);
       height: auto;
       margin: 20px 0;
     }
-
+    
     .button-container {
       display: flex;
       justify-content: space-between;
@@ -93,7 +93,7 @@
       max-width: 1400px;
       margin: 1.5rem auto 0;
     }
-
+    
     .action-btn {
       background-color: #2062b8; /* Middle of gradient */
       color: white;
@@ -103,28 +103,28 @@
       transition: all 0.2s;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-
+    
     .action-btn:hover {
       background-color: #2570d4;
       transform: translateY(-2px);
     }
-
+    
     @media (max-width: 768px) {
       .content-card {
         flex-direction: column;
       }
-
+      
       .vertical-divider {
         width: 100%;
         height: 1px;
         margin: 0;
       }
-
+      
       .button-container {
         flex-direction: column;
         gap: 12px;
       }
-
+      
       .button-container button {
         width: 100%;
       }
@@ -136,7 +136,7 @@
     <!-- Header Section -->
     <div class="text-center mb-6">
       <h1 class="text-3xl md:text-4xl font-bold text-white">CarePro</h1>
-
+      
       <!-- Search Bar -->
       <div class="w-full max-w-2xl mx-auto mt-6 flex">
         <input 
@@ -149,7 +149,7 @@
         </button>
       </div>
     </div>
-
+    
     <!-- Content Wrapper -->
     <div class="content-wrapper">
       <!-- Main Content -->
@@ -157,7 +157,7 @@
         <!-- Left Panel: OSCE Stations -->
         <div class="flex-1 p-6 overflow-auto">
           <h2 class="text-xl font-bold text-white mb-4">OSCE Stations</h2>
-
+          
           <div class="space-y-2">
             <div class="list-item">
               <div class="number-circle">1</div>
@@ -165,42 +165,42 @@
                 <span class="font-bold">Macleod's Clinical Examination:</span> 1 – Cardiovascular Examination
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">2</div>
               <div class="flex-1">
                 <span class="font-bold">Oxford Handbook of Clinical Medicine:</span> 2 – Respiratory Assessment
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">3</div>
               <div class="flex-1">
                 <span class="font-bold">Talley & O'Connor:</span> 3 – Abdominal Examination
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">4</div>
               <div class="flex-1">
                 <span class="font-bold">Kumar & Clark's Clinical Medicine:</span> 4 – Neurological Examination
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">5</div>
               <div class="flex-1">
                 <span class="font-bold">Davidson's Principles of Medicine:</span> 5 – Musculoskeletal Assessment
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">6</div>
               <div class="flex-1">
                 <span class="font-bold">Toronto Notes:</span> 6 – Psychiatric Interview
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">7</div>
               <div class="flex-1">
@@ -209,14 +209,14 @@
             </div>
           </div>
         </div>
-
+        
         <!-- Vertical Divider -->
         <div class="vertical-divider"></div>
-
+        
         <!-- Right Panel: Resources -->
         <div class="flex-1 p-6 overflow-auto">
           <h2 class="text-xl font-bold text-white mb-4">Resources</h2>
-
+          
           <div class="space-y-2">
             <div class="list-item">
               <div class="number-circle">1</div>
@@ -224,42 +224,42 @@
                 <span class="font-bold">RCOG:</span> Green-top Guideline No. 24 – Placenta Praevia – 2018
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">2</div>
               <div class="flex-1">
                 <span class="font-bold">NICE:</span> Antenatal care – 2021
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">3</div>
               <div class="flex-1">
                 <span class="font-bold">BMJ:</span> Best Practice – Hypertension in Pregnancy – 2022
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">4</div>
               <div class="flex-1">
                 <span class="font-bold">WHO:</span> Recommendations on Maternal and Newborn Care – 2021
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">5</div>
               <div class="flex-1">
                 <span class="font-bold">ACOG:</span> Practice Bulletin No. 222 – Gestational Diabetes – 2020
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">6</div>
               <div class="flex-1">
                 <span class="font-bold">RCOG:</span> Green-top Guideline No. 37a – Reduced Fetal Movements – 2017
               </div>
             </div>
-
+            
             <div class="list-item">
               <div class="number-circle">7</div>
               <div class="flex-1">
@@ -270,19 +270,19 @@
         </div>
       </div>
     </div>
-
+    
     <!-- Navigation Buttons -->
     <div class="button-container">
       <button id="backBtn" class="action-btn">
         Back
       </button>
-
+      
       <button id="doneBtn" class="action-btn">
         Done
       </button>
     </div>
   </div>
-
+  
   <script>
     // Simple functionality for interactive elements
     document.querySelectorAll('.list-item').forEach(item => {
@@ -291,23 +291,23 @@
         this.classList.toggle('bg-[rgba(255,255,255,0.15)]');
       });
     });
-
+    
     // Search functionality
     const searchInput = document.querySelector('input[type="text"]');
     const searchButton = searchInput.nextElementSibling;
-
+    
     searchButton.addEventListener('click', function() {
       const searchTerm = searchInput.value.toLowerCase();
-
+      
       if (searchTerm.trim() === '') {
         alert('Please enter a search term');
         return;
       }
-
+      
       // Filter list items based on search term
       document.querySelectorAll('.list-item').forEach(item => {
         const text = item.textContent.toLowerCase();
-
+        
         if (text.includes(searchTerm)) {
           item.style.display = 'flex';
         } else {
@@ -315,22 +315,22 @@
         }
       });
     });
-
+    
     // Back button functionality
     document.getElementById('backBtn').addEventListener('click', function() {
       alert('Going back to previous page');
       // In a real app, this would navigate back to the previous page
       // window.location.href = 'previous-page.html';
     });
-
+    
     // Done button functionality
     document.getElementById('doneBtn').addEventListener('click', function() {
       const selectedItems = [];
-
+      
       document.querySelectorAll('.list-item.bg-[rgba(255,255,255,0.15)]').forEach(item => {
         selectedItems.push(item.textContent.trim());
       });
-
+      
       if (selectedItems.length === 0) {
         alert('Please select at least one item before proceeding');
       } else {
@@ -339,17 +339,18 @@
         // window.location.href = 'study.html';
       }
     });
-
+    
     // Function to adjust content height
     function adjustContentHeight() {
       const mainContainer = document.querySelector('.main-container');
       const windowHeight = window.innerHeight;
       mainContainer.style.height = `${windowHeight}px`;
     }
-
+    
     // Initial adjustment and on resize
     window.addEventListener('resize', adjustContentHeight);
     adjustContentHeight();
   </script>
 </body>
 </html>
+

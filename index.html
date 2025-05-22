@@ -3,198 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OSCE MRCPI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Obstetrics - Study MRCPI</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
-      min-height: 100vh;
-      margin: 0;
-      overflow: hidden;
-    }
-    .custom-scroll::-webkit-scrollbar {
-      width: 7px;
-      background: #e1e6ef;
-      border-radius: 4px;
-    }
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background: #2062b8;
-      border-radius: 4px;
-    }
-    .divider {
-      width: 2px;
-      background: linear-gradient(180deg, #c7d2fe 10%, #7b1fa2 90%);
-      min-height: 80%;
-      margin: 0 10px;
-      border-radius: 1px;
-    }
-    .timer-divider {
-      width: 2px;
-      background: linear-gradient(90deg, #c7d2fe 10%, #7b1fa2 90%);
-      height: 24px;
-      margin: 0 8px;
-      border-radius: 1px;
-    }
-    .tutor-active {
-      background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
-      animation: clouds 3s infinite alternate;
-    }
-    .back-button {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(255, 255, 255, 0.9);
-      margin-top: 16px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: all 0.2s ease;
-      text-decoration: none; /* Ensure no underline on link */
-      cursor: pointer;
-    }
-    .back-button:hover {
-      background-color: rgba(219, 234, 254, 0.9);
-      transform: scale(1.05);
-    }
-    .sidebar-spacing {
-      height: 16px;
-    }
-    @keyframes clouds {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
-    @media (max-width: 900px) {
-      .main-flex { flex-direction: column !important; }
-      .divider { display: none; }
-      .left-panel { max-width: 100%; margin-bottom: 18px;}
-      .summary-scroll { max-height: 320px; }
-      .center-vert { justify-content: flex-start !important; }
+      background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
     }
   </style>
 </head>
-<body>
-  <div class="flex flex-row h-screen main-flex">
-    <![-- Left Panel ](Navigation) -->
-    <div class="left-panel flex flex-col w-1/3 max-w-xs min-w-[290px] px-4 pt-4 pb-4 center-vert justify-center">
-      <div class="flex flex-col items-center">
-        <h2 class="text-3xl font-bold text-white tracking-wide drop-shadow">OSCE MRCPI</h2>
-      </div>
-      <div class="sidebar-spacing"></div>
-      <div class="flex flex-col items-center">
-        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">SD</button>
-        <div class="sidebar-spacing"></div>
-        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">SPT</button>
-        <div class="sidebar-spacing"></div>
-        <button class="w-full h-12 rounded-xl bg-white/90 hover:bg-blue-100 text-[#7b1fa2] font-semibold text-lg shadow transition">LWP</button>
-        <div class="sidebar-spacing"></div>
-        <div id="liveTutorBox" class="w-full h-12 rounded-xl bg-white/90 flex items-center justify-center px-4 shadow relative transition">
-          <div class="flex items-center gap-2">
-            <button id="playBtn" title="Play" class="focus:outline-none"><svg width="24" height="24" fill="#2062b8"><polygon points="8,5 19,12 8,19"></polygon></svg></button>
-            <div class="timer-divider"></div>
-            <button id="pauseBtn" title="Pause" class="focus:outline-none"><svg width="24" height="24" fill="#ff8300"><rect x="7" y="5" width="4" height="14"></rect><rect x="13" y="5" width="4" height="14"></rect></svg></button>
-            <span id="timer" class="ml-1 text-sm font-bold text-[#2062b8]">25:00</span>
-          </div>
+<body class="min-h-screen px-4 py-6">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-semibold text-center mb-6">🩺 Study MRCPI – Obstetrics</h1>
+
+    <!-- Search Bar -->
+    <div class="mb-6">
+      <input type="text" id="searchInput" placeholder="Search topic..." class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <!-- Topics Section -->
+    <div class="space-y-6" id="topicsContainer">
+
+      <!-- Maternal Medicine -->
+      <div>
+        <h2 class="text-xl font-semibold text-blue-800 mb-2">Maternal Medicine</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <button class="btn-topic">Graves’ disease</button>
+          <button class="btn-topic">Chronic renal disease & transplant</button>
+          <button class="btn-topic">Gestational thrombocytopenia</button>
+          <button class="btn-topic">Diabetes mellitus (DM)</button>
+          <button class="btn-topic">Venous thromboembolism (VTE)</button>
+          <button class="btn-topic">Epilepsy</button>
+          <button class="btn-topic">Rheumatic diseases</button>
+          <button class="btn-topic">MS / AS</button>
+          <button class="btn-topic">Coarctation of aorta</button>
+          <button class="btn-topic">Obesity / Advanced maternal age</button>
+          <button class="btn-topic">Sickle cell disease (SCD)</button>
         </div>
-        <div class="sidebar-spacing"></div>
-        <!-- Back Button - Properly linked to index.html -->
-        <a href="index.html" class="back-button" id="backButton" onclick="goToIndex()">
-          <span class="text-[#2062b8] font-semibold">Back</span>
-        </a>
+      </div>
+
+      <!-- Maternal Infections -->
+      <div>
+        <h2 class="text-xl font-semibold text-red-700 mb-2">Maternal Infections</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <button class="btn-topic">Parvovirus B19</button>
+          <button class="btn-topic">Genital herpes</button>
+          <button class="btn-topic">Hepatitis B</button>
+          <button class="btn-topic">Chickenpox</button>
+          <button class="btn-topic">Malaria</button>
+          <button class="btn-topic">HIV</button>
+        </div>
+      </div>
+
+      <!-- Antenatal Care -->
+      <div>
+        <h2 class="text-xl font-semibold text-purple-700 mb-2">Antenatal Care</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <button class="btn-topic">Obstetric cholestasis (OC)</button>
+          <button class="btn-topic">Preterm labour (PTL)</button>
+          <button class="btn-topic">PPROM</button>
+          <button class="btn-topic">Antepartum haemorrhage (APH)</button>
+          <button class="btn-topic">PET / Eclampsia</button>
+        </div>
+      </div>
+
+      <!-- Fetal Medicine -->
+      <div>
+        <h2 class="text-xl font-semibold text-green-700 mb-2">Fetal Medicine</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <button class="btn-topic">Oligohydramnios</button>
+          <button class="btn-topic">LGA</button>
+          <button class="btn-topic">Polyhydramnios</button>
+          <button class="btn-topic">IUFD</button>
+          <button class="btn-topic">Red cell antibodies</button>
+          <button class="btn-topic">FGR</button>
+          <button class="btn-topic">Twins</button>
+        </div>
+      </div>
+
+      <!-- Obstetric Emergencies -->
+      <div>
+        <h2 class="text-xl font-semibold text-orange-600 mb-2">Obstetric Emergencies</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <button class="btn-topic">Shoulder dystocia</button>
+          <button class="btn-topic">Maternal collapse</button>
+          <button class="btn-topic">PPH</button>
+        </div>
+      </div>
+
+      <!-- Labour & Delivery -->
+      <div>
+        <h2 class="text-xl font-semibold text-pink-600 mb-2">Labour & Delivery</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <button class="btn-topic">Home birth</button>
+          <button class="btn-topic">Breech</button>
+          <button class="btn-topic">Delayed 2nd stage + OVD</button>
+          <button class="btn-topic">Broken perineum</button>
+          <button class="btn-topic">Caesarean section</button>
+          <button class="btn-topic">Perineal tears</button>
+          <button class="btn-topic">Labour ward prioritisation (LWP)</button>
+        </div>
       </div>
     </div>
-    <!-- Divider -->
-    <div class="divider self-center"></div>
-    <![-- Right Panel ](Content) -->
-    <div class="flex-1 flex flex-col justify-start h-full py-10 px-8 overflow-hidden">
-      <!-- Lesson Title -->
-      <div class="mb-4 flex items-center justify-center" style="height:54px;">
-        <h3 
-          class="text-3xl font-bold mb-2 text-center"
-          style="color:#d7e9fc; letter-spacing:0.5px;">
-          Hyperemesis Gravidarum
-        </h3>
-      </div>
-      <![-- Lesson Summary ](Scrollable) -->
-      <div class="bg-white/90 rounded-xl shadow-lg p-6 custom-scroll overflow-y-auto" style="height: calc(100vh - 170px); max-height: 620px;">
-        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Definition</h4>
-        <p class="mb-4">
-          Hyperemesis gravidarum is a severe form of nausea and vomiting in pregnancy associated with weight loss, dehydration, and electrolyte imbalance. 
-        </p>
-        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Epidemiology</h4>
-        <p class="mb-4">
-          Occurs in up to 1% of pregnancies. Risk factors include multiple pregnancy, molar pregnancy, and previous history.
-        </p>
-        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Diagnosis</h4>
-        <ul class="list-disc ml-6 mb-4">
-          <li>Persistent vomiting</li>
-          <li>Weight loss &gt;5% pre-pregnancy weight</li>
-          <li>Ketonuria, electrolyte imbalance, dehydration</li>
-        </ul>
-        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">Management</h4>
-        <ul class="list-disc ml-6 mb-4">
-          <li>Rehydration (oral/IV fluids)</li>
-          <li>Antiemetics: cyclizine, prochlorperazine, ondansetron (as per RCOG/BNF)</li>
-          <li>Vitamin supplementation (thiamine)</li>
-          <li>Thromboprophylaxis if admitted</li>
-        </ul>
-        <h4 class="font-semibold text-lg text-[#2062b8] mb-2">References</h4>
-        <ul class="list-disc ml-6">
-          <li>
-            <a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/the-management-of-nausea-and-vomiting-of-pregnancy-and-hyperemesis-gravidarum-green-top-guideline-no-69/" target="_blank" class="text-[#2062b8] underline">RCOG Green-top Guideline No. 69</a>
-          </li>
-        </ul>
-        <div style="height:160px;"></div>
-      </div>
+
+    <!-- Back Button -->
+    <div class="mt-10 flex justify-center">
+      <a href="study.html" class="bg-gray-700 hover:bg-gray-900 text-white font-semibold px-6 py-2 rounded-full">← Back to Study</a>
     </div>
   </div>
+
+  <!-- Styling for topic buttons -->
+  <style>
+    .btn-topic {
+      background-color: #f1f5f9;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 500;
+      text-align: left;
+      transition: background-color 0.2s ease;
+    }
+    .btn-topic:hover {
+      background-color: #dbeafe;
+    }
+  </style>
+
+  <!-- Simple search filter -->
   <script>
-    // Timer for countdown from 25:00 to 00:00
-    let timerInterval;
-    let time = 25 * 60; // 25 minutes in seconds
-    const timerDisplay = document.getElementById('timer');
-    const playBtn = document.getElementById('playBtn');
-    const pauseBtn = document.getElementById('pauseBtn');
-    
-    // Initialize timer display
-    updateTimerDisplay();
-    
-    function updateTimerDisplay() {
-      const min = String(Math.floor(time / 60)).padStart(2, '0');
-      const sec = String(time % 60).padStart(2, '0');
-      timerDisplay.textContent = `${min}:${sec}`;
-    }
-    
-    playBtn.onclick = function() {
-      clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        if (time > 0) {
-          time--;
-          updateTimerDisplay();
-        } else {
-          clearInterval(timerInterval);
-          // Alert when timer reaches 00:00
-          alert('Time is up!');
-        }
-      }, 1000);
-      document.getElementById('liveTutorBox').classList.add('tutor-active');
-    };
-    
-    pauseBtn.onclick = function() {
-      clearInterval(timerInterval);
-      document.getElementById('liveTutorBox').classList.remove('tutor-active');
-    };
-    
-    // Function to navigate back to index page
-    function goToIndex() {
-      window.location.href = 'index.html';
-    }
-    
-    // Add a click event handler for the back button as a backup
-    document.getElementById('backButton').addEventListener('click', function(e) {
-      goToIndex();
+    const searchInput = document.getElementById('searchInput');
+    const buttons = document.querySelectorAll('.btn-topic');
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      buttons.forEach(btn => {
+        btn.style.display = btn.textContent.toLowerCase().includes(query) ? 'block' : 'none';
+      });
     });
   </script>
 </body>

@@ -4,9 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Obstetrics Topics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       margin: 0;
+      font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       background: linear-gradient(
         120deg,
@@ -15,7 +18,6 @@
         rgba(123, 31, 162, 0.7) 100%
       );
       position: relative;
-      font-family: sans-serif;
     }
 
     .line-art {
@@ -30,31 +32,69 @@
       background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 Q120,120 340,60 Q600,0 800,180 Q900,270 1200,180" stroke="white" stroke-width="2" fill="none"/><circle cx="650" cy="200" r="80" stroke="white" stroke-width="1" fill="none"/></svg>') no-repeat center/cover;
     }
 
-    .content {
+    .module {
       position: relative;
       z-index: 1;
-      text-align: center;
-      color: white;
-      padding: 100px 20px;
+      background: rgba(255,255,255,0.9);
+      margin: 2rem auto;
+      max-width: 900px;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
-    h1 {
-      font-size: 2.5rem;
+    .module h2 {
+      font-size: 1.5rem;
       font-weight: 600;
+      margin-bottom: 1rem;
     }
 
-    p {
-      font-size: 1.2rem;
-      opacity: 0.9;
+    .module ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .module li {
+      padding: 0.5rem 0;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .module input[type="checkbox"] {
+      margin-right: 0.75rem;
     }
   </style>
 </head>
 <body>
   <div class="line-art"></div>
 
-  <div class="content">
-    <h1>Welcome to Obstetrics</h1>
-    <p>This is a clean demo with the 30% lighter CarePro gradient background and subtle line-art overlay.</p>
+  <div class="module">
+    <h2>Maternal Medicine</h2>
+    <ul>
+      <li><input type="checkbox"> Graves disease</li>
+      <li><input type="checkbox"> Chronic renal disease & transplant</li>
+      <li><input type="checkbox"> Gestational thrombocytopenia</li>
+      <li><input type="checkbox"> DM</li>
+      <li><input type="checkbox"> VTE</li>
+      <li><input type="checkbox"> Epilepsy</li>
+      <li><input type="checkbox"> Rheumatic diseases</li>
+      <li><input type="checkbox"> MS/AS</li>
+      <li><input type="checkbox"> Coarctation of Aorta</li>
+      <li><input type="checkbox"> Obesity / advanced maternal age</li>
+      <li><input type="checkbox"> SCD</li>
+    </ul>
+  </div>
+
+  <div class="module">
+    <h2>Maternal Infections</h2>
+    <ul>
+      <li><input type="checkbox"> Parvovirus B19</li>
+      <li><input type="checkbox"> Genital Herpes</li>
+      <li><input type="checkbox"> Hepatitis B</li>
+      <li><input type="checkbox"> Chickenpox</li>
+      <li><input type="checkbox"> Malaria</li>
+      <li><input type="checkbox"> HIV</li>
+    </ul>
   </div>
 </body>
 </html>

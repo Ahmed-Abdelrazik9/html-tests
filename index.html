@@ -1,144 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Obstetrics - Study MRCPI</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study – Obstetrics</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-    }
-  </style>
 </head>
-<body class="min-h-screen px-4 py-6">
-  <div class="max-w-4xl mx-auto">
-    <h1 class="text-3xl font-semibold text-center mb-6">🩺 Study MRCPI – Obstetrics</h1>
+<body class="bg-gradient-to-br from-indigo-900 via-blue-600 to-purple-700 min-h-screen text-white p-4">
+  <div class="max-w-4xl mx-auto space-y-6">
+    <h1 class="text-3xl font-bold text-center mb-4">Study MRCPI – Obstetrics</h1>
 
     <!-- Search Bar -->
-    <div class="mb-6">
-      <input type="text" id="searchInput" placeholder="Search topic..." class="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <div class="flex gap-2">
+      <input id="searchInput" type="text" placeholder="Search a topic..." class="flex-1 p-2 rounded text-black" />
+      <button onclick="performSearch()" class="bg-white text-indigo-800 px-4 py-2 rounded">Search</button>
     </div>
 
-    <!-- Topics Section -->
-    <div class="space-y-6" id="topicsContainer">
-
-      <!-- Maternal Medicine -->
+    <!-- Results Section -->
+    <div id="results" class="hidden mt-6 space-y-6">
+      <!-- From Books -->
       <div>
-        <h2 class="text-xl font-semibold text-blue-800 mb-2">Maternal Medicine</h2>
-        <div class="grid grid-cols-2 gap-3">
-          <button class="btn-topic">Graves’ disease</button>
-          <button class="btn-topic">Chronic renal disease & transplant</button>
-          <button class="btn-topic">Gestational thrombocytopenia</button>
-          <button class="btn-topic">Diabetes mellitus (DM)</button>
-          <button class="btn-topic">Venous thromboembolism (VTE)</button>
-          <button class="btn-topic">Epilepsy</button>
-          <button class="btn-topic">Rheumatic diseases</button>
-          <button class="btn-topic">MS / AS</button>
-          <button class="btn-topic">Coarctation of aorta</button>
-          <button class="btn-topic">Obesity / Advanced maternal age</button>
-          <button class="btn-topic">Sickle cell disease (SCD)</button>
+        <h2 class="text-xl font-semibold">From OSCE Books</h2>
+        <ul class="list-disc list-inside space-y-1">
+          <li><a href="#" class="underline text-blue-200">Konje – Station 21 – Eclampsia Management</a></li>
+          <li><a href="#" class="underline text-blue-200">Clark – Station 9 – Shoulder Dystocia</a></li>
+        </ul>
+      </div>
+
+      <!-- From Official Sources -->
+      <div>
+        <h2 class="text-xl font-semibold">From Trusted Guidelines</h2>
+        <div class="space-y-1">
+          <label><input type="checkbox" class="mr-2" value="NICE" /> NICE (e.g., Hypertension in Pregnancy)</label><br/>
+          <label><input type="checkbox" class="mr-2" value="RCOG" /> RCOG (e.g., Green-top Guidelines)</label><br/>
+          <label><input type="checkbox" class="mr-2" value="TOG" /> TOG Journal</label><br/>
+          <label><input type="checkbox" class="mr-2" value="FSRH" /> FSRH Guidance</label><br/>
+          <label><input type="checkbox" class="mr-2" value="NHS" /> NHS.uk</label>
         </div>
       </div>
 
-      <!-- Maternal Infections -->
-      <div>
-        <h2 class="text-xl font-semibold text-red-700 mb-2">Maternal Infections</h2>
-        <div class="grid grid-cols-2 gap-3">
-          <button class="btn-topic">Parvovirus B19</button>
-          <button class="btn-topic">Genital herpes</button>
-          <button class="btn-topic">Hepatitis B</button>
-          <button class="btn-topic">Chickenpox</button>
-          <button class="btn-topic">Malaria</button>
-          <button class="btn-topic">HIV</button>
-        </div>
+      <!-- Action Buttons -->
+      <div class="flex gap-4 mt-4">
+        <button onclick="generateSummary()" class="bg-green-500 px-4 py-2 rounded text-white">Done</button>
+        <button onclick="window.print()" class="bg-yellow-500 px-4 py-2 rounded text-white">Print</button>
       </div>
 
-      <!-- Antenatal Care -->
-      <div>
-        <h2 class="text-xl font-semibold text-purple-700 mb-2">Antenatal Care</h2>
-        <div class="grid grid-cols-2 gap-3">
-          <button class="btn-topic">Obstetric cholestasis (OC)</button>
-          <button class="btn-topic">Preterm labour (PTL)</button>
-          <button class="btn-topic">PPROM</button>
-          <button class="btn-topic">Antepartum haemorrhage (APH)</button>
-          <button class="btn-topic">PET / Eclampsia</button>
-        </div>
-      </div>
-
-      <!-- Fetal Medicine -->
-      <div>
-        <h2 class="text-xl font-semibold text-green-700 mb-2">Fetal Medicine</h2>
-        <div class="grid grid-cols-2 gap-3">
-          <button class="btn-topic">Oligohydramnios</button>
-          <button class="btn-topic">LGA</button>
-          <button class="btn-topic">Polyhydramnios</button>
-          <button class="btn-topic">IUFD</button>
-          <button class="btn-topic">Red cell antibodies</button>
-          <button class="btn-topic">FGR</button>
-          <button class="btn-topic">Twins</button>
-        </div>
-      </div>
-
-      <!-- Obstetric Emergencies -->
-      <div>
-        <h2 class="text-xl font-semibold text-orange-600 mb-2">Obstetric Emergencies</h2>
-        <div class="grid grid-cols-2 gap-3">
-          <button class="btn-topic">Shoulder dystocia</button>
-          <button class="btn-topic">Maternal collapse</button>
-          <button class="btn-topic">PPH</button>
-        </div>
-      </div>
-
-      <!-- Labour & Delivery -->
-      <div>
-        <h2 class="text-xl font-semibold text-pink-600 mb-2">Labour & Delivery</h2>
-        <div class="grid grid-cols-2 gap-3">
-          <button class="btn-topic">Home birth</button>
-          <button class="btn-topic">Breech</button>
-          <button class="btn-topic">Delayed 2nd stage + OVD</button>
-          <button class="btn-topic">Broken perineum</button>
-          <button class="btn-topic">Caesarean section</button>
-          <button class="btn-topic">Perineal tears</button>
-          <button class="btn-topic">Labour ward prioritisation (LWP)</button>
-        </div>
+      <!-- Summary Output -->
+      <div id="summaryOutput" class="bg-white text-black p-4 rounded mt-4 hidden">
+        <h3 class="font-bold mb-2">Summary</h3>
+        <p>This is where your smart summary will appear based on the selected sources and search topic. It will not include references in the printout.</p>
       </div>
     </div>
 
     <!-- Back Button -->
-    <div class="mt-10 flex justify-center">
-      <a href="study.html" class="bg-gray-700 hover:bg-gray-900 text-white font-semibold px-6 py-2 rounded-full">← Back to Study</a>
+    <div class="flex justify-center mt-10">
+      <a href="study.html" class="bg-white text-indigo-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-200 transition">⬅ Back to Study</a>
     </div>
   </div>
 
-  <!-- Styling for topic buttons -->
-  <style>
-    .btn-topic {
-      background-color: #f1f5f9;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: 500;
-      text-align: left;
-      transition: background-color 0.2s ease;
-    }
-    .btn-topic:hover {
-      background-color: #dbeafe;
-    }
-  </style>
-
-  <!-- Simple search filter -->
   <script>
-    const searchInput = document.getElementById('searchInput');
-    const buttons = document.querySelectorAll('.btn-topic');
+    function performSearch() {
+      document.getElementById("results").classList.remove("hidden");
+      // You can dynamically change the results here using API if needed
+    }
 
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase();
-      buttons.forEach(btn => {
-        btn.style.display = btn.textContent.toLowerCase().includes(query) ? 'block' : 'none';
-      });
-    });
+    function generateSummary() {
+      const output = document.getElementById("summaryOutput");
+      output.classList.remove("hidden");
+      output.innerHTML = `
+        <h3 class="font-bold mb-2">Summary</h3>
+        <p>This is a smart summary generated for the searched topic (e.g., Pre-eclampsia) based on selected sources. All references are excluded in the final output as requested.</p>
+      `;
+    }
   </script>
 </body>
 </html>
+

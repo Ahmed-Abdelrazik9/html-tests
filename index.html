@@ -3,99 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CarePro OSCE - Search</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>CarePro OSCE - Search Results</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
+      position: relative;
     }
-    .action-button {
-      /* Base styles, Tailwind will override/extend */
-      transition: background-color 0.2s, transform 0.2s;
+    .line-art {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.10;
+      background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 Q120,120 340,60 Q600,0 800,180 Q900,270 1200,180" stroke="white" stroke-width="2" fill="none"/><circle cx="650" cy="200" r="80" stroke="white" stroke-width="1" fill="none"/></svg>') no-repeat center/cover;
     }
-    .action-button:hover {
-      transform: translateY(-1px);
+    .result-card {
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    /* Ensure Poppins is applied if Tailwind base resets it */
-    #searchView, #summaryView, #searchInput::placeholder, #searchInput, .result-item-label, .summary-item {
-        font-family: 'Poppins', sans-serif;
-    }
-    /* Custom scrollbar for results container (optional, for aesthetics) */
-    #resultsContainer::-webkit-scrollbar {
-        width: 8px;
-    }
-    #resultsContainer::-webkit-scrollbar-track {
-        background: rgba(200, 200, 200, 0.1);
-        border-radius: 10px;
-    }
-    #resultsContainer::-webkit-scrollbar-thumb {
-        background: rgba(32, 98, 184, 0.5); /* #2062b8 with opacity */
-        border-radius: 10px;
-    }
-    #resultsContainer::-webkit-scrollbar-thumb:hover {
-        background: rgba(32, 98, 184, 0.7);
+    .result-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px 0 rgba(16, 98, 200, 0.18);
     }
     .toast {
       position: fixed;
       bottom: 20px;
-      /* Adjusted right based on new button panel */
-      left: 50%;
-      transform: translateX(-50%);
+      right: 20px;
       padding: 12px 20px;
-      background: rgba(255, 255, 255, 0.98);
+      background: rgba(255, 255, 255, 0.95);
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      z-index: 1000; /* Ensure toast is above button panel */
+      z-index: 100;
+      transform: translateY(100px);
       opacity: 0;
       transition: transform 0.3s, opacity 0.3s;
     }
     .toast.show {
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
       opacity: 1;
     }
-    .toast.show.initial { /* To hide initially if it's off-screen */
-        transform: translateX(-50%) translateY(100px);
+    .gradient-text {
+      background: linear-gradient(90deg, #2062b8, #7b1fa2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+    }
+    .floating-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 50;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .circular-button {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
+    }
+    .circular-button:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
-<body class="h-screen overflow-hidden bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-200">
+<body>
+  <!-- RCOG line art style overlay -->
+  <div class="line-art"></div>
 
-  <div id="searchView" class="flex flex-col w-full h-full items-center">
-    <header class="w-full max-w-4xl pt-6 md:pt-8 px-4 md:px-0 z-20 shrink-0">
-      <h1 id="logo" class="text-3xl md:text-4xl text-center mb-6 font-semibold" style="color: #7b1fa2;">CarePro</h1>
-      <div id="searchFormContainer" class="w-full mb-4">
+  <div class="relative z-10 flex flex-col items-center min-h-screen p-4 md:p-8">
+    <!-- CarePro Title at the top center - Made clearer without symbols -->
+    <h1 class="text-4xl md:text-5xl text-white font-bold mb-8">CarePro</h1>
+
+    <!-- Search Form -->
+    <div class="w-full max-w-4xl mb-8">
+      <form id="searchForm" class="flex flex-col md:flex-row gap-3">
         <div class="flex-1 relative">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search for a medical topic..."
-            class="w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300 text-gray-800 placeholder-gray-500"
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search for a medical topic..." 
+            class="w-full px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-blue-300 focus:outline-none"
             value="Preeclampsia"
           >
-          </div>
-      </div>
-    </header>
-
-    <main id="resultsWrapper" class="w-full max-w-4xl flex-grow overflow-hidden mb-4 px-4 md:px-0 z-10">
-      <div id="resultsContainer" class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-xl h-full overflow-y-auto">
-        <div class="flex justify-center items-center h-full">
-          <p class="text-gray-500 text-center">Enter a search term and click 'Search' to find medical topics.</p>
         </div>
-      </div>
-    </main>
-  </div>
-
-  <div id="summaryView" class="hidden flex-col w-full h-full items-center p-4 md:p-8">
+      </form>
     </div>
 
-  <div id="actionButtonsContainer" class="fixed top-1/2 right-3 md:right-5 transform -translate-y-1/2 flex flex-col space-y-3 z-50 p-3 bg-gray-50 bg-opacity-70 backdrop-blur-sm rounded-xl shadow-lg">
-    <button id="searchBtnExternal" class="action-button text-sm px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 shadow">Search</button>
-    <button id="doneBtn" class="action-button text-sm px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 shadow">Done</button>
-    <button id="backBtnExternal" class="action-button text-sm px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 shadow">Back</button>
+    <!-- Search Results Section - Extended by 50% vertically -->
+    <div id="resultsContainer" class="w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-12 min-h-[calc(100vh-200px)]">
+      <!-- Results will be populated here by JavaScript -->
+      <div class="flex justify-center items-center py-8">
+        <p class="text-gray-500">Enter a search term to find medical topics.</p>
+      </div>
+    </div>
+
+    <!-- Bottom Buttons Container -->
+    <div class="fixed bottom-6 w-full flex justify-between px-6 z-50">
+      <!-- Back Button - Square, same style as Done -->
+      <a href="index.html" class="px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors">
+        Back
+      </a>
+      
+      <!-- Search Button - Same style as Done -->
+      <button id="searchBtn" class="px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors mr-4">
+        Search
+      </button>
+      
+      <!-- Done Button -->
+      <button id="doneBtn" class="px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors">
+        Done
+      </button>
+    </div>
   </div>
 
-  <div id="toast" class="toast flex items-center initial">
+  <!-- Toast Notification -->
+  <div id="toast" class="toast flex items-center">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
     </svg>
@@ -103,29 +133,97 @@
   </div>
 
   <script>
+    /**
+     * Sample database of medical topics
+     */
     const medicalTopics = {
       books: [
-        { id: 'b1', title: 'Preeclampsia and Hypertensive Disorders', source: 'Williams Obstetrics, 25th Edition', pages: '710-742', keywords: ['preeclampsia', 'hypertension', 'pregnancy', 'eclampsia', 'gestational hypertension']},
-        { id: 'b2', title: 'Severe Preeclampsia Management', source: 'Clinical Obstetrics: The Fetus & Mother', pages: '423-450', keywords: ['preeclampsia', 'severe', 'management', 'eclampsia', 'HELLP']},
-        { id: 'b3', title: 'Diabetes in Pregnancy', source: 'Williams Obstetrics, 25th Edition', pages: '1125-1156', keywords: ['diabetes', 'gestational diabetes', 'pregnancy', 'insulin', 'glucose']},
-        { id: 'b4', title: 'Postpartum Hemorrhage', source: 'Obstetric Emergencies: A Practical Guide', pages: '87-112', keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'blood loss']}
+        {
+          id: 'b1',
+          title: 'Preeclampsia and Hypertensive Disorders',
+          source: 'Williams Obstetrics, 25th Edition',
+          pages: '710-742',
+          keywords: ['preeclampsia', 'hypertension', 'pregnancy', 'eclampsia', 'gestational hypertension']
+        },
+        {
+          id: 'b2',
+          title: 'Severe Preeclampsia Management',
+          source: 'Clinical Obstetrics: The Fetus & Mother',
+          pages: '423-450',
+          keywords: ['preeclampsia', 'severe', 'management', 'eclampsia', 'HELLP']
+        },
+        {
+          id: 'b3',
+          title: 'Diabetes in Pregnancy',
+          source: 'Williams Obstetrics, 25th Edition',
+          pages: '1125-1156',
+          keywords: ['diabetes', 'gestational diabetes', 'pregnancy', 'insulin', 'glucose']
+        },
+        {
+          id: 'b4',
+          title: 'Postpartum Hemorrhage',
+          source: 'Obstetric Emergencies: A Practical Guide',
+          pages: '87-112',
+          keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'blood loss']
+        }
       ],
       osceStations: [
-        { id: 'o1', title: 'Preeclampsia Assessment Station', source: 'OSCE Clinical Skills Handbook', duration: '10 minutes', keywords: ['preeclampsia', 'assessment', 'clinical skills', 'hypertension', 'pregnancy']},
-        { id: 'o2', title: 'Obstetric Emergency: Eclampsia', source: 'Emergency OSCE Scenarios Guide', duration: '15 minutes', keywords: ['eclampsia', 'seizure', 'emergency', 'magnesium sulfate', 'hypertension']}
+        {
+          id: 'o1',
+          title: 'Preeclampsia Assessment Station',
+          source: 'OSCE Clinical Skills',
+          duration: '10 minutes',
+          keywords: ['preeclampsia', 'assessment', 'clinical skills', 'hypertension', 'pregnancy']
+        },
+        {
+          id: 'o2',
+          title: 'Obstetric Emergency: Eclampsia',
+          source: 'Emergency OSCE Scenarios',
+          duration: '15 minutes',
+          keywords: ['eclampsia', 'seizure', 'emergency', 'magnesium sulfate', 'hypertension']
+        }
       ],
       guidelines: [
-        { id: 'g1', title: 'Hypertension in Pregnancy', source: 'RCOG Green-top Guideline No. 37a', updated: '2023', keywords: ['hypertension', 'preeclampsia', 'pregnancy', 'blood pressure', 'eclampsia']},
-        { id: 'g2', title: 'Preeclampsia: Diagnosis and Management', source: 'NICE Guideline NG133', updated: '2024', keywords: ['preeclampsia', 'diagnosis', 'management', 'hypertension', 'proteinuria']},
-        { id: 'g3', title: 'Gestational Diabetes Mellitus', source: 'ACOG Practice Bulletin No. 190', updated: '2023', keywords: ['diabetes', 'gestational diabetes', 'pregnancy', 'glucose', 'screening']},
-        { id: 'g4', title: 'Management of Postpartum Hemorrhage', source: 'RCOG Green-top Guideline No. 52', updated: '2022', keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'transfusion']}
+        {
+          id: 'g1',
+          title: 'Hypertension in Pregnancy',
+          source: 'RCOG Green-top Guideline No. 37a',
+          updated: '2023',
+          keywords: ['hypertension', 'preeclampsia', 'pregnancy', 'blood pressure', 'eclampsia']
+        },
+        {
+          id: 'g2',
+          title: 'Preeclampsia: Diagnosis and Management',
+          source: 'NICE Guideline NG133',
+          updated: '2024',
+          keywords: ['preeclampsia', 'diagnosis', 'management', 'hypertension', 'proteinuria']
+        },
+        {
+          id: 'g3',
+          title: 'Gestational Diabetes Mellitus',
+          source: 'ACOG Practice Bulletin No. 190',
+          updated: '2023',
+          keywords: ['diabetes', 'gestational diabetes', 'pregnancy', 'glucose', 'screening']
+        },
+        {
+          id: 'g4',
+          title: 'Management of Postpartum Hemorrhage',
+          source: 'RCOG Green-top Guideline No. 52',
+          updated: '2022',
+          keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'transfusion']
+        }
       ]
     };
 
+    /**
+     * Calculate similarity score between search query and a topic
+     */
     function calculateSimilarity(query, topic) {
       query = query.toLowerCase();
       if (topic.title.toLowerCase().includes(query)) return 100;
-      const keywordMatches = topic.keywords.filter(keyword => keyword.includes(query) || query.includes(keyword)).length;
+      const keywordMatches = topic.keywords.filter(keyword => 
+        keyword.includes(query) || query.includes(keyword)
+      ).length;
       if (keywordMatches > 0) {
         const keywordScore = (keywordMatches / topic.keywords.length) * 100;
         const closestKeyword = topic.keywords.reduce((closest, keyword) => {
@@ -139,24 +237,37 @@
       let titleMatchCount = 0;
       for (const qWord of queryWords) {
         for (const tWord of titleWords) {
-          if (tWord.includes(qWord) || qWord.includes(tWord) || levenshteinSimilarity(qWord, tWord) > 0.7) {
-            titleMatchCount++; break;
+          if (tWord.includes(qWord) || qWord.includes(tWord) || 
+              levenshteinSimilarity(qWord, tWord) > 0.7) {
+            titleMatchCount++;
+            break;
           }
         }
       }
-      if (titleMatchCount > 0) return Math.min(90, (titleMatchCount / queryWords.length) * 100);
-      return Math.round(levenshteinSimilarity(query, topic.title.toLowerCase()) * 100);
+      if (titleMatchCount > 0) {
+        return Math.min(90, (titleMatchCount / queryWords.length) * 100);
+      }
+      const overallSimilarity = levenshteinSimilarity(query, topic.title.toLowerCase()) * 100;
+      return Math.round(overallSimilarity);
     }
 
+    /**
+     * Calculate Levenshtein similarity between two strings
+     */
     function levenshteinSimilarity(a, b) {
-      if (a.length === 0) return 0; if (b.length === 0) return 0;
-      const matrix = Array(a.length + 1).fill(null).map(() => Array(b.length + 1).fill(0));
+      if (a.length === 0) return 0;
+      if (b.length === 0) return 0;
+      const matrix = Array(a.length + 1).fill().map(() => Array(b.length + 1).fill(0));
       for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
       for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
       for (let i = 1; i <= a.length; i++) {
         for (let j = 1; j <= b.length; j++) {
           const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-          matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j] + 1,      // deletion
+            matrix[i][j - 1] + 1,      // insertion
+            matrix[i - 1][j - 1] + cost // substitution
+          );
         }
       }
       const distance = matrix[a.length][b.length];
@@ -164,212 +275,230 @@
       return maxLength > 0 ? 1 - (distance / maxLength) : 1;
     }
 
+    /**
+     * Search for topics matching the query
+     */
     function searchTopics(query) {
-      if (!query || query.trim() === '') return { books: [], osceStations: [], guidelines: [], exactMatch: false };
-      query = query.trim().toLowerCase();
-      // Exact match logic (can be used for highlighting if needed later)
-      const exactMatch = medicalTopics.books.some(b => b.title.toLowerCase() === query) ||
-                         medicalTopics.osceStations.some(s => s.title.toLowerCase() === query) ||
-                         medicalTopics.guidelines.some(g => g.title.toLowerCase() === query);
-
-      const scoredBooks = medicalTopics.books.map(book => ({ ...book, score: calculateSimilarity(query, book) })).filter(b => b.score >= 40).sort((a, b) => b.score - a.score);
-      const scoredOSCE = medicalTopics.osceStations.map(station => ({ ...station, score: calculateSimilarity(query, station) })).filter(s => s.score >= 40).sort((a, b) => b.score - a.score);
-      const scoredGuidelines = medicalTopics.guidelines.map(guideline => ({ ...guideline, score: calculateSimilarity(query, guideline) })).filter(g => g.score >= 40).sort((a, b) => b.score - a.score);
-      
-      return { books: scoredBooks, osceStations: scoredOSCE, guidelines: scoredGuidelines, exactMatch };
+      // --- FIX: Correct condition for empty query ---
+      if (![query || query.trim]() === '') {
+        return { books: [], osceStations: [], guidelines: [], exactMatch: false };
+      }
+      query = query.trim();
+      // --- FIX: Proper exact match logic ---
+      const exactMatchBook = medicalTopics.books.find(book =>
+        book.title.toLowerCase() === query.toLowerCase()
+      );
+      const exactMatchOSCE = medicalTopics.osceStations.find(station =>
+        station.title.toLowerCase() === query.toLowerCase()
+      );
+      const exactMatchGuideline = medicalTopics.guidelines.find(guideline =>
+        guideline.title.toLowerCase() === query.toLowerCase()
+      );
+      const exactMatch = ![!](exactMatchBook || exactMatchOSCE || exactMatchGuideline);
+      // ---
+      const scoredBooks = medicalTopics.books.map(book => ({
+        ...book,
+        score: calculateSimilarity(query, book)
+      })).sort((a, b) => b.score - a.score);
+      const scoredOSCE = medicalTopics.osceStations.map(station => ({
+        ...station,
+        score: calculateSimilarity(query, station)
+      })).sort((a, b) => b.score - a.score);
+      const scoredGuidelines = medicalTopics.guidelines.map(guideline => ({
+        ...guideline,
+        score: calculateSimilarity(query, guideline)
+      })).sort((a, b) => b.score - a.score);
+      const filteredBooks = scoredBooks.filter(book => book.score >= 50);
+      const filteredOSCE = scoredOSCE.filter(station => station.score >= 50);
+      const filteredGuidelines = scoredGuidelines.filter(guideline => guideline.score >= 50);
+      return {
+        books: filteredBooks,
+        osceStations: filteredOSCE,
+        guidelines: filteredGuidelines,
+        exactMatch
+      };
     }
 
+    /**
+     * Escape HTML to prevent XSS
+     */
     function escapeHtml(unsafe) {
-      return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
+    /**
+     * Show toast notification
+     */
     function showToast(message, duration = 3000) {
       const toast = document.getElementById('toast');
       const toastMessage = document.getElementById('toastMessage');
       toastMessage.textContent = message;
-      toast.classList.remove('initial'); // Ensure it's not stuck in initial hidden state
       toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); }, duration);
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
     }
 
-    async function searchDeepSeekAPI(query) { // Placeholder
-      console.log(`Simulating API search for: ${query}`);
-      await new Promise(resolve => setTimeout(resolve, 300));
-      return searchTopics(query);
+    /**
+     * Send search query to DeepSeek API
+     */
+    async function searchDeepSeekAPI(query) {
+      try {
+        // Placeholder for DeepSeek integration
+        console.log(`Searching DeepSeek API for: ${query}`);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        return searchTopics(query);
+      } catch (error) {
+        console.error('Error searching DeepSeek API:', error);
+        showToast('Error connecting to search service');
+        return searchTopics(query);
+      }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+      const searchForm = document.getElementById('searchForm');
       const searchInput = document.getElementById('searchInput');
       const resultsContainer = document.getElementById('resultsContainer');
-      const searchBtnExternal = document.getElementById('searchBtnExternal');
       const doneBtn = document.getElementById('doneBtn');
-      const backBtnExternal = document.getElementById('backBtnExternal');
-      const searchView = document.getElementById('searchView');
-      const summaryView = document.getElementById('summaryView');
-      const logoElement = document.getElementById('logo'); // For summary page
+      const searchBtn = document.getElementById('searchBtn');
 
-      function displaySearchResults(query, results) {
-        resultsContainer.innerHTML = ''; // Clear previous
+      // Handle search form submission
+      searchForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        performSearch();
+      });
+      
+      // Handle search button click
+      searchBtn.addEventListener('click', function() {
+        performSearch();
+      });
 
-        if (!results.books.length && !results.osceStations.length && !results.guidelines.length) {
-          resultsContainer.innerHTML = `<div class="flex justify-center items-center h-full"><p class="text-gray-600 text-lg text-center">No results found for "${escapeHtml(query)}".</p></div>`;
-          return;
-        }
-
-        let htmlContent = '<div class="space-y-6">';
-        let hasContent = false;
-
-        if (results.osceStations.length > 0) {
-          hasContent = true;
-          htmlContent += `<div><h3 class="text-lg font-bold mb-3 text-gray-800">OSCE Stations</h3><ul class="list-none space-y-2">`;
-          results.osceStations.forEach((station, index) => {
-            const stationLabel = `${index + 1}. ${escapeHtml(station.source)}: Station ${index + 1} - ${escapeHtml(station.title)}`;
-            htmlContent += `
-              <li class="flex items-start p-2 rounded-md hover:bg-gray-100 transition-colors duration-150">
-                <input type="checkbox" id="${station.id}" data-type="osce" data-item='${escapeHtml(JSON.stringify(station))}' class="mr-3 mt-1 h-5 w-5 text-blue-600 border-gray-400 rounded focus:ring-blue-500 cursor-pointer flex-shrink-0">
-                <label for="${station.id}" class="text-sm text-gray-700 result-item-label cursor-pointer">${stationLabel}</label>
-              </li>`;
-          });
-          htmlContent += `</ul></div>`;
-        }
-
-        const allResources = [...results.guidelines, ...results.books];
-        if (allResources.length > 0) {
-          hasContent = true;
-          htmlContent += `<div><h3 class="text-lg font-bold mb-3 text-gray-800">Resources</h3><ul class="list-none space-y-2">`;
-          allResources.forEach((resource, index) => {
-            let resourcePrefix = '';
-            let resourceTitle = escapeHtml(resource.title);
-            let resourceType = '';
-
-            if (resource.updated) { // Guideline
-              resourceType = 'guideline';
-              const sourceParts = resource.source.split(' ')[0]; // RCOG, NICE, ACOG
-              resourcePrefix = escapeHtml(sourceParts);
-            } else { // Book
-              resourceType = 'book';
-              resourcePrefix = escapeHtml(resource.source.split(',')[0]); // e.g., Williams Obstetrics
-            }
-            const resourceLabel = `${index + 1}. ${resourcePrefix}: ${resourceTitle}`;
-            htmlContent += `
-              <li class="flex items-start p-2 rounded-md hover:bg-gray-100 transition-colors duration-150">
-                <input type="checkbox" id="${resource.id}" data-type="${resourceType}" data-item='${escapeHtml(JSON.stringify(resource))}' class="mr-3 mt-1 h-5 w-5 text-blue-600 border-gray-400 rounded focus:ring-blue-500 cursor-pointer flex-shrink-0">
-                <label for="${resource.id}" class="text-sm text-gray-700 result-item-label cursor-pointer">${resourceLabel}</label>
-              </li>`;
-          });
-          htmlContent += `</ul></div>`;
-        }
-        
-        htmlContent += '</div>'; // Close .space-y-6
-        
-        if (hasContent) {
-            resultsContainer.innerHTML = htmlContent;
-        } else { // Should be caught by earlier check, but as a fallback
-            resultsContainer.innerHTML = `<div class="flex justify-center items-center h-full"><p class="text-gray-600 text-lg text-center">No relevant results for "${escapeHtml(query)}".</p></div>`;
-        }
-      }
-
-      function showSummaryPage() {
-        const selectedItems = [];
-        document.querySelectorAll('#resultsContainer input[type="checkbox"]:checked').forEach(cb => {
-          selectedItems.push(JSON.parse(cb.dataset.item));
-        });
-
-        if (selectedItems.length === 0) {
-          showToast('Please select at least one item to include in the summary.', 3000);
-          return;
-        }
-
-        let summaryHTML = `
-          <header class="w-full max-w-4xl pt-6 md:pt-8 px-4 md:px-0 z-20 shrink-0">
-            <h1 class="text-3xl md:text-4xl text-center mb-6 font-semibold" style="color: #7b1fa2;">CarePro</h1>
-          </header>
-          <main class="w-full max-w-4xl flex-grow overflow-hidden mb-4 px-4 md:px-0 z-10">
-            <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-xl h-full overflow-y-auto">
-              <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Study Summary</h2>
-                <button id="backToSearchBtnSummary" class="action-button text-sm px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors shadow">Back to Search</button>
-              </div>
-              <div class="space-y-6">
-        `;
-
-        const selectedOSCE = selectedItems.filter(item => item.duration); // OSCE stations have duration
-        if (selectedOSCE.length > 0) {
-          summaryHTML += `<div><h3 class="text-lg font-semibold mb-2 text-gray-700">Selected OSCE Stations:</h3><ul class="list-disc list-inside space-y-1 pl-2">`;
-          selectedOSCE.forEach((item, index) => {
-            summaryHTML += `<li class="text-gray-600 summary-item">${index + 1}. ${escapeHtml(item.source)}: ${escapeHtml(item.title)}</li>`;
-          });
-          summaryHTML += `</ul></div>`;
-        }
-
-        const selectedResources = selectedItems.filter(item => !item.duration); // Guidelines and books
-        if (selectedResources.length > 0) {
-          summaryHTML += `<div><h3 class="text-lg font-semibold mb-2 text-gray-700">Selected Resources:</h3><ul class="list-disc list-inside space-y-1 pl-2">`;
-          selectedResources.forEach((item, index) => {
-             let prefix = item.updated ? item.source.split(' ')[0] : item.source.split(',')[0]; // RCOG/NICE or Book Source
-            summaryHTML += `<li class="text-gray-600 summary-item">${index + 1}. ${escapeHtml(prefix)}: ${escapeHtml(item.title)}</li>`;
-          });
-          summaryHTML += `</ul></div>`;
-        }
-        summaryHTML += `</div></div></main>`; // Close content, main wrapper, view
-
-        summaryView.innerHTML = summaryHTML;
-        searchView.style.display = 'none';
-        summaryView.style.display = 'flex'; // Show as flex container
-
-        document.getElementById('backToSearchBtnSummary').addEventListener('click', showSearchPage);
-        showToast('Study summary generated!', 2000);
-      }
-
-      function showSearchPage() {
-        summaryView.style.display = 'none';
-        searchView.style.display = 'flex'; // Show as flex container
-        // Checkboxes in resultsContainer will retain their state if not cleared.
-        // If you want to clear selections on going back:
-        // document.querySelectorAll('#resultsContainer input[type="checkbox"]').forEach(cb => cb.checked = false);
-      }
-
-      searchBtnExternal.addEventListener('click', async function() {
+      async function performSearch() {
         const query = searchInput.value.trim();
         if (query) {
           resultsContainer.innerHTML = `
-            <div class="flex justify-center items-center h-full">
-              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div class="flex justify-center items-center py-8">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2062b8]"></div>
               <p class="ml-3 text-gray-600">Searching...</p>
-            </div>`;
+            </div>
+          `;
           const results = await searchDeepSeekAPI(query);
           displaySearchResults(query, results);
+        }
+      }
+
+      function displaySearchResults(query, results) {
+        let resultsHTML = `
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-[#142354]">Search Results for "${escapeHtml(query)}"</h2>
+            <p class="text-gray-600 text-sm">${getTotalResultsCount(results)} results found</p>
+          </div>
+        `;
+
+        if (getTotalResultsCount(results) === 0) {
+          resultsHTML += `
+            <div class="bg-gray-50 rounded-xl p-6 text-center">
+              <p class="text-gray-500">No results found for "${escapeHtml(query)}".</p>
+              <p class="text-gray-500 mt-2">Try using different keywords or check your spelling.</p>
+            </div>
+          `;
         } else {
-          resultsContainer.innerHTML = `
-            <div class="flex justify-center items-center h-full">
-              <p class="text-gray-500 text-center">Please enter a search term.</p>
-            </div>`;
+          // Books section
+          if (results.books.length > 0) {
+            resultsHTML += `
+              <div class="mb-8">
+                <h3 class="text-lg font-semibold text-[#2062b8] mb-3">Books & Chapters (${results.books.length})</h3>
+                <div class="space-y-3">
+            `;
+            
+            results.books.forEach(book => {
+              resultsHTML += `
+                <div class="result-card bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                  <div class="flex justify-between">
+                    <h4 class="font-medium text-[#142354]">${escapeHtml(book.title)}</h4>
+                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">${Math.round(book.score)}% match</span>
+                  </div>
+                  <p class="text-gray-600 text-sm mt-1">${escapeHtml(book.source)}</p>
+                  <p class="text-gray-500 text-xs mt-1">Pages: ${escapeHtml(book.pages)}</p>
+                </div>
+              `;
+            });
+            
+            resultsHTML += `
+                </div>
+              </div>
+            `;
+          }
+          
+          // OSCE Stations section
+          if (results.osceStations.length > 0) {
+            resultsHTML += `
+              <div class="mb-8">
+                <h3 class="text-lg font-semibold text-[#7b1fa2] mb-3">OSCE Stations (${results.osceStations.length})</h3>
+                <div class="space-y-3">
+            `;
+            
+            results.osceStations.forEach(station => {
+              resultsHTML += `
+                <div class="result-card bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                  <div class="flex justify-between">
+                    <h4 class="font-medium text-[#142354]">${escapeHtml(station.title)}</h4>
+                    <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">${Math.round(station.score)}% match</span>
+                  </div>
+                  <p class="text-gray-600 text-sm mt-1">${escapeHtml(station.source)}</p>
+                  <p class="text-gray-500 text-xs mt-1">Duration: ${escapeHtml(station.duration)}</p>
+                </div>
+              `;
+            });
+            
+            resultsHTML += `
+                </div>
+              </div>
+            `;
+          }
+          
+          // Guidelines section
+          if (results.guidelines.length > 0) {
+            resultsHTML += `
+              <div class="mb-4">
+                <h3 class="text-lg font-semibold text-[#2062b8] mb-3">Guidelines (${results.guidelines.length})</h3>
+                <div class="space-y-3">
+            `;
+            
+            results.guidelines.forEach(guideline => {
+              resultsHTML += `
+                <div class="result-card bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                  <div class="flex justify-between">
+                    <h4 class="font-medium text-[#142354]">${escapeHtml(guideline.title)}</h4>
+                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">${Math.round(guideline.score)}% match</span>
+                  </div>
+                  <p class="text-gray-600 text-sm mt-1">${escapeHtml(guideline.source)}</p>
+                  <p class="text-gray-500 text-xs mt-1">Updated: ${escapeHtml(guideline.updated)}</p>
+                </div>
+              `;
+            });
+            
+            resultsHTML += `
+                </div>
+              </div>
+            `;
+          }
         }
-      });
-      
-      // Allow search on Enter key in input field
-      searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault(); // Prevent form submission if it were in a form
-          searchBtnExternal.click();
-        }
-      });
+        
+        resultsContainer.innerHTML = resultsHTML;
+      }
 
-      doneBtn.addEventListener('click', showSummaryPage);
+      function getTotalResultsCount(results) {
+        return results.books.length + results.osceStations.length + results.guidelines.length;
+      }
 
-      backBtnExternal.addEventListener('click', function() {
-        // This button could navigate to a true previous page if this were part of a larger site.
-        // For a single-page app context, it might clear search or go to a "home" state.
-        // Currently, linking to index.html as per original implication.
-        if (searchView.style.display !== 'none') { // If on search page
-             window.location.href = 'index.html'; // Or some other "home" action
-        } else { // If on summary page (though summary has its own back button)
-            showSearchPage();
-        }
-      });
-
-      // Initial state
-      showSearchPage();
+      // Initialize with search for "Preeclampsia"
+      performSearch();
     });
   </script>
 </body>

@@ -45,6 +45,33 @@
       transform: translateY(0);
       opacity: 1;
     }
+    .gradient-text {
+      background: linear-gradient(90deg, #2062b8, #7b1fa2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+    }
+    .floating-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 50;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .circular-button {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
+    }
+    .circular-button:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
@@ -52,54 +79,51 @@
   <div class="line-art"></div>
 
   <div class="relative z-10 flex flex-col items-center min-h-screen p-4 md:p-8">
-    <!-- Header with Back Button -->
-    <div class="w-full max-w-4xl flex items-center mb-6">
-      <a href="index.html" class="flex items-center text-white hover:text-blue-200 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        <span>Back</span>
-      </a>
-    </div>
+    <!-- CarePro Title at the top center -->
+    <h1 class="text-4xl md:text-5xl gradient-text mb-8">CarePro</h1>
 
     <!-- Search Form -->
     <div class="w-full max-w-4xl mb-8">
       <form id="searchForm" class="flex flex-col md:flex-row gap-3">
-        <div class="flex-1">
+        <div class="flex-1 relative">
           <input 
             type="text" 
             id="searchInput" 
             placeholder="Search for a medical topic..." 
-            class="w-full px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-blue-300 focus:outline-none"
+            class="w-full px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-blue-300 focus:outline-none pr-12"
             value="Preeclampsia"
           >
+          <button 
+            type="submit" 
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#2062b8]"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
         </div>
-        <button 
-          type="submit" 
-          class="px-6 py-3 bg-[#2062b8] text-white font-medium rounded-xl hover:bg-[#1a4c8f] transition-colors"
-        >
-          Search
-        </button>
       </form>
     </div>
 
-    <!-- Search Results Section -->
-    <div id="resultsContainer" class="w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-8">
+    <!-- Search Results Section - Stretched to fill most of the page height -->
+    <div id="resultsContainer" class="w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-12 min-h-[calc(100vh-300px)]">
       <!-- Results will be populated here by JavaScript -->
       <div class="flex justify-center items-center py-8">
         <p class="text-gray-500">Enter a search term to find medical topics.</p>
       </div>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="w-full max-w-4xl flex flex-col md:flex-row gap-4 justify-end">
-      <button id="selectAllBtn" class="px-6 py-3 bg-white text-[#2062b8] font-medium rounded-xl hover:bg-gray-100 transition-colors">
-        Select All
-      </button>
-      <button id="doneBtn" class="px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors">
-        Done
-      </button>
-    </div>
+    <!-- Circular Back Button -->
+    <a href="index.html" class="circular-button bg-white text-[#2062b8] mb-6">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+    </a>
+
+    <!-- Floating Done Button -->
+    <button id="doneBtn" class="floating-button px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors">
+      Done
+    </button>
   </div>
 
   <!-- Toast Notification -->
@@ -143,6 +167,22 @@
           source: 'Obstetric Emergencies: A Practical Guide',
           pages: '87-112',
           keywords: ['hemorrhage', 'bleeding', 'postpartum', 'delivery', 'blood loss']
+        }
+      ],
+      osceStations: [
+        {
+          id: 'o1',
+          title: 'Preeclampsia Assessment Station',
+          source: 'OSCE Clinical Skills',
+          duration: '10 minutes',
+          keywords: ['preeclampsia', 'assessment', 'clinical skills', 'hypertension', 'pregnancy']
+        },
+        {
+          id: 'o2',
+          title: 'Obstetric Emergency: Eclampsia',
+          source: 'Emergency OSCE Scenarios',
+          duration: '15 minutes',
+          keywords: ['eclampsia', 'seizure', 'emergency', 'magnesium sulfate', 'hypertension']
         }
       ],
       guidelines: [
@@ -277,7 +317,12 @@
      */
     function searchTopics(query) {
       if (![query || query.trim]() === '') {
-        return { books: [], guidelines: [], exactMatch: false };
+        return { 
+          books: [], 
+          osceStations: [],
+          guidelines: [], 
+          exactMatch: false 
+        };
       }
       
       query = query.trim();
@@ -286,16 +331,24 @@
       const exactMatchBook = medicalTopics.books.find(book => 
         book.title.toLowerCase() === query.toLowerCase()
       );
+      const exactMatchOSCE = medicalTopics.osceStations.find(station => 
+        station.title.toLowerCase() === query.toLowerCase()
+      );
       const exactMatchGuideline = medicalTopics.guidelines.find(guideline => 
         guideline.title.toLowerCase() === query.toLowerCase()
       );
       
-      const exactMatch = ![!](exactMatchBook || exactMatchGuideline);
+      const exactMatch = ![!](exactMatchBook || exactMatchOSCE || exactMatchGuideline);
       
       // Calculate similarity scores for all topics
       const scoredBooks = medicalTopics.books.map(book => ({
         ...book,
         score: calculateSimilarity(query, book)
+      })).sort((a, b) => b.score - a.score);
+      
+      const scoredOSCE = medicalTopics.osceStations.map(station => ({
+        ...station,
+        score: calculateSimilarity(query, station)
       })).sort((a, b) => b.score - a.score);
       
       const scoredGuidelines = medicalTopics.guidelines.map(guideline => ({
@@ -305,10 +358,12 @@
       
       // Filter out low-scoring results (below 50%)
       const filteredBooks = scoredBooks.filter(book => book.score >= 50);
+      const filteredOSCE = scoredOSCE.filter(station => station.score >= 50);
       const filteredGuidelines = scoredGuidelines.filter(guideline => guideline.score >= 50);
       
       return {
         books: filteredBooks,
+        osceStations: filteredOSCE,
         guidelines: filteredGuidelines,
         exactMatch
       };
@@ -345,21 +400,51 @@
       }, duration);
     }
 
+    /**
+     * Send search query to DeepSeek API
+     * @param {string} query - The search query
+     * @return {Promise} Promise resolving to API response
+     */
+    async function searchDeepSeekAPI(query) {
+      try {
+        // This is a placeholder for the actual API call
+        // In a real implementation, you would make a fetch request to the DeepSeek API
+        console.log(`Searching DeepSeek API for: ${query}`);
+        
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // For now, return the local search results
+        return searchTopics(query);
+      } catch (error) {
+        console.error('Error searching DeepSeek API:', error);
+        showToast('Error connecting to search service');
+        return searchTopics(query); // Fallback to local search
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       const searchForm = document.getElementById('searchForm');
       const searchInput = document.getElementById('searchInput');
       const resultsContainer = document.getElementById('resultsContainer');
-      const selectAllBtn = document.getElementById('selectAllBtn');
       const doneBtn = document.getElementById('doneBtn');
       
       // Handle search form submission
-      searchForm.addEventListener('submit', function(e) {
+      searchForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const query = searchInput.value.trim();
         
         if (query) {
-          // Perform search
-          const results = searchTopics(query);
+          // Show loading state
+          resultsContainer.innerHTML = `
+            <div class="flex justify-center items-center py-8">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2062b8]"></div>
+              <p class="ml-3 text-gray-600">Searching...</p>
+            </div>
+          `;
+          
+          // Perform search via DeepSeek API
+          const results = await searchDeepSeekAPI(query);
           displaySearchResults(query, results);
         }
       });
@@ -386,6 +471,9 @@
             </div>
           `;
         }
+        
+        // Upper Section: Books and OSCE Stations
+        resultsHTML += `<div class="mb-8 border-b pb-6">`;
         
         // Books section
         if (results.books.length > 0) {
@@ -439,16 +527,67 @@
           `;
         }
         
-        // Guidelines section
-        if (results.guidelines.length > 0) {
+        // OSCE Stations section
+        if (results.osceStations.length > 0) {
           resultsHTML += `
             <div>
               <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Guidelines
+                OSCE Stations
               </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          `;
+          
+          // Add OSCE station results
+          results.osceStations.forEach(station => {
+            resultsHTML += `
+              <div class="result-card p-4 bg-white rounded-xl shadow-md border border-gray-100" data-id="${station.id}" data-type="osce" data-title="${escapeHtml(station.title)}" data-source="${escapeHtml(station.source)}">
+                <div class="flex items-start">
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-[#2062b8]">${escapeHtml(station.title)}</h4>
+                    <p class="text-sm text-gray-600 mb-2">${escapeHtml(station.source)}</p>
+                    <div class="flex items-center text-xs text-gray-500">
+                      <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full mr-2">Match: ${Math.round(station.score)}%</span>
+                      <span>Duration: ${escapeHtml(station.duration)}</span>
+                    </div>
+                  </div>
+                  <div class="ml-2">
+                    <input type="checkbox" class="h-5 w-5 text-[#2062b8] rounded border-gray-300 focus:ring-[#2062b8]">
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+          
+          resultsHTML += `
+              </div>
+            </div>
+          `;
+        } else {
+          resultsHTML += `
+            <div>
+              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                OSCE Stations
+              </h3>
+              <p class="text-gray-500">No matching OSCE stations found.</p>
+            </div>
+          `;
+        }
+        
+        resultsHTML += `</div>`;
+        
+        // Lower Section: Guidelines and References
+        resultsHTML += `<h3 class="text-xl font-bold text-[#7b1fa2] mb-4">Trusted Guidelines & References</h3>`;
+        
+        // Guidelines section
+        if (results.guidelines.length > 0) {
+          resultsHTML += `
+            <div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           `;
           
@@ -480,19 +619,13 @@
         } else {
           resultsHTML += `
             <div>
-              <h3 class="text-lg font-semibold text-[#142354] mb-3 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Guidelines
-              </h3>
               <p class="text-gray-500">No matching guidelines found.</p>
             </div>
           `;
         }
         
         // No results message
-        if (results.books.length === 0 && results.guidelines.length === 0) {
+        if (results.books.length === 0 && results.osceStations.length === 0 && results.guidelines.length === 0) {
           resultsHTML += `
             <div class="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-100 text-center">
               <p class="text-yellow-800">No matching topics found. Try a different search term.</p>
@@ -503,15 +636,6 @@
         // Update results container
         resultsContainer.innerHTML = resultsHTML;
       }
-      
-      // Handle select all button
-      selectAllBtn.addEventListener('click', function() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-        checkboxes.forEach(checkbox => {
-          checkbox.checked = !allChecked;
-        });
-      });
       
       // Handle done button - proceed to summarization
       doneBtn.addEventListener('click', function() {

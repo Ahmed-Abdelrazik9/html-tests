@@ -45,61 +45,44 @@
       transform: translateY(0);
       opacity: 1;
     }
-    /* Removed gradient-text for CarePro as per request */
-    /* .gradient-text {
+    .gradient-text {
       background: linear-gradient(90deg, #2062b8, #7b1fa2);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       font-weight: bold;
-    } */
-    .floating-buttons-container {
+    }
+    .floating-button {
       position: fixed;
       bottom: 20px;
-      left: 20px; /* Aligned to left */
-      right: 20px; /* Aligned to right */
+      right: 20px;
       z-index: 50;
-      display: flex; /* Use flexbox for alignment */
-      justify-content: space-between; /* Space out buttons */
-      gap: 10px; /* Space between buttons */
-    }
-    .action-button { /* New class for common button style */
-      padding: 12px 20px;
-      background-color: white; /* White background */
-      color: #2062b8; /* Blue text color for Back and Search */
-      font-weight: bold;
-      border-radius: 10px; /* Rounded corners */
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .action-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    .circular-button {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
     }
-    /* Specific style for Done button, keeping its original color */
-    #doneBtn {
-        background-color: #7b1fa2; /* Original Done button color */
-        color: white;
-    }
-    #doneBtn:hover {
-        background-color: #6a1b8c; /* Darker hover for Done button */
-    }
-
-    /* Adjust search results container height */
-    #resultsContainer {
-        min-height: calc(100vh - 300px); /* Original height */
-        flex-grow: 1.5; /* Grow by 50% more */
-        display: flex; /* Ensure flex behavior */
-        flex-direction: column; /* Stack children vertically */
+    .circular-button:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
+  <!-- RCOG line art style overlay -->
   <div class="line-art"></div>
 
   <div class="relative z-10 flex flex-col items-center min-h-screen p-4 md:p-8">
+    <!-- CarePro Title at the top center - Made clearer without symbols -->
     <h1 class="text-4xl md:text-5xl text-white font-bold mb-8">CarePro</h1>
 
+    <!-- Search Form -->
     <div class="w-full max-w-4xl mb-8">
       <form id="searchForm" class="flex flex-col md:flex-row gap-3">
         <div class="flex-1 relative">
@@ -107,34 +90,41 @@
             type="text" 
             id="searchInput" 
             placeholder="Search for a medical topic..." 
-            class="w-full px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-blue-300 focus:outline-none pr-4"
+            class="w-full px-4 py-3 rounded-xl border-2 border-blue-100 focus:border-blue-300 focus:outline-none"
             value="Preeclampsia"
           >
-          </div>
+        </div>
       </form>
     </div>
 
-    <div id="resultsContainer" class="w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-12">
+    <!-- Search Results Section - Extended by 50% vertically -->
+    <div id="resultsContainer" class="w-full max-w-4xl bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl mb-12 min-h-[calc(100vh-200px)]">
+      <!-- Results will be populated here by JavaScript -->
       <div class="flex justify-center items-center py-8">
         <p class="text-gray-500">Enter a search term to find medical topics.</p>
       </div>
     </div>
 
-    <div class="floating-buttons-container">
-        <a href="index.html" class="action-button">
-          Back
-        </a>
-
-        <button id="searchButton" class="action-button">
-          Search
-        </button>
-
-        <button id="doneBtn" class="action-button">
-          Done
-        </button>
+    <!-- Bottom Buttons Container -->
+    <div class="fixed bottom-6 w-full flex justify-between px-6 z-50">
+      <!-- Back Button - Square, same style as Done -->
+      <a href="index.html" class="px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors">
+        Back
+      </a>
+      
+      <!-- Search Button - Same style as Done -->
+      <button id="searchBtn" class="px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors mr-4">
+        Search
+      </button>
+      
+      <!-- Done Button -->
+      <button id="doneBtn" class="px-6 py-3 bg-[#7b1fa2] text-white font-medium rounded-xl hover:bg-[#6a1b8c] transition-colors">
+        Done
+      </button>
     </div>
   </div>
 
+  <!-- Toast Notification -->
   <div id="toast" class="toast flex items-center">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -290,7 +280,7 @@
      */
     function searchTopics(query) {
       // --- FIX: Correct condition for empty query ---
-      if (!query || query.trim() === '') {
+      if (![query || query.trim]() === '') {
         return { books: [], osceStations: [], guidelines: [], exactMatch: false };
       }
       query = query.trim();
@@ -304,7 +294,7 @@
       const exactMatchGuideline = medicalTopics.guidelines.find(guideline =>
         guideline.title.toLowerCase() === query.toLowerCase()
       );
-      const exactMatch = !!(exactMatchBook || exactMatchOSCE || exactMatchGuideline);
+      const exactMatch = ![!](exactMatchBook || exactMatchOSCE || exactMatchGuideline);
       // ---
       const scoredBooks = medicalTopics.books.map(book => ({
         ...book,
@@ -375,11 +365,20 @@
       const searchInput = document.getElementById('searchInput');
       const resultsContainer = document.getElementById('resultsContainer');
       const doneBtn = document.getElementById('doneBtn');
-      const searchButton = document.getElementById('searchButton'); // Get the new search button
+      const searchBtn = document.getElementById('searchBtn');
 
-      // Handle search form submission (triggered by the new Search button)
-      searchButton.addEventListener('click', async function(e) {
-        e.preventDefault(); // Prevent default form submission if this button were inside a form
+      // Handle search form submission
+      searchForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        performSearch();
+      });
+      
+      // Handle search button click
+      searchBtn.addEventListener('click', function() {
+        performSearch();
+      });
+
+      async function performSearch() {
         const query = searchInput.value.trim();
         if (query) {
           resultsContainer.innerHTML = `
@@ -391,126 +390,115 @@
           const results = await searchDeepSeekAPI(query);
           displaySearchResults(query, results);
         }
-      });
-
-      // Allow pressing Enter in the input to trigger search
-      searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          searchButton.click(); // Simulate a click on the search button
-        }
-      });
+      }
 
       function displaySearchResults(query, results) {
-        let resultsHTML = '';
-        const escapedQuery = escapeHtml(query);
+        let resultsHTML = `
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-[#142354]">Search Results for "${escapeHtml(query)}"</h2>
+            <p class="text-gray-600 text-sm">${getTotalResultsCount(results)} results found</p>
+          </div>
+        `;
 
-        if (results.books.length === 0 && results.osceStations.length === 0 && results.guidelines.length === 0) {
-          resultsHTML = `
-            <div class="flex justify-center items-center py-8">
-              <p class="text-gray-500">No results found for "${escapedQuery}".</p>
+        if (getTotalResultsCount(results) === 0) {
+          resultsHTML += `
+            <div class="bg-gray-50 rounded-xl p-6 text-center">
+              <p class="text-gray-500">No results found for "${escapeHtml(query)}".</p>
+              <p class="text-gray-500 mt-2">Try using different keywords or check your spelling.</p>
             </div>
           `;
         } else {
-          // Function to highlight text
-          const highlightText = (text, query) => {
-            if (!query) return escapeHtml(text);
-            const regex = new RegExp(`(${escapeHtml(query)})`, 'gi');
-            return escapeHtml(text).replace(regex, '<mark class="bg-yellow-200 rounded px-0.5">$1</mark>');
-          };
-
+          // Books section
           if (results.books.length > 0) {
             resultsHTML += `
-              <h2 class="text-2xl font-bold text-[#142354] mb-4">Books</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <div class="mb-8">
+                <h3 class="text-lg font-semibold text-[#2062b8] mb-3">Books & Chapters (${results.books.length})</h3>
+                <div class="space-y-3">
             `;
+            
             results.books.forEach(book => {
-              const bookText = `Book: ${book.title}, Source: ${book.source}, Pages: ${book.pages}`;
               resultsHTML += `
-                <div class="result-card bg-blue-50 p-4 rounded-lg shadow-md flex flex-col justify-between" data-copy-text="${escapeHtml(bookText)}">
-                  <div>
-                    <h3 class="text-lg font-semibold text-[#2062b8] mb-1">${highlightText(book.title, query)}</h3>
-                    <p class="text-sm text-gray-700 mb-1">Source: ${highlightText(book.source, query)}</p>
-                    <p class="text-sm text-gray-600">Pages: ${escapeHtml(book.pages)}</p>
+                <div class="result-card bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                  <div class="flex justify-between">
+                    <h4 class="font-medium text-[#142354]">${escapeHtml(book.title)}</h4>
+                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">${Math.round(book.score)}% match</span>
                   </div>
-                  <button class="copy-btn mt-3 self-end px-3 py-1 bg-[#2062b8] text-white text-xs rounded-md hover:bg-[#142354] transition-colors">Copy</button>
+                  <p class="text-gray-600 text-sm mt-1">${escapeHtml(book.source)}</p>
+                  <p class="text-gray-500 text-xs mt-1">Pages: ${escapeHtml(book.pages)}</p>
                 </div>
               `;
             });
-            resultsHTML += `</div>`;
+            
+            resultsHTML += `
+                </div>
+              </div>
+            `;
           }
-
+          
+          // OSCE Stations section
           if (results.osceStations.length > 0) {
             resultsHTML += `
-              <h2 class="text-2xl font-bold text-[#142354] mb-4">OSCE Stations</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <div class="mb-8">
+                <h3 class="text-lg font-semibold text-[#7b1fa2] mb-3">OSCE Stations (${results.osceStations.length})</h3>
+                <div class="space-y-3">
             `;
+            
             results.osceStations.forEach(station => {
-              const stationText = `OSCE Station: ${station.title}, Source: ${station.source}, Duration: ${station.duration}`;
               resultsHTML += `
-                <div class="result-card bg-purple-50 p-4 rounded-lg shadow-md flex flex-col justify-between" data-copy-text="${escapeHtml(stationText)}">
-                  <div>
-                    <h3 class="text-lg font-semibold text-[#7b1fa2] mb-1">${highlightText(station.title, query)}</h3>
-                    <p class="text-sm text-gray-700 mb-1">Source: ${highlightText(station.source, query)}</p>
-                    <p class="text-sm text-gray-600">Duration: ${escapeHtml(station.duration)}</p>
+                <div class="result-card bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                  <div class="flex justify-between">
+                    <h4 class="font-medium text-[#142354]">${escapeHtml(station.title)}</h4>
+                    <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">${Math.round(station.score)}% match</span>
                   </div>
-                  <button class="copy-btn mt-3 self-end px-3 py-1 bg-[#7b1fa2] text-white text-xs rounded-md hover:bg-[#6a1b8c] transition-colors">Copy</button>
+                  <p class="text-gray-600 text-sm mt-1">${escapeHtml(station.source)}</p>
+                  <p class="text-gray-500 text-xs mt-1">Duration: ${escapeHtml(station.duration)}</p>
                 </div>
               `;
             });
-            resultsHTML += `</div>`;
+            
+            resultsHTML += `
+                </div>
+              </div>
+            `;
           }
-
+          
+          // Guidelines section
           if (results.guidelines.length > 0) {
             resultsHTML += `
-              <h2 class="text-2xl font-bold text-[#142354] mb-4">Guidelines</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <div class="mb-4">
+                <h3 class="text-lg font-semibold text-[#2062b8] mb-3">Guidelines (${results.guidelines.length})</h3>
+                <div class="space-y-3">
             `;
+            
             results.guidelines.forEach(guideline => {
-              const guidelineText = `Guideline: ${guideline.title}, Source: ${guideline.source}, Updated: ${guideline.updated}`;
               resultsHTML += `
-                <div class="result-card bg-green-50 p-4 rounded-lg shadow-md flex flex-col justify-between" data-copy-text="${escapeHtml(guidelineText)}">
-                  <div>
-                    <h3 class="text-lg font-semibold text-[#0f766e] mb-1">${highlightText(guideline.title, query)}</h3>
-                    <p class="text-sm text-gray-700 mb-1">Source: ${highlightText(guideline.source, query)}</p>
-                    <p class="text-sm text-gray-600">Updated: ${escapeHtml(guideline.updated)}</p>
+                <div class="result-card bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                  <div class="flex justify-between">
+                    <h4 class="font-medium text-[#142354]">${escapeHtml(guideline.title)}</h4>
+                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">${Math.round(guideline.score)}% match</span>
                   </div>
-                  <button class="copy-btn mt-3 self-end px-3 py-1 bg-[#0f766e] text-white text-xs rounded-md hover:bg-[#0c4e48] transition-colors">Copy</button>
+                  <p class="text-gray-600 text-sm mt-1">${escapeHtml(guideline.source)}</p>
+                  <p class="text-gray-500 text-xs mt-1">Updated: ${escapeHtml(guideline.updated)}</p>
                 </div>
               `;
             });
-            resultsHTML += `</div>`;
+            
+            resultsHTML += `
+                </div>
+              </div>
+            `;
           }
         }
-
+        
         resultsContainer.innerHTML = resultsHTML;
-
-        // Add event listeners for copy buttons
-        document.querySelectorAll('.copy-btn').forEach(button => {
-          button.addEventListener('click', function() {
-            const textToCopy = this.closest('.result-card').dataset.copyText;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-              showToast('Copied to clipboard!');
-            }).catch(err => {
-              console.error('Failed to copy text: ', err);
-              showToast('Failed to copy text.');
-            });
-          });
-        });
       }
 
-      // Initial search based on pre-filled input (e.g., "Preeclampsia")
-      const initialQuery = searchInput.value;
-      if (initialQuery) {
-        // Trigger the search via the new search button's click handler
-        searchButton.click(); 
+      function getTotalResultsCount(results) {
+        return results.books.length + results.osceStations.length + results.guidelines.length;
       }
 
-      // Handle Done button click
-      doneBtn.addEventListener('click', function() {
-        showToast('Session completed. Data recorded.', 4000);
-        // In a real application, you might navigate away or clear data here
-        // window.location.href = 'some_other_page.html';
-      });
+      // Initialize with search for "Preeclampsia"
+      performSearch();
     });
   </script>
 </body>

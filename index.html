@@ -48,6 +48,19 @@
               700: '#786d5e',
               800: '#645a4c',
               900: '#504a3f',
+            },
+            deepbeige: {
+              50: '#f9f7f4',
+              100: '#f2efe9',
+              200: '#e5dfd3',
+              300: '#d7ccbe',
+              400: '#c0b19d',
+              500: '#a99a80',
+              600: '#8c7d65',
+              700: '#756854',
+              800: '#5f5545',
+              900: '#4d4639',
+              950: '#2a2620',
             }
           }
         }
@@ -57,12 +70,9 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f8f7ff;
+      background-color: #4d4639;
       background-image: 
-        radial-gradient(circle at 20% 30%, rgba(255, 200, 200, 0.1) 0%, transparent 25%),
-        radial-gradient(circle at 80% 40%, rgba(200, 255, 200, 0.08) 0%, transparent 20%),
-        radial-gradient(circle at 40% 70%, rgba(200, 200, 255, 0.1) 0%, transparent 30%),
-        radial-gradient(circle at 70% 90%, rgba(255, 220, 180, 0.08) 0%, transparent 25%);
+        url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264.888-.14 1.255.914 1.854 1.094 2.802.708.397-.413.464-1.17 1.277-1.503.217-.332.297-.814.63-.814.335 0 .4.5.61.916.21.416.4.834.76.97.368.14.92.3 1.37.488.45.188.9.392 1.35.393 1.1.005 1.61.448 2.42.8.5.227 1.29.418 1.9.648.36.14.7.382 1.03.48 1.07.3 2.18.142 3.45.7.95.33 1.94.47 2.98.74.75.214 1.41.638 2.21.864.8.227 1.6.392 2.4.59.8.19 1.6.38 2.5.38.87 0 1.7-.195 2.5-.195.78 0 1.6.195 2.38.195.79 0 1.6-.19 2.4-.38.81-.19 1.6-.363 2.4-.59.8-.227 1.5-.65 2.2-.864 1.04-.27 2.03-.41 2.98-.74 1.27-.558 2.38-.4 3.45-.7.33-.098.67-.34 1.03-.48.61-.23 1.4-.42 1.9-.648.81-.352 1.32-.795 2.42-.8.45-.001.9-.205 1.35-.393.45-.188 1-.347 1.37-.488.36-.136.55-.554.76-.97.21-.416.28-.916.61-.916.34 0 .42.482.63.814.81.333.88 1.09 1.28 1.503.94.386 1.55.206 2.8-.708.17-.124.53-.258.89-.14 1.07.35 1.28 1.98 2.53 2.15.58.046 1.09-.4 1.93-.4.85 0 1.35.445 1.93.4 1.25-.17 1.46-1.8 2.53-2.15z' fill='%23594f3f' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
     }
     .custom-checkbox {
       appearance: none;
@@ -95,7 +105,7 @@
     }
     .module-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
     }
     .topic-grid label {
       transition: all 0.2s ease;
@@ -123,9 +133,26 @@
       transform: translateY(-50%);
       pointer-events: none;
     }
+    .module-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      margin-right: 0.75rem;
+      font-weight: 600;
+    }
+    .topic-count {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-left: 0.5rem;
+      font-weight: normal;
+    }
   </style>
 </head>
-<body class="bg-warmgray-50 text-warmgray-800 min-h-screen p-4">
+<body class="text-warmgray-800 min-h-screen p-4">
   <div class="max-w-6xl mx-auto space-y-8">
 
     <!-- Search Bar -->
@@ -140,7 +167,11 @@
       <!-- Maternal Medicine -->
       <div class="module-card rounded-xl shadow-sm overflow-hidden border border-warmgray-200">
         <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Maternal Medicine</h2>
+          <h2 class="text-xl font-semibold text-white flex items-center">
+            <span class="module-number">1</span>
+            Maternal Medicine
+            <span class="topic-count">(11)</span>
+          </h2>
           <div class="space-x-2">
             <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
             <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
@@ -164,7 +195,11 @@
       <!-- Maternal Infections -->
       <div class="module-card rounded-xl shadow-sm overflow-hidden border border-warmgray-200">
         <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Maternal Infections</h2>
+          <h2 class="text-xl font-semibold text-white flex items-center">
+            <span class="module-number">2</span>
+            Maternal Infections
+            <span class="topic-count">(6)</span>
+          </h2>
           <div class="space-x-2">
             <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
             <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
@@ -183,7 +218,11 @@
       <!-- Antenatal Care -->
       <div class="module-card rounded-xl shadow-sm overflow-hidden border border-warmgray-200">
         <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Antenatal Care</h2>
+          <h2 class="text-xl font-semibold text-white flex items-center">
+            <span class="module-number">3</span>
+            Antenatal Care
+            <span class="topic-count">(5)</span>
+          </h2>
           <div class="space-x-2">
             <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
             <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
@@ -201,7 +240,11 @@
       <!-- Fetal Medicine -->
       <div class="module-card rounded-xl shadow-sm overflow-hidden border border-warmgray-200">
         <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Fetal Medicine</h2>
+          <h2 class="text-xl font-semibold text-white flex items-center">
+            <span class="module-number">4</span>
+            Fetal Medicine
+            <span class="topic-count">(7)</span>
+          </h2>
           <div class="space-x-2">
             <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
             <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
@@ -221,7 +264,11 @@
       <!-- Obstetric Emergencies -->
       <div class="module-card rounded-xl shadow-sm overflow-hidden border border-warmgray-200">
         <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Obstetric Emergencies</h2>
+          <h2 class="text-xl font-semibold text-white flex items-center">
+            <span class="module-number">5</span>
+            Obstetric Emergencies
+            <span class="topic-count">(3)</span>
+          </h2>
           <div class="space-x-2">
             <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
             <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
@@ -237,7 +284,11 @@
       <!-- Labour & Delivery -->
       <div class="module-card rounded-xl shadow-sm overflow-hidden border border-warmgray-200">
         <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
-          <h2 class="text-xl font-semibold text-white">Labour & Delivery</h2>
+          <h2 class="text-xl font-semibold text-white flex items-center">
+            <span class="module-number">6</span>
+            Labour & Delivery
+            <span class="topic-count">(7)</span>
+          </h2>
           <div class="space-x-2">
             <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
             <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
@@ -281,6 +332,7 @@
         label.innerHTML = `<input type="checkbox" class="custom-checkbox"> ${newTopic}`;
         container.appendChild(label);
         setupCheckbox(label.querySelector("input"));
+        updateTopicCount(btn.closest(".module-card"));
       }
     }
 
@@ -288,7 +340,14 @@
       const container = btn.closest(".module-card").querySelector(".topic-grid");
       if (container.lastElementChild) {
         container.removeChild(container.lastElementChild);
+        updateTopicCount(btn.closest(".module-card"));
       }
+    }
+
+    function updateTopicCount(moduleCard) {
+      const topicCount = moduleCard.querySelectorAll(".topic-grid label").length;
+      const countElement = moduleCard.querySelector(".topic-count");
+      countElement.textContent = `(${topicCount})`;
     }
 
     function setupCheckbox(checkbox) {
@@ -308,6 +367,9 @@
     // Apply to all checkboxes on load
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('input[type="checkbox"]').forEach(setupCheckbox);
+      
+      // Initialize topic counts
+      document.querySelectorAll('.module-card').forEach(updateTopicCount);
     });
   </script>
 </body>

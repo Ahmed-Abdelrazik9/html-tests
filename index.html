@@ -7,39 +7,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(120deg, #142354 0%, #2062b8 45%, #7b1fa2 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-    }
-    
-    .main-container {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 100vh;
-      padding: 2rem;
-      box-sizing: border-box;
-    }
-    
-    .content-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
     }
     
     .content-card {
@@ -47,9 +23,6 @@
       backdrop-filter: blur(5px);
       border-radius: 16px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-      flex: 1;
-      display: flex;
-      overflow: hidden;
     }
     
     .number-circle {
@@ -69,7 +42,7 @@
     .list-item {
       display: flex;
       align-items: center;
-      padding: 8px 16px;
+      padding: 12px 16px;
       border-radius: 8px;
       transition: all 0.2s;
       cursor: pointer;
@@ -82,42 +55,43 @@
     .vertical-divider {
       width: 1px;
       background: rgba(255, 255, 255, 0.3);
-      height: auto;
-      margin: 20px 0;
+      height: 100%;
     }
     
-    .button-container {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 1400px;
-      margin: 1.5rem auto 0;
+    /* Custom scrollbar */
+    .scrollable::-webkit-scrollbar {
+      width: 8px;
     }
     
-    .action-btn {
-      background-color: #2062b8; /* Middle of gradient */
-      color: white;
-      padding: 0.75rem 2rem;
-      border-radius: 0.75rem;
-      font-weight: 600;
-      transition: all 0.2s;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .scrollable::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
     }
     
-    .action-btn:hover {
-      background-color: #2570d4;
-      transform: translateY(-2px);
+    .scrollable::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+    
+    .scrollable::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* For Firefox */
+    .scrollable {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
     }
     
     @media (max-width: 768px) {
-      .content-card {
+      .content-layout {
         flex-direction: column;
       }
       
       .vertical-divider {
         width: 100%;
         height: 1px;
-        margin: 0;
+        margin: 16px 0;
       }
       
       .button-container {
@@ -131,156 +105,153 @@
     }
   </style>
 </head>
-<body>
-  <div class="main-container">
-    <!-- Header Section -->
-    <div class="text-center mb-6">
-      <h1 class="text-3xl md:text-4xl font-bold text-white">CarePro</h1>
+<body class="p-6">
+  <!-- Title -->
+  <h1 class="text-3xl md:text-4xl font-bold text-white text-center mb-8 mt-6">CarePro</h1>
+  
+  <!-- Search Bar -->
+  <div class="w-full max-w-2xl mx-auto mb-10 flex">
+    <input 
+      type="text" 
+      placeholder="Search for stations or resources..." 
+      class="flex-grow px-4 py-3 rounded-l-lg text-gray-800 outline-none"
+    />
+    <button class="bg-[#2062b8] text-white px-6 py-3 rounded-r-lg font-medium hover:bg-[#1a4c8f] transition">
+      Search
+    </button>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="content-card w-full max-w-5xl content-layout flex mb-6">
+    <!-- Left Panel: OSCE Stations -->
+    <div class="flex-1 p-6">
+      <h2 class="text-xl font-bold text-white mb-6">OSCE Stations</h2>
       
-      <!-- Search Bar -->
-      <div class="w-full max-w-2xl mx-auto mt-6 flex">
-        <input 
-          type="text" 
-          placeholder="Search for stations or resources..." 
-          class="flex-grow px-4 py-3 rounded-l-lg text-gray-800 outline-none"
-        />
-        <button class="bg-[#2062b8] text-white px-6 py-3 rounded-r-lg font-medium hover:bg-[#1a4c8f] transition">
-          Search
-        </button>
-      </div>
-    </div>
-    
-    <!-- Content Wrapper -->
-    <div class="content-wrapper">
-      <!-- Main Content -->
-      <div class="content-card">
-        <!-- Left Panel: OSCE Stations -->
-        <div class="flex-1 p-6 overflow-auto">
-          <h2 class="text-xl font-bold text-white mb-4">OSCE Stations</h2>
-          
-          <div class="space-y-2">
-            <div class="list-item">
-              <div class="number-circle">1</div>
-              <div class="flex-1">
-                <span class="font-bold">Macleod's Clinical Examination:</span> 1 – Cardiovascular Examination
-              </div>
-            </div>
-            
-            <div class="list-item">
-              <div class="number-circle">2</div>
-              <div class="flex-1">
-                <span class="font-bold">Oxford Handbook of Clinical Medicine:</span> 2 – Respiratory Assessment
-              </div>
-            </div>
-            
-            <div class="list-item">
-              <div class="number-circle">3</div>
-              <div class="flex-1">
-                <span class="font-bold">Talley & O'Connor:</span> 3 – Abdominal Examination
-              </div>
-            </div>
-            
-            <div class="list-item">
-              <div class="number-circle">4</div>
-              <div class="flex-1">
-                <span class="font-bold">Kumar & Clark's Clinical Medicine:</span> 4 – Neurological Examination
-              </div>
-            </div>
-            
-            <div class="list-item">
-              <div class="number-circle">5</div>
-              <div class="flex-1">
-                <span class="font-bold">Davidson's Principles of Medicine:</span> 5 – Musculoskeletal Assessment
-              </div>
-            </div>
-            
-            <div class="list-item">
-              <div class="number-circle">6</div>
-              <div class="flex-1">
-                <span class="font-bold">Toronto Notes:</span> 6 – Psychiatric Interview
-              </div>
-            </div>
-            
-            <div class="list-item">
-              <div class="number-circle">7</div>
-              <div class="flex-1">
-                <span class="font-bold">Macleod's Clinical Examination:</span> 7 – Thyroid Examination
-              </div>
+      <div class="scrollable overflow-y-auto max-h-[400px] pr-2">
+        <div class="space-y-3">
+          <div class="list-item">
+            <div class="number-circle">1</div>
+            <div class="flex-1">
+              <span class="font-bold">Macleod's Clinical Examination:</span> 1 – Cardiovascular Examination
             </div>
           </div>
-        </div>
-        
-        <!-- Vertical Divider -->
-        <div class="vertical-divider"></div>
-        
-        <!-- Right Panel: Resources -->
-        <div class="flex-1 p-6 overflow-auto">
-          <h2 class="text-xl font-bold text-white mb-4">Resources</h2>
           
-          <div class="space-y-2">
-            <div class="list-item">
-              <div class="number-circle">1</div>
-              <div class="flex-1">
-                <span class="font-bold">RCOG:</span> Green-top Guideline No. 24 – Placenta Praevia – 2018
-              </div>
+          <div class="list-item">
+            <div class="number-circle">2</div>
+            <div class="flex-1">
+              <span class="font-bold">Oxford Handbook of Clinical Medicine:</span> 2 – Respiratory Assessment
             </div>
-            
-            <div class="list-item">
-              <div class="number-circle">2</div>
-              <div class="flex-1">
-                <span class="font-bold">NICE:</span> Antenatal care – 2021
-              </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">3</div>
+            <div class="flex-1">
+              <span class="font-bold">Talley & O'Connor:</span> 3 – Abdominal Examination
             </div>
-            
-            <div class="list-item">
-              <div class="number-circle">3</div>
-              <div class="flex-1">
-                <span class="font-bold">BMJ:</span> Best Practice – Hypertension in Pregnancy – 2022
-              </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">4</div>
+            <div class="flex-1">
+              <span class="font-bold">Kumar & Clark's Clinical Medicine:</span> 4 – Neurological Examination
             </div>
-            
-            <div class="list-item">
-              <div class="number-circle">4</div>
-              <div class="flex-1">
-                <span class="font-bold">WHO:</span> Recommendations on Maternal and Newborn Care – 2021
-              </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">5</div>
+            <div class="flex-1">
+              <span class="font-bold">Davidson's Principles of Medicine:</span> 5 – Musculoskeletal Assessment
             </div>
-            
-            <div class="list-item">
-              <div class="number-circle">5</div>
-              <div class="flex-1">
-                <span class="font-bold">ACOG:</span> Practice Bulletin No. 222 – Gestational Diabetes – 2020
-              </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">6</div>
+            <div class="flex-1">
+              <span class="font-bold">Toronto Notes:</span> 6 – Psychiatric Interview
             </div>
-            
-            <div class="list-item">
-              <div class="number-circle">6</div>
-              <div class="flex-1">
-                <span class="font-bold">RCOG:</span> Green-top Guideline No. 37a – Reduced Fetal Movements – 2017
-              </div>
-            </div>
-            
-            <div class="list-item">
-              <div class="number-circle">7</div>
-              <div class="flex-1">
-                <span class="font-bold">NICE:</span> Intrapartum care for healthy women and babies – 2023
-              </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">7</div>
+            <div class="flex-1">
+              <span class="font-bold">Macleod's Clinical Examination:</span> 7 – Thyroid Examination
             </div>
           </div>
         </div>
       </div>
     </div>
     
-    <!-- Navigation Buttons -->
-    <div class="button-container">
-      <button id="backBtn" class="action-btn">
-        Back
-      </button>
+    <!-- Vertical Divider -->
+    <div class="vertical-divider"></div>
+    
+    <!-- Right Panel: Resources -->
+    <div class="flex-1 p-6">
+      <h2 class="text-xl font-bold text-white mb-6">Resources</h2>
       
-      <button id="doneBtn" class="action-btn">
-        Done
-      </button>
+      <div class="scrollable overflow-y-auto max-h-[400px] pr-2">
+        <div class="space-y-3">
+          <div class="list-item">
+            <div class="number-circle">1</div>
+            <div class="flex-1">
+              <span class="font-bold">RCOG:</span> Green-top Guideline No. 24 – Placenta Praevia – 2018
+            </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">2</div>
+            <div class="flex-1">
+              <span class="font-bold">NICE:</span> Antenatal care – 2021
+            </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">3</div>
+            <div class="flex-1">
+              <span class="font-bold">BMJ:</span> Best Practice – Hypertension in Pregnancy – 2022
+            </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">4</div>
+            <div class="flex-1">
+              <span class="font-bold">WHO:</span> Recommendations on Maternal and Newborn Care – 2021
+            </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">5</div>
+            <div class="flex-1">
+              <span class="font-bold">ACOG:</span> Practice Bulletin No. 222 – Gestational Diabetes – 2020
+            </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">6</div>
+            <div class="flex-1">
+              <span class="font-bold">RCOG:</span> Green-top Guideline No. 37a – Reduced Fetal Movements – 2017
+            </div>
+          </div>
+          
+          <div class="list-item">
+            <div class="number-circle">7</div>
+            <div class="flex-1">
+              <span class="font-bold">NICE:</span> Intrapartum care for healthy women and babies – 2023
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  
+  <!-- Navigation Buttons -->
+  <div class="w-full max-w-5xl flex justify-between button-container">
+    <button id="backBtn" class="bg-white text-[#142354] px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition shadow-lg">
+      Back
+    </button>
+    
+    <button id="doneBtn" class="bg-[#2062b8] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#1a4c8f] transition shadow-lg">
+      Done
+    </button>
   </div>
   
   <script>
@@ -339,18 +310,6 @@
         // window.location.href = 'study.html';
       }
     });
-    
-    // Function to adjust content height
-    function adjustContentHeight() {
-      const mainContainer = document.querySelector('.main-container');
-      const windowHeight = window.innerHeight;
-      mainContainer.style.height = `${windowHeight}px`;
-    }
-    
-    // Initial adjustment and on resize
-    window.addEventListener('resize', adjustContentHeight);
-    adjustContentHeight();
   </script>
 </body>
 </html>
-

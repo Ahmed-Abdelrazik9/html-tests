@@ -8,145 +8,242 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            secondary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
+      background-color: #f8fafc;
+    }
+    .custom-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      height: 1.2rem;
+      width: 1.2rem;
+      background-color: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.5rem;
+    }
+    .custom-checkbox:checked {
+      background-color: #7c3aed;
+      border-color: #7c3aed;
+      position: relative;
+    }
+    .custom-checkbox:checked::after {
+      content: "✓";
+      color: white;
+      font-size: 0.8rem;
+      position: absolute;
+    }
+    .module-card {
+      transition: all 0.2s ease;
+    }
+    .module-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .topic-grid label {
+      transition: all 0.2s ease;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+    }
+    .topic-grid label:hover {
+      background-color: rgba(124, 58, 237, 0.1);
+    }
+    .btn-action {
+      transition: all 0.2s ease;
+    }
+    .btn-action:hover {
+      transform: scale(1.1);
+    }
+    .search-container {
+      position: relative;
+    }
+    .search-container::after {
+      content: "🔍";
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-900 via-blue-600 to-purple-700 text-white min-h-screen p-4">
-  <div class="max-w-6xl mx-auto space-y-6">
+<body class="bg-slate-50 text-slate-800 min-h-screen p-4">
+  <div class="max-w-6xl mx-auto space-y-8">
 
     <!-- Search Bar -->
-    <div class="flex gap-2 mt-6 justify-center">
-      <input id="searchInput" type="text" placeholder="Search a topic..." class="flex-1 p-2 rounded text-black max-w-xl" />
-      <button onclick="performSearch()" class="bg-white text-indigo-800 px-4 py-2 rounded">Search</button>
+    <div class="search-container flex gap-3 mt-6 justify-center">
+      <input id="searchInput" type="text" placeholder="Search a topic..." class="flex-1 p-3 pl-10 rounded-lg shadow-sm border border-slate-200 focus:border-secondary-400 focus:ring focus:ring-secondary-200 focus:ring-opacity-50 outline-none transition text-slate-700 max-w-xl" />
+      <button onclick="performSearch()" class="bg-secondary-600 hover:bg-secondary-700 text-white px-5 py-3 rounded-lg shadow-sm transition font-medium">Search</button>
     </div>
 
     <!-- Topics Section -->
-    <div class="mt-10 space-y-10">
+    <div class="mt-10 space-y-6">
 
       <!-- Maternal Medicine -->
-      <div class="space-y-2">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold">Maternal Medicine</h2>
+      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
+        <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
+          <h2 class="text-xl font-semibold text-white">Maternal Medicine</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">+</button>
-            <button onclick="removeTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-          <label><input type="checkbox" class="mr-2"> Graves disease</label>
-          <label><input type="checkbox" class="mr-2"> Chronic renal disease & transplant</label>
-          <label><input type="checkbox" class="mr-2"> Gestational thrombocytopenia</label>
-          <label><input type="checkbox" class="mr-2"> DM</label>
-          <label><input type="checkbox" class="mr-2"> VTE</label>
-          <label><input type="checkbox" class="mr-2"> Epilepsy</label>
-          <label><input type="checkbox" class="mr-2"> Rheumatic diseases</label>
-          <label><input type="checkbox" class="mr-2"> MS/AS</label>
-          <label><input type="checkbox" class="mr-2"> Coarctation of Aorta</label>
-          <label><input type="checkbox" class="mr-2"> Obesity / advanced maternal age</label>
-          <label><input type="checkbox" class="mr-2"> SCD</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Graves disease</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Chronic renal disease & transplant</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Gestational thrombocytopenia</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> DM</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> VTE</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Epilepsy</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Rheumatic diseases</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> MS/AS</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Coarctation of Aorta</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Obesity / advanced maternal age</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> SCD</label>
         </div>
       </div>
 
       <!-- Maternal Infections -->
-      <div class="space-y-2">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold">Maternal Infections</h2>
+      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
+        <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
+          <h2 class="text-xl font-semibold text-white">Maternal Infections</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">+</button>
-            <button onclick="removeTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-          <label><input type="checkbox" class="mr-2"> Parvovirus B19</label>
-          <label><input type="checkbox" class="mr-2"> Genital Herpes</label>
-          <label><input type="checkbox" class="mr-2"> Hepatitis B</label>
-          <label><input type="checkbox" class="mr-2"> Chickenpox</label>
-          <label><input type="checkbox" class="mr-2"> Malaria</label>
-          <label><input type="checkbox" class="mr-2"> HIV</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Parvovirus B19</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Genital Herpes</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Hepatitis B</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Chickenpox</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Malaria</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> HIV</label>
         </div>
       </div>
 
       <!-- Antenatal Care -->
-      <div class="space-y-2">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold">Antenatal Care</h2>
+      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
+        <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
+          <h2 class="text-xl font-semibold text-white">Antenatal Care</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">+</button>
-            <button onclick="removeTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-          <label><input type="checkbox" class="mr-2"> OC</label>
-          <label><input type="checkbox" class="mr-2"> PTL</label>
-          <label><input type="checkbox" class="mr-2"> PPROM</label>
-          <label><input type="checkbox" class="mr-2"> APH</label>
-          <label><input type="checkbox" class="mr-2"> PET/ET</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> OC</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> PTL</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> PPROM</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> APH</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> PET/ET</label>
         </div>
       </div>
 
       <!-- Fetal Medicine -->
-      <div class="space-y-2">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold">Fetal Medicine</h2>
+      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
+        <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
+          <h2 class="text-xl font-semibold text-white">Fetal Medicine</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">+</button>
-            <button onclick="removeTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-          <label><input type="checkbox" class="mr-2"> Oligohydramnios</label>
-          <label><input type="checkbox" class="mr-2"> LGA</label>
-          <label><input type="checkbox" class="mr-2"> Polyhydramnios</label>
-          <label><input type="checkbox" class="mr-2"> IUFD</label>
-          <label><input type="checkbox" class="mr-2"> Red cells Abs</label>
-          <label><input type="checkbox" class="mr-2"> FGR</label>
-          <label><input type="checkbox" class="mr-2"> Twins</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Oligohydramnios</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> LGA</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Polyhydramnios</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> IUFD</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Red cells Abs</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> FGR</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Twins</label>
         </div>
       </div>
 
       <!-- Obstetric Emergencies -->
-      <div class="space-y-2">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold">Obstetric Emergencies</h2>
+      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
+        <div class="flex justify-between items-center bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4">
+          <h2 class="text-xl font-semibold text-white">Obstetric Emergencies</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">+</button>
-            <button onclick="removeTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-          <label><input type="checkbox" class="mr-2"> Shoulder dystocia</label>
-          <label><input type="checkbox" class="mr-2"> Maternal collapse</label>
-          <label><input type="checkbox" class="mr-2"> PPH</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Shoulder dystocia</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Maternal collapse</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> PPH</label>
         </div>
       </div>
 
       <!-- Labour & Delivery -->
-      <div class="space-y-2">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold">Labour & Delivery</h2>
+      <div class="module-card bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
+        <div class="flex justify-between items-center bg-gradient-to-r from-secondary-600 to-secondary-700 px-6 py-4">
+          <h2 class="text-xl font-semibold text-white">Labour & Delivery</h2>
           <div class="space-x-2">
-            <button onclick="addTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">+</button>
-            <button onclick="removeTopic(this)" class="text-xl px-2 py-1 bg-transparent text-white border-none">-</button>
+            <button onclick="addTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">+</button>
+            <button onclick="removeTopic(this)" class="btn-action text-xl px-3 py-1 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-md">-</button>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-          <label><input type="checkbox" class="mr-2"> Home birth</label>
-          <label><input type="checkbox" class="mr-2"> Breech</label>
-          <label><input type="checkbox" class="mr-2"> Delayed 2nd stage + OVD</label>
-          <label><input type="checkbox" class="mr-2"> Broken perineum</label>
-          <label><input type="checkbox" class="mr-2"> CS</label>
-          <label><input type="checkbox" class="mr-2"> Perineal tears</label>
-          <label><input type="checkbox" class="mr-2"> LWP</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 p-6 topic-grid">
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Home birth</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Breech</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Delayed 2nd stage + OVD</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Broken perineum</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> CS</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> Perineal tears</label>
+          <label class="flex items-center"><input type="checkbox" class="custom-checkbox"> LWP</label>
         </div>
       </div>
     </div>
 
     <!-- Back Button -->
-    <div class="flex justify-center mt-10">
-      <a href="study.html" class="bg-white text-indigo-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-200 transition">Back to Study</a>
+    <div class="flex justify-center mt-10 mb-6">
+      <a href="study.html" class="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-6 py-3 rounded-full font-semibold shadow-sm hover:shadow transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Back to Study
+      </a>
     </div>
   </div>
 
@@ -157,18 +254,19 @@
     }
 
     function addTopic(btn) {
-      const container = btn.closest("div").nextElementSibling;
+      const container = btn.closest(".module-card").querySelector(".topic-grid");
       const newTopic = prompt("Enter new topic:");
       if (newTopic) {
         const label = document.createElement("label");
-        label.innerHTML = `<input type="checkbox" class="mr-2"> ${newTopic}`;
+        label.className = "flex items-center";
+        label.innerHTML = `<input type="checkbox" class="custom-checkbox"> ${newTopic}`;
         container.appendChild(label);
         setupCheckbox(label.querySelector("input"));
       }
     }
 
     function removeTopic(btn) {
-      const container = btn.closest("div").nextElementSibling;
+      const container = btn.closest(".module-card").querySelector(".topic-grid");
       if (container.lastElementChild) {
         container.removeChild(container.lastElementChild);
       }
@@ -195,3 +293,4 @@
   </script>
 </body>
 </html>
+

@@ -131,36 +131,54 @@
     const dropdown = document.getElementById('lesson-select');
     const board = document.getElementById('topic-container');
     const playBtn = document.getElementById('play-btn');
+    const backBtn = document.getElementById('backward-btn');
+    const forwardBtn = document.getElementById('forward-btn');
 
-    Object.keys(grammarData).forEach(topic => {
+    const topics = Object.keys(grammarData);
+    let currentIndex = 0;
+    topics.forEach(topic => {
       const opt = document.createElement('option');
       opt.value = topic;
       opt.textContent = topic;
       dropdown.appendChild(opt);
     });
 
+    function showTopic(index, speak) {
+      currentIndex = index;
+      const topic = topics[currentIndex];
+      dropdown.value = topic;
+      const content = grammarData[topic].content;
+      displayAnimatedText(content, board);
+      if (speak) {
+        speakText(content);
+      }
+    }
+
     dropdown.addEventListener('change', () => {
-      const topic = dropdown.value;
-      if (grammarData[topic]) {
-        const content = grammarData[topic].content;
-        displayAnimatedText(content, board);
+      const idx = topics.indexOf(dropdown.value);
+      if (idx !== -1) {
+        showTopic(idx, false);
       }
     });
 
-    if (playBtn) {
-      playBtn.addEventListener('click', () => {
-        const topic = dropdown.value;
-        if (grammarData[topic]) {
-          const content = grammarData[topic].content;
-          displayAnimatedText(content, board);
-          speakText(content);
-        }
-      });
-    }
+    playBtn?.addEventListener('click', () => {
+      showTopic(currentIndex, true);
+    });
 
-    if (dropdown.options.length > 1) {
-      dropdown.selectedIndex = 1;
-      dropdown.dispatchEvent(new Event('change'));
+    backBtn?.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        showTopic(currentIndex - 1, true);
+      }
+    });
+
+    forwardBtn?.addEventListener('click', () => {
+      if (currentIndex < topics.length - 1) {
+        showTopic(currentIndex + 1, true);
+      }
+    });
+
+    if (topics.length) {
+      showTopic(0, false);
     }
   }
 

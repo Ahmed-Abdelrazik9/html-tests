@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Grammar Tutor</title>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #2062b8;
+      --primary-purple: #7b1fa2;
+      --dark-blue: #142354;
+      --light-text: #f3f4f6;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, var(--dark-blue) 0%, var(--primary-blue) 45%, var(--primary-purple) 100%);
+      display: flex;
+      flex-direction: column;
+      color: var(--light-text);
+      height: 100vh;
+    }
+
+    header {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 600;
+      background: linear-gradient(120deg, #4a5d8f, #5a8fd2, #a35fb8);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    #screen {
+      flex: 1;
+      margin: 0 1rem 5rem;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 1rem;
+      box-shadow: 0 20px 40px rgba(16, 98, 200, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    #topic-container details {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 0.5rem;
+      padding: 1rem;
+    }
+
+    #controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #controls select,
+    #controls button {
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.6rem 1rem;
+    }
+
+    #controls select {
+      background: #fff;
+      color: #333;
+    }
+
+    #controls button {
+      background: linear-gradient(120deg, var(--primary-blue), var(--primary-purple));
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    #controls button:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>English Grammar Tutor</h1>
+  </header>
+  <main id="screen"><div id="topic-container">Select a grammar topic from the list below.</div></main>
+  <div id="controls">
+    <select id="lesson-select" aria-label="Choose a Grammar Topic">
+      <option value="" disabled selected>Choose a Grammar Topic</option>
+    </select>
+    <button id="backward-btn">Backward</button>
+    <button id="play-btn">Play</button>
+    <button id="forward-btn">Forward</button>
+  </div>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('grammar.json')
+      .then(res => res.json())
+      .then(data => initLessonApp(data))
+      .catch(err => {
+        console.error('Failed to load grammar.json', err);
+        document.getElementById('topic-container').textContent = 'Failed to load topics.';
+      });
+  });
+
+  function initLessonApp(grammarData) {
+    const dropdown = document.getElementById('lesson-select');
+    const board = document.getElementById('topic-container');
+    const playBtn = document.getElementById('play-btn');
+
+    Object.keys(grammarData).forEach(topic => {
+      const opt = document.createElement('option');
+      opt.value = topic;
+      opt.textContent = topic;
+      dropdown.appendChild(opt);
+    });
+
+    dropdown.addEventListener('change', () => {
+      const topic = dropdown.value;
+      if (grammarData[topic]) {
+        const content = grammarData[topic].content;
+        displayAnimatedText(content, board);
+      }
+    });
+
+    if (playBtn) {
+      playBtn.addEventListener('click', () => {
+        const topic = dropdown.value;
+        if (grammarData[topic]) {
+          const content = grammarData[topic].content;
+          displayAnimatedText(content, board);
+          speakText(content);
+        }
+      });
+    }
+
+    if (dropdown.options.length > 1) {
+      dropdown.selectedIndex = 1;
+      dropdown.dispatchEvent(new Event('change'));
+    }
+  }
+
+  async function displayAnimatedText(text, container) {
+    container.innerHTML = '';
+    const sentences = text.split(/\.(\s|$)/).filter(Boolean);
+    for (const sentence of sentences) {
+      const p = document.createElement('p');
+      container.appendChild(p);
+      for (const char of sentence.trim()) {
+        p.textContent += char;
+        await new Promise(r => setTimeout(r, 15));
+      }
+      p.textContent += '.';
+    }
+  }
+
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) return;
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'en-GB';
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(msg);
+  }
+  </script>
+</body>
+</html>
